@@ -1,0 +1,36 @@
+{
+  "address": "H5U88wk7D8Qj7KeztdrJJcWqLwAgZLyMVozrigd2D1Ue",
+  "version": "0.1.0",
+  "name": "counter",
+  "instructions": [
+    {
+      "name": "createCounter",
+      "accounts": [
+        { "name": "authority", "isMut": true, "isSigner": true },
+        { "name": "counter", "isMut": true, "isSigner": false },
+        { "name": "systemProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": []
+    },
+    {
+      "name": "updateCounter",
+      "accounts": [
+        { "name": "authority", "isMut": false, "isSigner": true },
+        { "name": "counter", "isMut": true, "isSigner": false }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Counter",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "authority", "type": "publicKey" },
+          { "name": "count", "type": "u64" }
+        ]
+      }
+    }
+  ]
+}
