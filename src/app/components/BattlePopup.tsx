@@ -1,20 +1,6 @@
 import React, { useState } from "react";
 
-type Enemy = {
-  name: string;
-  image: string;
-  hp: number;
-};
-
-type BattlePopupProps = {
-  enemy: Enemy;
-  isPlayerTurn: boolean;
-  onAttack: () => void;
-  enemyAttackMessage: string;
-  herbCount: number; // やくそうの数
-  onUseHerb: () => void; // やくそうを使う処理
-  playerHp: number; // プレイヤーのHP
-};
+import { BattlePopupProps } from "../utils/types";
 
 const BattlePopup: React.FC<BattlePopupProps> = ({
   enemy,

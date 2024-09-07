@@ -8,7 +8,9 @@ export const handleKeyPress = (
   setPlayerPosition: React.Dispatch<
     React.SetStateAction<{ x: number; y: number }>
   >,
-  setDirection: React.Dispatch<React.SetStateAction<string>>,
+  setDirection: React.Dispatch<
+    React.SetStateAction<"up" | "down" | "left" | "right">
+  >, // 型を修正
   treePositions: Array<{ x: number; y: number }>,
   waterPositions: Array<{ x: number; y: number }>,
   setSteps: React.Dispatch<React.SetStateAction<number>>,
@@ -89,9 +91,10 @@ export const handleUseHerb = (
     });
     setHerbCount((prev) => prev - 1); // やくそうの数を減らす
     setEnemyAttackMessage(`やくそうを使ってHPが${healAmount}回復した！`);
-    herbSound
-      .play()
-      .catch((err) => console.error("Error playing herb sound:", err));
+    if (herbSound)
+      herbSound
+        .play()
+        .catch((err) => console.error("Error playing herb sound:", err));
   }
 };
 

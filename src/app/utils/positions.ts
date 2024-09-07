@@ -5,7 +5,7 @@ export const treePositions = [
 ];
 
 // 水の位置を範囲で指定
-export const waterPositions = [];
+export const waterPositions: { x: number; y: number }[] = [];
 for (let x = 0; x <= 20; x++) {
   for (let y = 13; y <= 14; y++) {
     waterPositions.push({ x, y });
@@ -13,7 +13,7 @@ for (let x = 0; x <= 20; x++) {
 }
 
 // 草の位置
-export const grassPositions = [];
+export const grassPositions: { x: number; y: number }[] = [];
 for (let x = 0; x <= 20; x++) {
   for (let y = 15; y <= 19; y++) {
     grassPositions.push({ x, y });

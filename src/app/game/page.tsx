@@ -36,7 +36,17 @@ import Image from "next/image";
 
 const Game = () => {
   const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0 });
-  const [playerHp, setPlayerHp] = useState(50);
+  const [playerHp, setPlayerHp] = useState(50); // HP
+  const [playerMp, setPlayerMp] = useState(30); // MP
+  const [playerLevel, setPlayerLevel] = useState(1); // レベル
+  const [playerExp, setPlayerExp] = useState(0); // 累積経験値
+  const [gainedExpMessage, setGainedExpMessage] = useState(""); // 経験値を取得したメッセージ
+  const [levelUpMessage, setLevelUpMessage] = useState(""); // レベルアップメッセージ
+  const [statIncreaseMessage, setStatIncreaseMessage] = useState("");
+
+  const [playerAttack, setPlayerAttack] = useState(10); // 攻撃力
+  const [playerDefense, setPlayerDefense] = useState(5); // 防御力
+
   const [herbCount, setHerbCount] = useState(0); // やくそうの所持数
   const [isBattlePopupVisible, setIsBattlePopupVisible] = useState(false);
   const [steps, setSteps] = useState(0);
@@ -58,7 +68,9 @@ const Game = () => {
   const [enemyAttackSound, setEnemyAttackSound] =
     useState<HTMLAudioElement | null>(null); // 敵の攻撃音
 
-  const [direction, setDirection] = useState("down"); // プレイヤーの向き
+  const [direction, setDirection] = useState<"up" | "down" | "left" | "right">(
+    "down"
+  ); // プレイヤーの向き
   const [animationFrame, setAnimationFrame] = useState(0); // 画像を切り替えるためのフレーム
 
   useEffect(() => {
@@ -128,20 +140,27 @@ const Game = () => {
 
   const handleAttack = () => {
     if (currentEnemy && isPlayerTurn) {
-      swordSound
-        .play()
-        .catch((err) => console.error("Error playing sword sound:", err)); // エラーキャッチ
+      if (swordSound)
+        swordSound
+          .play()
+          .catch((err) => console.error("Error playing sword sound:", err)); // エラーキャッチ
       const newHp = currentEnemy.hp - 6;
       if (newHp <= 0) {
         setCurrentEnemy({ ...currentEnemy, hp: 0 });
         setTimeout(() => {
           attemptHerbDrop(currentEnemy, setHerbCount, setHerbMessage);
+          // 経験値を獲得
+          const gainedExp = currentEnemy.experience;
+          setPlayerExp((prevExp) => prevExp + gainedExp); // 経験値を追加
+          setGainedExpMessage(`${gainedExp}の経験値を取得しました`); // メッセージを設定
+
           if (victorySound) victorySound.play();
           setIsBattlePopupVisible(false);
           setIsVictoryPopupVisible(true);
           setTimeout(() => {
             setIsVictoryPopupVisible(false);
             setHerbMessage(""); // 勝利ポップアップが消える時にメッセージもリセット
+            setGainedExpMessage("");
             startRandomBattleSteps();
           }, 2000);
         }, 500);
@@ -200,9 +219,13 @@ const Game = () => {
   return (
     <div style={{ textAlign: "center" }}>
       <h1>簡単なフィールドでの移動</h1>
-
       <div style={{ marginBottom: "20px" }}>
         <h2>主人公のHP: {playerHp}</h2>
+        <h2>主人公のMP: {playerMp}</h2>
+        <h2>レベル: {playerLevel}</h2>
+        <h2>経験値: {playerExp}</h2>
+        <h2>攻撃力: {playerAttack}</h2>
+        <h2>防御力: {playerDefense}</h2>
         <h2>やくそう: {herbCount}個</h2>
       </div>
 
@@ -255,7 +278,6 @@ const Game = () => {
           );
         })}
       </div>
-
       {/* 戦闘ポップアップ */}
       {isBattlePopupVisible && currentEnemy && (
         <BattlePopup
@@ -277,9 +299,13 @@ const Game = () => {
           playerHp={playerHp}
         />
       )}
-
       {/* 勝利ポップアップ */}
-      {isVictoryPopupVisible && <VictoryPopup herbMessage={herbMessage} />}
+      {isVictoryPopupVisible && (
+        <VictoryPopup
+          herbMessage={herbMessage}
+          gainedExpMessage={gainedExpMessage}
+        />
+      )}
     </div>
   );
 };

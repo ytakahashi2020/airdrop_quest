@@ -1,11 +1,6 @@
 import Image from "next/image";
 
-type TileProps = {
-  src: string; // 画像のパス
-  alt: string; // 画像の説明（altテキスト）
-  isVisible: boolean; // 画像を表示するかどうか
-  size?: number; // タイルのサイズを指定 (デフォルト: 100)
-};
+import { TileProps } from "./types";
 
 const Tile: React.FC<TileProps> = ({ src, alt, isVisible, size = 100 }) => {
   return isVisible ? (
