@@ -90,6 +90,7 @@ const Game = () => {
   const [showAttackEffect, setShowAttackEffect] = useState(false); // 攻撃エフェクトの表示状態
   const [showMagicEffect, setShowMagicEffect] = useState(false); // 魔法エフェクトの表示状態
   const [enemyOpacity, setEnemyOpacity] = useState(1); // 透明度の状態管理
+  const [isMagicConfirmVisible, setIsMagicConfirmVisible] = useState(false); // 魔法の確認ポップアップの表示状態
 
   // ①音源の初期化
   useEffect(() => {
@@ -217,6 +218,9 @@ const Game = () => {
   // ⑦敵への攻撃(魔法)
   const handleMagic = () => {
     if (currentEnemy && isPlayerTurn) {
+      // 魔法確認ポップアップを表示する
+      setIsMagicConfirmVisible(true);
+
       if (swordSound)
         swordSound
           .play()
@@ -425,6 +429,7 @@ const Game = () => {
           enemyOpacity={enemyOpacity}
           showAttackEffect={showAttackEffect}
           showMagicEffect={showMagicEffect}
+          isMagicConfirmVisible={isMagicConfirmVisible}
         />
       )}
       {/* 勝利ポップアップ */}

@@ -290,6 +290,7 @@ const BattlePopup: React.FC<BattlePopupProps> = (props) => {
         enemyOpacity={props.enemyOpacity}
         showAttackEffect={props.showAttackEffect}
         showMagicEffect={props.showMagicEffect}
+        isMagicConfirmVisible={props.isMagicConfirmVisible}
       />
 
       {/* 下：コマンドやメッセージ */}
