@@ -76,9 +76,10 @@ const PlayerStatusPopup: React.FC<{
 // 戦闘の選択ポップアップ
 const BattleOptionsPopup: React.FC<{
   onAttack: () => void;
+  onMagic: () => void;
   onUseHerb: () => void;
   herbCount: number;
-}> = ({ onAttack, onUseHerb, herbCount }) => {
+}> = ({ onAttack, onMagic, onUseHerb, herbCount }) => {
   return (
     <div
       style={{
@@ -109,7 +110,7 @@ const BattleOptionsPopup: React.FC<{
           onClick={onAttack}
           style={{
             width: "100%",
-            padding: "10px",
+            padding: "5px",
             marginBottom: "5px",
             color: "white",
           }}
@@ -117,11 +118,22 @@ const BattleOptionsPopup: React.FC<{
           たたかう
         </button>
         <button
+          onClick={onMagic}
+          style={{
+            width: "100%",
+            padding: "5px",
+            marginBottom: "5px",
+            color: "white",
+          }}
+        >
+          まほう
+        </button>
+        <button
           onClick={onUseHerb}
           disabled={herbCount === 0} // やくそうがない場合は無効化
           style={{
             width: "100%",
-            padding: "10px",
+            padding: "5px",
             color: "white",
           }}
         >
@@ -137,28 +149,19 @@ const EnemyPopup: React.FC<{
   enemy: Enemy;
   isPlayerTurn: boolean;
   onAttack: () => void;
+  onMagic: () => void;
   enemyOpacity: number;
-}> = ({ enemy, isPlayerTurn, onAttack, enemyOpacity }) => {
-  // const [enemyOpacity, setEnemyOpacity] = useState(1); // 透明度の状態管理
-  const [showAttackEffect, setShowAttackEffect] = useState(false);
-
-  // const handleEnemyHit = () => {
-  //   setEnemyOpacity(0.5); // 敵がヒットした時の透明度
-  //   setShowAttackEffect(true); // 攻撃エフェクトを表示
-  //   setTimeout(() => {
-  //     setEnemyOpacity(1);
-  //     setTimeout(() => {
-  //       setEnemyOpacity(1);
-  //       setShowAttackEffect(false); // 500ms後にエフェクトを非表示
-  //     }, 500);
-  //   }, 300);
-  // };
-
-  // const handleAttack = () => {
-  //   handleEnemyHit();
-  //   onAttack();
-  // };
-
+  showAttackEffect: boolean;
+  showMagicEffect: boolean;
+}> = ({
+  enemy,
+  isPlayerTurn,
+  onAttack,
+  onMagic,
+  enemyOpacity,
+  showAttackEffect,
+  showMagicEffect,
+}) => {
   return (
     <div
       style={{
@@ -194,6 +197,20 @@ const EnemyPopup: React.FC<{
           }}
         />
       )}
+      {showMagicEffect && (
+        <img
+          src="/images/effect/magic.gif" // 魔法エフェクトのGIF
+          alt="Magic Effect"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            zIndex: 3000, // 敵の画像より上に表示
+          }}
+        />
+      )}
       <img
         src={enemy.image}
         alt="Enemy"
@@ -219,6 +236,7 @@ const CommandPopup: React.FC<{
   playerHp: number;
   isPlayerTurn: boolean;
   onAttack: () => void;
+  onMagic: () => void;
 }> = ({ enemyAttackMessage, enemy }) => {
   return (
     <div
@@ -258,6 +276,7 @@ const BattlePopup: React.FC<BattlePopupProps> = (props) => {
 
       <BattleOptionsPopup
         onAttack={props.onAttack}
+        onMagic={props.onMagic}
         onUseHerb={props.onUseHerb}
         herbCount={props.herbCount}
       />
@@ -267,7 +286,10 @@ const BattlePopup: React.FC<BattlePopupProps> = (props) => {
         enemy={props.enemy}
         isPlayerTurn={props.isPlayerTurn}
         onAttack={props.onAttack} // handleAttack を渡す
+        onMagic={props.onMagic}
         enemyOpacity={props.enemyOpacity}
+        showAttackEffect={props.showAttackEffect}
+        showMagicEffect={props.showMagicEffect}
       />
 
       {/* 下：コマンドやメッセージ */}
@@ -278,6 +300,7 @@ const BattlePopup: React.FC<BattlePopupProps> = (props) => {
         playerHp={props.playerHp}
         isPlayerTurn={props.isPlayerTurn}
         onAttack={props.onAttack}
+        onMagic={props.onMagic}
         enemy={props.enemy}
       />
     </>

@@ -37,10 +37,13 @@ import Tile from "../utils/tile";
 
 import {
   PLAYER_ATTACK_DAMAGE,
+  PLAYER_MAGIC_DAMAGE,
   ENEMY_DEFEAT_DELAY,
   VICTORY_POPUP_DISPLAY_TIME,
   ENEMY_ATTACK_DELAY,
   LEVEL_UP_POPUP_DISPLAY_TIME,
+  ATTACK_EFFECT_TIME,
+  MAGIC_EFFECT_TIME,
 } from "../utils/constants";
 
 import Image from "next/image";
@@ -85,6 +88,7 @@ const Game = () => {
   ); // プレイヤーの向き
   const [animationFrame, setAnimationFrame] = useState(0); // 画像を切り替えるためのフレーム
   const [showAttackEffect, setShowAttackEffect] = useState(false); // 攻撃エフェクトの表示状態
+  const [showMagicEffect, setShowMagicEffect] = useState(false); // 魔法エフェクトの表示状態
   const [enemyOpacity, setEnemyOpacity] = useState(1); // 透明度の状態管理
 
   // ①音源の初期化
@@ -163,9 +167,68 @@ const Game = () => {
 
       const newHp = currentEnemy.hp - PLAYER_ATTACK_DAMAGE;
       setEnemyOpacity(0.5); // 敵がヒットした時の透明度
+      setShowAttackEffect(true); // 攻撃エフェクトを表示
       setTimeout(() => {
         setEnemyOpacity(1);
-      }, 500);
+        setShowAttackEffect(false);
+      }, ATTACK_EFFECT_TIME);
+
+      // 敵のHPが0以下になったら
+      if (newHp <= 0) {
+        setCurrentEnemy({ ...currentEnemy, hp: 0 });
+        setTimeout(() => {
+          attemptHerbDrop(currentEnemy, setHerbCount, setHerbMessage);
+          // 経験値を獲得
+          const gainedExp = currentEnemy.experience;
+          // setPlayerExp((prevExp) => prevExp + gainedExp); // 経験値を追加
+          handleGainExperience(gainedExp);
+          setGainedExpMessage(`${gainedExp}の経験値を取得しました`); // メッセージを設定
+          console.log("leveledUp", leveledUp);
+          if (victorySound) victorySound.play();
+          setIsBattlePopupVisible(false);
+          setIsVictoryPopupVisible(true);
+
+          // レベルアップ時は長めに表示する
+          const popupDisplayTime = leveledUp
+            ? LEVEL_UP_POPUP_DISPLAY_TIME
+            : VICTORY_POPUP_DISPLAY_TIME;
+          console.log("popupDisplayTime", popupDisplayTime);
+          setTimeout(() => {
+            setIsVictoryPopupVisible(false);
+            setHerbMessage(""); // 勝利ポップアップが消える時にメッセージもリセット
+            // setGainedExpMessage("");
+            setLevelUpMessage(""); // レベルアップメッセージをリセット
+            setStatIncreaseMessage("");
+            startRandomBattleSteps(setNextBattleSteps, setSteps);
+          }, popupDisplayTime);
+        }, ENEMY_DEFEAT_DELAY);
+      }
+      // 敵のHPが残っていたら
+      else {
+        setCurrentEnemy({ ...currentEnemy, hp: newHp });
+        setIsPlayerTurn(false);
+        setTimeout(() => {
+          handleEnemyAttack();
+        }, ENEMY_ATTACK_DELAY);
+      }
+    }
+  };
+
+  // ⑦敵への攻撃(魔法)
+  const handleMagic = () => {
+    if (currentEnemy && isPlayerTurn) {
+      if (swordSound)
+        swordSound
+          .play()
+          .catch((err) => console.error("Error playing sword sound:", err)); // エラーキャッチ
+
+      const newHp = currentEnemy.hp - PLAYER_MAGIC_DAMAGE;
+      setEnemyOpacity(0.5); // 敵がヒットした時の透明度
+      setShowMagicEffect(true); // 魔法エフェクトを表示
+      setTimeout(() => {
+        setEnemyOpacity(1);
+        setShowMagicEffect(false);
+      }, MAGIC_EFFECT_TIME);
 
       // 敵のHPが0以下になったら
       if (newHp <= 0) {
@@ -343,6 +406,7 @@ const Game = () => {
           enemy={currentEnemy}
           isPlayerTurn={isPlayerTurn}
           onAttack={handleAttack}
+          onMagic={handleMagic}
           enemyAttackMessage={enemyAttackMessage}
           herbCount={herbCount}
           onUseHerb={() =>
@@ -359,6 +423,8 @@ const Game = () => {
           playerMp={playerMp}
           playerLevel={playerLevel}
           enemyOpacity={enemyOpacity}
+          showAttackEffect={showAttackEffect}
+          showMagicEffect={showMagicEffect}
         />
       )}
       {/* 勝利ポップアップ */}

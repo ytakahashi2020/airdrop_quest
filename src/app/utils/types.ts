@@ -17,6 +17,7 @@ export type BattlePopupProps = {
   enemy: Enemy;
   isPlayerTurn: boolean;
   onAttack: () => void;
+  onMagic: () => void;
   enemyAttackMessage: string;
   herbCount: number; // やくそうの数
   onUseHerb: () => void; // やくそうを使う処理
@@ -24,6 +25,8 @@ export type BattlePopupProps = {
   playerMp: number; // プレイヤーのMP
   playerLevel: number; // プレイヤーのレベル
   enemyOpacity: number;
+  showAttackEffect: boolean;
+  showMagicEffect: boolean;
 };
 
 export type TileProps = {
