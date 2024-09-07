@@ -57,6 +57,7 @@ export const handleKeyPress = (
   setSteps((prevSteps) => prevSteps + 1);
 };
 
+// 敵の攻撃
 export const enemyAttack = (
   currentEnemy: Enemy | null,
   setPlayerHp: React.Dispatch<React.SetStateAction<number>>,

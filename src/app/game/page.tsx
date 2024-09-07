@@ -31,7 +31,16 @@ import {
   isWaterPosition,
 } from "../utils/positions";
 
+import { levelUp } from "../utils/levelUp";
+
 import Tile from "../utils/tile";
+
+import {
+  PLAYER_ATTACK_DAMAGE,
+  ENEMY_DEFEAT_DELAY,
+  VICTORY_POPUP_DISPLAY_TIME,
+  ENEMY_ATTACK_DELAY,
+} from "../utils/constants";
 
 import Image from "next/image";
 
@@ -130,7 +139,7 @@ const Game = () => {
     startRandomBattleSteps(setNextBattleSteps, setSteps); // setNextBattleSteps, setStepsが渡されているか確認
   }, [setNextBattleSteps, setSteps]);
 
-  // 関数を使用
+  // ⑥敵からの攻撃
   const handleEnemyAttack = () => {
     enemyAttack(
       currentEnemy,
@@ -141,13 +150,14 @@ const Game = () => {
     );
   };
 
+  // ⑦敵への攻撃
   const handleAttack = () => {
     if (currentEnemy && isPlayerTurn) {
       if (swordSound)
         swordSound
           .play()
           .catch((err) => console.error("Error playing sword sound:", err)); // エラーキャッチ
-      const newHp = currentEnemy.hp - 6;
+      const newHp = currentEnemy.hp - PLAYER_ATTACK_DAMAGE;
       if (newHp <= 0) {
         setCurrentEnemy({ ...currentEnemy, hp: 0 });
         setTimeout(() => {
@@ -168,14 +178,14 @@ const Game = () => {
             setLevelUpMessage(""); // レベルアップメッセージをリセット
             setStatIncreaseMessage("");
             startRandomBattleSteps(setNextBattleSteps, setSteps);
-          }, 2000);
-        }, 500);
+          }, VICTORY_POPUP_DISPLAY_TIME);
+        }, ENEMY_DEFEAT_DELAY);
       } else {
         setCurrentEnemy({ ...currentEnemy, hp: newHp });
         setIsPlayerTurn(false);
         setTimeout(() => {
           handleEnemyAttack();
-        }, 1000);
+        }, ENEMY_ATTACK_DELAY);
       }
     }
   };
@@ -222,25 +232,17 @@ const Game = () => {
     }
   }, [steps, nextBattleSteps]);
 
-  // レベルアップ時のステータス増加処理
-  const levelUp = () => {
-    setPlayerLevel((prevLevel) => prevLevel + 1);
-
-    // 各ステータスが1〜5の範囲でランダムに増加
-    const hpIncrease = Math.floor(Math.random() * 5) + 1;
-    const mpIncrease = Math.floor(Math.random() * 5) + 1;
-    const attackIncrease = Math.floor(Math.random() * 5) + 1;
-    const defenseIncrease = Math.floor(Math.random() * 5) + 1;
-
-    setPlayerHp((prevHp) => prevHp + hpIncrease);
-    setPlayerMp((prevMp) => prevMp + mpIncrease);
-    setPlayerAttack((prevAttack) => prevAttack + attackIncrease);
-    setPlayerDefense((prevDefense) => prevDefense + defenseIncrease);
-
-    // レベルアップメッセージを設定
-    setLevelUpMessage(`レベルが${playerLevel + 1}に上がりました！`);
-    setStatIncreaseMessage(
-      `HP: +${hpIncrease} MP: +${mpIncrease} 攻撃力: +${attackIncrease} 防御力: +${defenseIncrease}`
+  // レベルアップを処理する
+  const handleLevelUp = () => {
+    levelUp(
+      playerLevel,
+      setPlayerLevel,
+      setPlayerHp,
+      setPlayerMp,
+      setPlayerAttack,
+      setPlayerDefense,
+      setLevelUpMessage,
+      setStatIncreaseMessage
     );
   };
 
@@ -252,7 +254,7 @@ const Game = () => {
       // 累積経験値が100以上になったらレベルアップ
       if (newExp >= 100) {
         setPlayerExp(newExp - 100); // レベルアップ後、経験値はリセットされる
-        levelUp(); // レベルアップ処理を呼び出す
+        handleLevelUp(); // レベルアップ処理を呼び出す
       } else {
         setPlayerExp(newExp); // 100未満ならそのまま累積経験値を更新
       }
