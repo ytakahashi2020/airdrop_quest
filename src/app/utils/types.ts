@@ -9,6 +9,8 @@ export type Enemy = {
 export type VictoryPopupProps = {
   herbMessage: string;
   gainedExpMessage: string;
+  levelUpMessage: string;
+  statIncreaseMessage: string;
 };
 
 export type BattlePopupProps = {

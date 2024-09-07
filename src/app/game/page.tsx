@@ -8,6 +8,7 @@ import {
   attemptHerbDrop,
   enemyAttack,
   handleKeyPress,
+  startRandomBattleSteps,
 } from "../utils/gameFunctions";
 
 import {
@@ -49,8 +50,9 @@ const Game = () => {
 
   const [herbCount, setHerbCount] = useState(0); // やくそうの所持数
   const [isBattlePopupVisible, setIsBattlePopupVisible] = useState(false);
-  const [steps, setSteps] = useState(0);
-  const [nextBattleSteps, setNextBattleSteps] = useState(0);
+  const [nextBattleSteps, setNextBattleSteps] = useState<number>(0);
+  const [steps, setSteps] = useState<number>(0);
+
   const [currentEnemy, setCurrentEnemy] = useState<Enemy | null>(null);
   const [isVictoryPopupVisible, setIsVictoryPopupVisible] = useState(false);
   const [isPlayerTurn, setIsPlayerTurn] = useState(true);
@@ -73,6 +75,7 @@ const Game = () => {
   ); // プレイヤーの向き
   const [animationFrame, setAnimationFrame] = useState(0); // 画像を切り替えるためのフレーム
 
+  // ①音源の初期化
   useEffect(() => {
     if (typeof window !== "undefined") {
       // クライアントサイドでのみAudioを初期化
@@ -85,6 +88,7 @@ const Game = () => {
     }
   }, []);
 
+  // ②アニメーションフレームの切り替え
   useEffect(() => {
     const interval = setInterval(() => {
       setAnimationFrame((prevFrame) => (prevFrame === 0 ? 1 : 0)); // フレームを切り替える
@@ -93,7 +97,7 @@ const Game = () => {
     return () => clearInterval(interval); // クリーンアップ
   }, []);
 
-  // 通常音楽の再生を開始
+  // ③通常音楽の再生を開始
   useEffect(() => {
     playNormalMusic(normalMusic);
     return () => {
@@ -101,7 +105,7 @@ const Game = () => {
     };
   }, [normalMusic]);
 
-  // 戦闘が始まるときに音楽を切り替え
+  // ④戦闘が始まるときの音楽を切り替え
   useEffect(() => {
     if (isBattlePopupVisible) {
       stopNormalMusic(normalMusic); // 通常の音楽を停止
@@ -121,11 +125,10 @@ const Game = () => {
     };
   }, [isBattlePopupVisible, normalMusic, battleMusic]);
 
-  const startRandomBattleSteps = () => {
-    const randomSteps = Math.floor(Math.random() * 6) + 3;
-    setNextBattleSteps(randomSteps);
-    setSteps(0);
-  };
+  // ⑤ランダムステップの設定
+  useEffect(() => {
+    startRandomBattleSteps(setNextBattleSteps, setSteps); // setNextBattleSteps, setStepsが渡されているか確認
+  }, [setNextBattleSteps, setSteps]);
 
   // 関数を使用
   const handleEnemyAttack = () => {
@@ -151,7 +154,8 @@ const Game = () => {
           attemptHerbDrop(currentEnemy, setHerbCount, setHerbMessage);
           // 経験値を獲得
           const gainedExp = currentEnemy.experience;
-          setPlayerExp((prevExp) => prevExp + gainedExp); // 経験値を追加
+          // setPlayerExp((prevExp) => prevExp + gainedExp); // 経験値を追加
+          gainExperience(gainedExp); // 経験値を獲得し、レベルアップをチェック
           setGainedExpMessage(`${gainedExp}の経験値を取得しました`); // メッセージを設定
 
           if (victorySound) victorySound.play();
@@ -160,8 +164,10 @@ const Game = () => {
           setTimeout(() => {
             setIsVictoryPopupVisible(false);
             setHerbMessage(""); // 勝利ポップアップが消える時にメッセージもリセット
-            setGainedExpMessage("");
-            startRandomBattleSteps();
+            // setGainedExpMessage("");
+            setLevelUpMessage(""); // レベルアップメッセージをリセット
+            setStatIncreaseMessage("");
+            startRandomBattleSteps(setNextBattleSteps, setSteps);
           }, 2000);
         }, 500);
       } else {
@@ -203,8 +209,8 @@ const Game = () => {
   }, [isBattlePopupVisible, handleKeyPressCallback]);
 
   useEffect(() => {
-    startRandomBattleSteps();
-  }, []);
+    startRandomBattleSteps(setNextBattleSteps, setSteps);
+  }, [setNextBattleSteps, setSteps]);
 
   useEffect(() => {
     if (steps >= nextBattleSteps) {
@@ -215,6 +221,45 @@ const Game = () => {
       setEnemyAttackMessage("");
     }
   }, [steps, nextBattleSteps]);
+
+  // レベルアップ時のステータス増加処理
+  const levelUp = () => {
+    setPlayerLevel((prevLevel) => prevLevel + 1);
+
+    // 各ステータスが1〜5の範囲でランダムに増加
+    const hpIncrease = Math.floor(Math.random() * 5) + 1;
+    const mpIncrease = Math.floor(Math.random() * 5) + 1;
+    const attackIncrease = Math.floor(Math.random() * 5) + 1;
+    const defenseIncrease = Math.floor(Math.random() * 5) + 1;
+
+    setPlayerHp((prevHp) => prevHp + hpIncrease);
+    setPlayerMp((prevMp) => prevMp + mpIncrease);
+    setPlayerAttack((prevAttack) => prevAttack + attackIncrease);
+    setPlayerDefense((prevDefense) => prevDefense + defenseIncrease);
+
+    // レベルアップメッセージを設定
+    setLevelUpMessage(`レベルが${playerLevel + 1}に上がりました！`);
+    setStatIncreaseMessage(
+      `HP: +${hpIncrease} MP: +${mpIncrease} 攻撃力: +${attackIncrease} 防御力: +${defenseIncrease}`
+    );
+  };
+
+  // 経験値を増やす関数
+  const gainExperience = (expGained: number) => {
+    setPlayerExp((prevExp) => {
+      const newExp = prevExp + expGained;
+
+      // 累積経験値が100以上になったらレベルアップ
+      if (newExp >= 100) {
+        setPlayerExp(newExp - 100); // レベルアップ後、経験値はリセットされる
+        levelUp(); // レベルアップ処理を呼び出す
+      } else {
+        setPlayerExp(newExp); // 100未満ならそのまま累積経験値を更新
+      }
+
+      return newExp;
+    });
+  };
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -304,6 +349,8 @@ const Game = () => {
         <VictoryPopup
           herbMessage={herbMessage}
           gainedExpMessage={gainedExpMessage}
+          levelUpMessage={levelUpMessage}
+          statIncreaseMessage={statIncreaseMessage}
         />
       )}
     </div>

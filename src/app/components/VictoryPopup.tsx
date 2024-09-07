@@ -5,6 +5,8 @@ import { VictoryPopupProps } from "../utils/types";
 const VictoryPopup: React.FC<VictoryPopupProps> = ({
   herbMessage,
   gainedExpMessage,
+  levelUpMessage,
+  statIncreaseMessage,
 }) => {
   return (
     <div
@@ -23,6 +25,12 @@ const VictoryPopup: React.FC<VictoryPopupProps> = ({
       {herbMessage && <p>{herbMessage}</p>}
       {gainedExpMessage && <p>{gainedExpMessage}</p>}{" "}
       {/* 取得した経験値メッセージを表示 */}
+      {levelUpMessage && (
+        <div>
+          <h3>{levelUpMessage}</h3>
+          <p>{statIncreaseMessage}</p>
+        </div>
+      )}
     </div>
   );
 };

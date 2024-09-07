@@ -1,3 +1,5 @@
+import { RANDOM_STEP_MULTIPLIER, RANDOM_STEP_OFFSET } from "./constants";
+
 import { Enemy } from "./types"; // 型定義をインポート
 import { playEnemyAttackSound } from "./audioManager"; // 音声管理ファイルをインポート
 import { isPassablePosition } from "./positions";
@@ -111,4 +113,15 @@ export const attemptHerbDrop = (
   } else {
     setHerbMessage(""); // やくそうを入手しなかった場合はリセット
   }
+};
+
+// ランダムで戦闘ステップを設定
+export const startRandomBattleSteps = (
+  setNextBattleSteps: React.Dispatch<React.SetStateAction<number>>,
+  setSteps: React.Dispatch<React.SetStateAction<number>>
+) => {
+  const randomSteps =
+    Math.floor(Math.random() * RANDOM_STEP_MULTIPLIER) + RANDOM_STEP_OFFSET;
+  setNextBattleSteps(randomSteps);
+  setSteps(0);
 };
