@@ -31,7 +31,7 @@ import {
   isWaterPosition,
 } from "../utils/positions";
 
-import { levelUp } from "../utils/levelUp";
+import { levelUp, gainExperience } from "../utils/levelUp";
 
 import Tile from "../utils/tile";
 
@@ -165,7 +165,7 @@ const Game = () => {
           // 経験値を獲得
           const gainedExp = currentEnemy.experience;
           // setPlayerExp((prevExp) => prevExp + gainedExp); // 経験値を追加
-          gainExperience(gainedExp); // 経験値を獲得し、レベルアップをチェック
+          handleGainExperience(gainedExp); // 経験値を獲得し、レベルアップをチェック
           setGainedExpMessage(`${gainedExp}の経験値を取得しました`); // メッセージを設定
 
           if (victorySound) victorySound.play();
@@ -232,7 +232,7 @@ const Game = () => {
     }
   }, [steps, nextBattleSteps]);
 
-  // レベルアップを処理する
+  // ⑧レベルアップを処理する
   const handleLevelUp = () => {
     levelUp(
       playerLevel,
@@ -246,21 +246,9 @@ const Game = () => {
     );
   };
 
-  // 経験値を増やす関数
-  const gainExperience = (expGained: number) => {
-    setPlayerExp((prevExp) => {
-      const newExp = prevExp + expGained;
-
-      // 累積経験値が100以上になったらレベルアップ
-      if (newExp >= 100) {
-        setPlayerExp(newExp - 100); // レベルアップ後、経験値はリセットされる
-        handleLevelUp(); // レベルアップ処理を呼び出す
-      } else {
-        setPlayerExp(newExp); // 100未満ならそのまま累積経験値を更新
-      }
-
-      return newExp;
-    });
+  // ⑨経験値を獲得
+  const handleGainExperience = (expGained: number) => {
+    gainExperience(expGained, playerExp, setPlayerExp, handleLevelUp);
   };
 
   return (

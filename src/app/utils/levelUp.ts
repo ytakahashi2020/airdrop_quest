@@ -27,3 +27,24 @@ export const levelUp = (
     `HP: +${hpIncrease} MP: +${mpIncrease} 攻撃力: +${attackIncrease} 防御力: +${defenseIncrease}`
   );
 };
+
+export const gainExperience = (
+  expGained: number,
+  playerExp: number,
+  setPlayerExp: React.Dispatch<React.SetStateAction<number>>,
+  handleLevelUp: () => void
+) => {
+  setPlayerExp((prevExp) => {
+    const newExp = prevExp + expGained;
+
+    // 累積経験値が100以上になったらレベルアップ
+    if (newExp >= 100) {
+      setPlayerExp(newExp - 100); // レベルアップ後、経験値はリセットされる
+      handleLevelUp(); // レベルアップ処理を呼び出す
+    } else {
+      setPlayerExp(newExp); // 100未満ならそのまま累積経験値を更新
+    }
+
+    return newExp;
+  });
+};
