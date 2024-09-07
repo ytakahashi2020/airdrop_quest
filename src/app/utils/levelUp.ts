@@ -30,21 +30,24 @@ export const levelUp = (
 
 export const gainExperience = (
   expGained: number,
-  playerExp: number,
+  playerLevel: number,
   setPlayerExp: React.Dispatch<React.SetStateAction<number>>,
-  handleLevelUp: () => void
+  handleLevelUp: () => void,
+  setLeveledUp: React.Dispatch<React.SetStateAction<boolean>> // レベルアップ状態を管理
 ) => {
   setPlayerExp((prevExp) => {
-    const newExp = prevExp + expGained;
-
-    // 累積経験値が100以上になったらレベルアップ
-    if (newExp >= 100) {
-      setPlayerExp(newExp - 100); // レベルアップ後、経験値はリセットされる
+    const totalExp = prevExp + expGained;
+    const nextLevelExp = playerLevel * 100; // 次のレベルに必要な経験値（例: レベル2なら100、レベル3なら200）
+    console.log("playerLevel", playerLevel);
+    console.log("nextLevelExp", nextLevelExp);
+    // レベルアップ判定
+    if (totalExp >= nextLevelExp) {
+      setLeveledUp(true); // レベルアップフラグをオン
       handleLevelUp(); // レベルアップ処理を呼び出す
     } else {
-      setPlayerExp(newExp); // 100未満ならそのまま累積経験値を更新
+      setLeveledUp(false); // レベルアップしていない場合はオフ
     }
 
-    return newExp;
+    return totalExp;
   });
 };

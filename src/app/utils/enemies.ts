@@ -2,24 +2,24 @@ import { Enemy } from "./types"; // 必要であれば、Enemyの型を定義し
 
 export const enemies: Enemy[] = [
   {
-    name: "enemy1",
+    name: "まどうし",
     image: "/images/enemy1.png",
     hp: 10,
     attackRange: [1, 3],
-    experience: 10,
+    experience: 100,
   },
   {
-    name: "enemy2",
+    name: "かべ男",
     image: "/images/enemy2.png",
     hp: 15,
     attackRange: [4, 6],
-    experience: 40,
+    experience: 120,
   },
   {
-    name: "enemy3",
+    name: "ブルードラゴン",
     image: "/images/enemy3.png",
     hp: 20,
     attackRange: [7, 9],
-    experience: 60,
+    experience: 150,
   },
 ];

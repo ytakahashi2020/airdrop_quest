@@ -9,5 +9,7 @@ export const PLAYER_ATTACK_DAMAGE = 6;
 export const ENEMY_DEFEAT_DELAY = 500;
 // 勝利ポップアップの表示時間
 export const VICTORY_POPUP_DISPLAY_TIME = 2000;
+// レベルアップ時のポップアップ表示時間
+export const LEVEL_UP_POPUP_DISPLAY_TIME = 5000;
 // 敵の攻撃の遅延時間
 export const ENEMY_ATTACK_DELAY = 1000;

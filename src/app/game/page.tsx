@@ -40,6 +40,7 @@ import {
   ENEMY_DEFEAT_DELAY,
   VICTORY_POPUP_DISPLAY_TIME,
   ENEMY_ATTACK_DELAY,
+  LEVEL_UP_POPUP_DISPLAY_TIME,
 } from "../utils/constants";
 
 import Image from "next/image";
@@ -67,7 +68,7 @@ const Game = () => {
   const [isPlayerTurn, setIsPlayerTurn] = useState(true);
   const [enemyAttackMessage, setEnemyAttackMessage] = useState("");
   const [herbMessage, setHerbMessage] = useState(""); // やくそうを入手したメッセージ
-
+  const [leveledUp, setLeveledUp] = useState(false); // レベルアップ状態を管理
   // 音楽ファイルのAudioオブジェクトをクライアントサイドで初期化
   const [normalMusic, setNormalMusic] = useState<HTMLAudioElement | null>(null);
   const [battleMusic, setBattleMusic] = useState<HTMLAudioElement | null>(null);
@@ -165,12 +166,18 @@ const Game = () => {
           // 経験値を獲得
           const gainedExp = currentEnemy.experience;
           // setPlayerExp((prevExp) => prevExp + gainedExp); // 経験値を追加
-          handleGainExperience(gainedExp); // 経験値を獲得し、レベルアップをチェック
+          handleGainExperience(gainedExp);
           setGainedExpMessage(`${gainedExp}の経験値を取得しました`); // メッセージを設定
-
+          console.log("leveledUp", leveledUp);
           if (victorySound) victorySound.play();
           setIsBattlePopupVisible(false);
           setIsVictoryPopupVisible(true);
+
+          // レベルアップ時は長めに表示する
+          const popupDisplayTime = leveledUp
+            ? LEVEL_UP_POPUP_DISPLAY_TIME
+            : VICTORY_POPUP_DISPLAY_TIME;
+          console.log("popupDisplayTime", popupDisplayTime);
           setTimeout(() => {
             setIsVictoryPopupVisible(false);
             setHerbMessage(""); // 勝利ポップアップが消える時にメッセージもリセット
@@ -178,7 +185,7 @@ const Game = () => {
             setLevelUpMessage(""); // レベルアップメッセージをリセット
             setStatIncreaseMessage("");
             startRandomBattleSteps(setNextBattleSteps, setSteps);
-          }, VICTORY_POPUP_DISPLAY_TIME);
+          }, popupDisplayTime);
         }, ENEMY_DEFEAT_DELAY);
       } else {
         setCurrentEnemy({ ...currentEnemy, hp: newHp });
@@ -248,7 +255,13 @@ const Game = () => {
 
   // ⑨経験値を獲得
   const handleGainExperience = (expGained: number) => {
-    gainExperience(expGained, playerExp, setPlayerExp, handleLevelUp);
+    gainExperience(
+      expGained,
+      playerLevel,
+      setPlayerExp,
+      handleLevelUp,
+      setLeveledUp
+    );
   };
 
   return (
@@ -332,6 +345,8 @@ const Game = () => {
             )
           } // useHerbは通常の関数として使用
           playerHp={playerHp}
+          playerMp={playerMp}
+          playerLevel={playerLevel}
         />
       )}
       {/* 勝利ポップアップ */}

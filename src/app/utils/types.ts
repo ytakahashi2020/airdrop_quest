@@ -21,6 +21,8 @@ export type BattlePopupProps = {
   herbCount: number; // やくそうの数
   onUseHerb: () => void; // やくそうを使う処理
   playerHp: number; // プレイヤーのHP
+  playerMp: number; // プレイヤーのMP
+  playerLevel: number; // プレイヤーのレベル
 };
 
 export type TileProps = {
