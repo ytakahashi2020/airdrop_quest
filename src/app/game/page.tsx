@@ -84,6 +84,8 @@ const Game = () => {
     "down"
   ); // プレイヤーの向き
   const [animationFrame, setAnimationFrame] = useState(0); // 画像を切り替えるためのフレーム
+  const [showAttackEffect, setShowAttackEffect] = useState(false); // 攻撃エフェクトの表示状態
+  const [enemyOpacity, setEnemyOpacity] = useState(1); // 透明度の状態管理
 
   // ①音源の初期化
   useEffect(() => {
@@ -158,7 +160,14 @@ const Game = () => {
         swordSound
           .play()
           .catch((err) => console.error("Error playing sword sound:", err)); // エラーキャッチ
+
       const newHp = currentEnemy.hp - PLAYER_ATTACK_DAMAGE;
+      setEnemyOpacity(0.5); // 敵がヒットした時の透明度
+      setTimeout(() => {
+        setEnemyOpacity(1);
+      }, 500);
+
+      // 敵のHPが0以下になったら
       if (newHp <= 0) {
         setCurrentEnemy({ ...currentEnemy, hp: 0 });
         setTimeout(() => {
@@ -187,7 +196,9 @@ const Game = () => {
             startRandomBattleSteps(setNextBattleSteps, setSteps);
           }, popupDisplayTime);
         }, ENEMY_DEFEAT_DELAY);
-      } else {
+      }
+      // 敵のHPが残っていたら
+      else {
         setCurrentEnemy({ ...currentEnemy, hp: newHp });
         setIsPlayerTurn(false);
         setTimeout(() => {
@@ -268,13 +279,13 @@ const Game = () => {
     <div style={{ textAlign: "center" }}>
       <h1>簡単なフィールドでの移動</h1>
       <div style={{ marginBottom: "20px" }}>
-        <h2>主人公のHP: {playerHp}</h2>
+        {/* <h2>主人公のHP: {playerHp}</h2>
         <h2>主人公のMP: {playerMp}</h2>
         <h2>レベル: {playerLevel}</h2>
         <h2>経験値: {playerExp}</h2>
         <h2>攻撃力: {playerAttack}</h2>
         <h2>防御力: {playerDefense}</h2>
-        <h2>やくそう: {herbCount}個</h2>
+        <h2>やくそう: {herbCount}個</h2> */}
       </div>
 
       <div
@@ -347,6 +358,7 @@ const Game = () => {
           playerHp={playerHp}
           playerMp={playerMp}
           playerLevel={playerLevel}
+          enemyOpacity={enemyOpacity}
         />
       )}
       {/* 勝利ポップアップ */}

@@ -133,24 +133,31 @@ const BattleOptionsPopup: React.FC<{
 };
 
 // 敵の画像と情報を表示するポップアップ
-const EnemyPopup: React.FC<BattlePopupProps> = ({
-  enemy,
-  isPlayerTurn,
-  onAttack,
-}) => {
-  const [enemyOpacity, setEnemyOpacity] = useState(1); // 透明度の状態管理
+const EnemyPopup: React.FC<{
+  enemy: Enemy;
+  isPlayerTurn: boolean;
+  onAttack: () => void;
+  enemyOpacity: number;
+}> = ({ enemy, isPlayerTurn, onAttack, enemyOpacity }) => {
+  // const [enemyOpacity, setEnemyOpacity] = useState(1); // 透明度の状態管理
+  const [showAttackEffect, setShowAttackEffect] = useState(false);
 
-  const handleEnemyHit = () => {
-    setEnemyOpacity(0.5);
-    setTimeout(() => {
-      setEnemyOpacity(1);
-    }, 300);
-  };
+  // const handleEnemyHit = () => {
+  //   setEnemyOpacity(0.5); // 敵がヒットした時の透明度
+  //   setShowAttackEffect(true); // 攻撃エフェクトを表示
+  //   setTimeout(() => {
+  //     setEnemyOpacity(1);
+  //     setTimeout(() => {
+  //       setEnemyOpacity(1);
+  //       setShowAttackEffect(false); // 500ms後にエフェクトを非表示
+  //     }, 500);
+  //   }, 300);
+  // };
 
-  const handleAttack = () => {
-    handleEnemyHit();
-    onAttack();
-  };
+  // const handleAttack = () => {
+  //   handleEnemyHit();
+  //   onAttack();
+  // };
 
   return (
     <div
@@ -158,7 +165,6 @@ const EnemyPopup: React.FC<BattlePopupProps> = ({
         position: "fixed",
         top: "30%",
         left: "20%",
-        // transform: "translate(-50%, -50%)",
         padding: "20px",
         paddingTop: "30px",
         border: "3px solid white",
@@ -168,12 +174,26 @@ const EnemyPopup: React.FC<BattlePopupProps> = ({
         width: "600px", // ポップアップの幅を設定
         height: "250px", // ポップアップの高さを設定
         backgroundImage: 'url("/images/fields/pipo-battlebg001a.jpg")', // 背景画像を設定
-        backgroundSize: "cover", // 背景画像がボックスを覆うように調整
-        backgroundPosition: "center", // 背景の位置
-        display: "flex", // Flexboxを使って中央に配置
-        justifyContent: "center", // 水平方向の中央揃え
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        display: "flex",
+        justifyContent: "center",
       }}
     >
+      {showAttackEffect && (
+        <img
+          src="/images/effect/sword.gif" // 攻撃エフェクトのGIF
+          alt="Attack Effect"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            zIndex: 3000, // 敵の画像より上に表示
+          }}
+        />
+      )}
       <img
         src={enemy.image}
         alt="Enemy"
@@ -243,7 +263,12 @@ const BattlePopup: React.FC<BattlePopupProps> = (props) => {
       />
 
       {/* 中央：敵の画像 */}
-      <EnemyPopup {...props} />
+      <EnemyPopup
+        enemy={props.enemy}
+        isPlayerTurn={props.isPlayerTurn}
+        onAttack={props.onAttack} // handleAttack を渡す
+        enemyOpacity={props.enemyOpacity}
+      />
 
       {/* 下：コマンドやメッセージ */}
       <CommandPopup

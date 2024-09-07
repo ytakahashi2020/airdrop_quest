@@ -23,6 +23,7 @@ export type BattlePopupProps = {
   playerHp: number; // プレイヤーのHP
   playerMp: number; // プレイヤーのMP
   playerLevel: number; // プレイヤーのレベル
+  enemyOpacity: number;
 };
 
 export type TileProps = {
