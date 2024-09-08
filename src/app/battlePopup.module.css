@@ -6,6 +6,14 @@
   border-radius: 7px;
 }
 
+.enemyAttackPopup {
+  position: fixed;
+  color: white;
+  background-color: black;
+  border: 3px solid red;
+  border-radius: 7px;
+}
+
 .battlePopup {
   bottom: 6%;
   left: 7%;
@@ -37,6 +45,32 @@
   background-position: center;
   display: flex;
   justify-content: center;
+}
+
+.enemyAttackImagePopup {
+  top: 30%;
+  left: 20%;
+  padding: 20px;
+  padding-top: 30px;
+  z-index: 1000;
+  width: 600px; /* ポップアップの幅 */
+  height: 250px; /* ポップアップの高さ */
+  background-image: url("/images/fields/pipo-battlebg001a.jpg"); /* 背景画像 */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+}
+
+.enemyAttackImagePopup::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 0, 0, 0.6); /* 赤色で透明度30%のオーバーレイ */
+  z-index: 2000; /* オーバーレイを画像の上に */
 }
 
 .battleCommand {

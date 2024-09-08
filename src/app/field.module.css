@@ -1,0 +1,16 @@
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(20, 30px);
+  grid-template-rows: repeat(20, 30px);
+  gap: 2px;
+}
+
+.gridField {
+  width: 32px;
+  height: 32px;
+  background-color: green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}

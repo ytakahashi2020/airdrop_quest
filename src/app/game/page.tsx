@@ -46,6 +46,8 @@ import {
   MAGIC_EFFECT_TIME,
 } from "../utils/constants";
 
+import styles from "../field.module.css"; // CSSモジュールのインポート
+
 import Image from "next/image";
 
 const Game = () => {
@@ -91,6 +93,8 @@ const Game = () => {
   const [showMagicEffect, setShowMagicEffect] = useState(false); // 魔法エフェクトの表示状態
   const [enemyOpacity, setEnemyOpacity] = useState(1); // 透明度の状態管理
   const [isMagicConfirmVisible, setIsMagicConfirmVisible] = useState(false); // 魔法の確認ポップアップの表示状態
+  const [showEnemyAttackEffect, setShowEnemyAttackEffectEffect] =
+    useState(false); // 敵からの攻撃エフェクトの表示状態
 
   // ①音源の初期化
   useEffect(() => {
@@ -154,7 +158,8 @@ const Game = () => {
       setPlayerHp,
       setEnemyAttackMessage,
       setIsPlayerTurn,
-      enemyAttackSound
+      enemyAttackSound,
+      setShowEnemyAttackEffectEffect
     );
   };
 
@@ -355,14 +360,7 @@ const Game = () => {
         <h2>やくそう: {herbCount}個</h2> */}
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: `repeat(20, 30px)`,
-          gridTemplateRows: `repeat(20, 30px)`,
-          gap: "2px",
-        }}
-      >
+      <div className={styles.gridContainer}>
         {Array.from({ length: 20 * 20 }).map((_, index) => {
           const x = index % 20;
           const y = Math.floor(index / 20);
@@ -371,18 +369,7 @@ const Game = () => {
           const isWater = isWaterPosition(x, y);
 
           return (
-            <div
-              key={index}
-              style={{
-                width: 32,
-                height: 32,
-                backgroundColor: "green",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                boxSizing: "border-box",
-              }}
-            >
+            <div key={index} className={styles.gridField}>
               <Tile
                 src={playerImages[direction][animationFrame]}
                 alt="Player"
@@ -429,6 +416,7 @@ const Game = () => {
           enemyOpacity={enemyOpacity}
           showAttackEffect={showAttackEffect}
           showMagicEffect={showMagicEffect}
+          showEnemyAttackEffect={showEnemyAttackEffect}
           isMagicConfirmVisible={isMagicConfirmVisible}
         />
       )}

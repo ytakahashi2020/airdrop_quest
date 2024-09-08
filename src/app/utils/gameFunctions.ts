@@ -63,13 +63,20 @@ export const enemyAttack = (
   setPlayerHp: React.Dispatch<React.SetStateAction<number>>,
   setEnemyAttackMessage: React.Dispatch<React.SetStateAction<string>>,
   setIsPlayerTurn: React.Dispatch<React.SetStateAction<boolean>>,
-  enemyAttackSound: HTMLAudioElement | null
+  enemyAttackSound: HTMLAudioElement | null,
+  setShowEnemyAttackEffectEffect: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   if (currentEnemy) {
     const [minAttack, maxAttack] = currentEnemy.attackRange;
     if (enemyAttackSound) {
       playEnemyAttackSound(enemyAttackSound); // 敵の攻撃音を再生
     }
+
+    setShowEnemyAttackEffectEffect(true); // 攻撃エフェクトを表示
+    setTimeout(() => {
+      setShowEnemyAttackEffectEffect(false);
+    }, 500);
+
     const damage =
       Math.floor(Math.random() * (maxAttack - minAttack + 1)) + minAttack;
     setPlayerHp((prevHp) => Math.max(prevHp - damage, 0));

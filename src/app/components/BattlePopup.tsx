@@ -120,6 +120,7 @@ const EnemyPopup: React.FC<{
   enemyOpacity: number;
   showAttackEffect: boolean;
   showMagicEffect: boolean;
+  showEnemyAttackEffect: boolean;
 }> = ({
   enemy,
   isPlayerTurn,
@@ -128,9 +129,16 @@ const EnemyPopup: React.FC<{
   enemyOpacity,
   showAttackEffect,
   showMagicEffect,
+  showEnemyAttackEffect,
 }) => {
   return (
-    <div className={`${styles.commonPopup} ${styles.enemyPopup}`}>
+    <div
+      className={`${
+        showEnemyAttackEffect ? styles.enemyAttackPopup : styles.commonPopup
+      } ${
+        showEnemyAttackEffect ? styles.enemyAttackImagePopup : styles.enemyPopup
+      }`}
+    >
       {showAttackEffect && (
         <img
           src="/images/effect/sword.gif" // 攻撃エフェクトのGIF
@@ -206,6 +214,7 @@ const BattlePopup: React.FC<BattlePopupProps> = (props) => {
         enemyOpacity={props.enemyOpacity}
         showAttackEffect={props.showAttackEffect}
         showMagicEffect={props.showMagicEffect}
+        showEnemyAttackEffect={props.showEnemyAttackEffect}
       />
 
       {/* 下：コマンドやメッセージ */}

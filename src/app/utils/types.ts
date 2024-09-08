@@ -27,6 +27,7 @@ export type BattlePopupProps = {
   enemyOpacity: number;
   showAttackEffect: boolean;
   showMagicEffect: boolean;
+  showEnemyAttackEffect: boolean;
   isMagicConfirmVisible: boolean;
 };
 
