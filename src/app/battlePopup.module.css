@@ -1,0 +1,63 @@
+.commonPopup {
+  position: fixed;
+  color: white;
+  background-color: black;
+  border: 3px solid white;
+  border-radius: 7px;
+}
+
+.battlePopup {
+  bottom: 6%;
+  left: 7%;
+  width: 150px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  z-index: 2000;
+}
+
+.commandPopup {
+  bottom: 7%;
+  left: 10%;
+  width: 800px;
+  height: 120px;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.enemyPopup {
+  top: 30%;
+  left: 20%;
+  padding: 20px;
+  padding-top: 30px;
+  z-index: 1000;
+  width: 600px; /* ポップアップの幅 */
+  height: 250px; /* ポップアップの高さ */
+  background-image: url("/images/fields/pipo-battlebg001a.jpg"); /* 背景画像 */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+}
+
+.battleCommand {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 5px;
+  color: white;
+}
+
+.commonEffect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3000;
+}
+
+.enemyImage {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  transition: opacity 0.3s;
+}

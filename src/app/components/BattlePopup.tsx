@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "../battlePopup.module.css"; // CSSモジュールのインポート
 import { BattlePopupProps, Enemy } from "../utils/types";
 
 // 主人公のステータス表示ポップアップ
@@ -81,21 +82,7 @@ const BattleOptionsPopup: React.FC<{
   herbCount: number;
 }> = ({ onAttack, onMagic, onUseHerb, herbCount }) => {
   return (
-    <div
-      style={{
-        position: "fixed",
-        bottom: "6%",
-        left: "7%",
-        width: "150px",
-        paddingTop: "10px",
-        paddingBottom: "10px",
-        color: "white",
-        backgroundColor: "black",
-        border: "3px solid white",
-        borderRadius: "7px",
-        zIndex: 2000,
-      }}
-    >
+    <div className={`${styles.commonPopup} ${styles.battlePopup}`}>
       {/* ボタンの配置 */}
       <div style={{ marginBottom: "10px", textAlign: "center" }}>
         <h3>ユウキ</h3>
@@ -106,36 +93,16 @@ const BattleOptionsPopup: React.FC<{
             margin: "10px 0", // 上下の余白を調整
           }}
         />
-        <button
-          onClick={onAttack}
-          style={{
-            width: "100%",
-            padding: "5px",
-            marginBottom: "5px",
-            color: "white",
-          }}
-        >
+        <button onClick={onAttack} className={styles.battleCommand}>
           たたかう
         </button>
-        <button
-          onClick={onMagic}
-          style={{
-            width: "100%",
-            padding: "5px",
-            marginBottom: "5px",
-            color: "white",
-          }}
-        >
+        <button onClick={onMagic} className={styles.battleCommand}>
           まほう
         </button>
         <button
           onClick={onUseHerb}
           disabled={herbCount === 0} // やくそうがない場合は無効化
-          style={{
-            width: "100%",
-            padding: "5px",
-            color: "white",
-          }}
+          className={styles.battleCommand}
         >
           やくそう ({herbCount}個)
         </button>
@@ -163,64 +130,28 @@ const EnemyPopup: React.FC<{
   showMagicEffect,
 }) => {
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: "30%",
-        left: "20%",
-        padding: "20px",
-        paddingTop: "30px",
-        border: "3px solid white",
-        borderRadius: "7px",
-        color: "white",
-        zIndex: 1000,
-        width: "600px", // ポップアップの幅を設定
-        height: "250px", // ポップアップの高さを設定
-        backgroundImage: 'url("/images/fields/pipo-battlebg001a.jpg")', // 背景画像を設定
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        display: "flex",
-        justifyContent: "center",
-      }}
-    >
+    <div className={`${styles.commonPopup} ${styles.enemyPopup}`}>
       {showAttackEffect && (
         <img
           src="/images/effect/sword.gif" // 攻撃エフェクトのGIF
           alt="Attack Effect"
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            zIndex: 3000, // 敵の画像より上に表示
-          }}
+          className={styles.commonEffect}
         />
       )}
       {showMagicEffect && (
         <img
           src="/images/effect/magic.gif" // 魔法エフェクトのGIF
           alt="Magic Effect"
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            zIndex: 3000, // 敵の画像より上に表示
-          }}
+          className={styles.commonEffect}
         />
       )}
       <img
         src={enemy.image}
         alt="Enemy"
         style={{
-          width: "150px",
-          height: "150px",
-          objectFit: "contain",
           opacity: enemyOpacity,
-          transition: "opacity 0.3s",
         }}
+        className={styles.enemyImage}
       />
       <p>HP: {enemy.hp}</p>
     </div>
@@ -239,22 +170,7 @@ const CommandPopup: React.FC<{
   onMagic: () => void;
 }> = ({ enemyAttackMessage, enemy }) => {
   return (
-    <div
-      style={{
-        position: "fixed",
-        color: "white",
-        bottom: "7%",
-        left: "10%",
-        // transform: "translateX(-50%)",
-        width: "800px",
-        padding: "10px",
-        height: "120px",
-        border: "3px solid white",
-        borderRadius: "7px",
-        backgroundColor: "black",
-        zIndex: 1000,
-      }}
-    >
+    <div className={`${styles.commonPopup} ${styles.commandPopup}`}>
       <p>
         {/* 敵の名前を表示、攻撃メッセージがなければ「現れた！」メッセージ */}
         {enemyAttackMessage || `${enemy?.name || "未知の敵"}が現れた！`}
@@ -290,7 +206,6 @@ const BattlePopup: React.FC<BattlePopupProps> = (props) => {
         enemyOpacity={props.enemyOpacity}
         showAttackEffect={props.showAttackEffect}
         showMagicEffect={props.showMagicEffect}
-        isMagicConfirmVisible={props.isMagicConfirmVisible}
       />
 
       {/* 下：コマンドやメッセージ */}
