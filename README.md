@@ -49,3 +49,12 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
   | :-- | :----------------------- | :----- | :-------------------- | :-------------------------- |
   | 1   | geneate Moster data API  | POST   | /api/ai               | generate Monster status     |
   | 2   | geneate Moster Image API | POST   | /api/ai/generateImage | generate Monster Image data |
+
+  以下の API のみ AWS CDK を使って AWS 上にサーバーレス API としてデプロイしています。  
+  ※ 実行には API キーが必要です。
+
+  エンドポイント： **https://aga2m7qtr3.execute-api.ap-northeast-1.amazonaws.com**
+
+  | No. | Name                 | method | path          | Overview                       |
+  | :-- | :------------------- | :----- | :------------ | :----------------------------- |
+  | 1   | geneate Question API | POST   | /generateQuiz | generate Quiz about MagicBlock |
