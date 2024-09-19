@@ -19,3 +19,5 @@ export const ENEMY_ATTACK_DELAY = 2000;
 export const ATTACK_EFFECT_TIME = 500;
 // 魔法のエフェクトの表示時間
 export const MAGIC_EFFECT_TIME = 2000;
+// Open AI APIのURL
+export const OPENAI_API_URL = "https://api.openai.com/v1/images/generations";
