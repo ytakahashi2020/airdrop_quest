@@ -95,6 +95,15 @@ const Game = () => {
   const [isMagicConfirmVisible, setIsMagicConfirmVisible] = useState(false); // 魔法の確認ポップアップの表示状態
   const [showEnemyAttackEffect, setShowEnemyAttackEffectEffect] =
     useState(false); // 敵からの攻撃エフェクトの表示状態
+  const [isQuizActive, setIsQuizActive] = useState(false); // クイズがアクティブかどうか
+  const [quizOptions, setQuizOptions] = useState<string[]>([]); // クイズの選択肢
+  const [quizAnswer, setQuizAnswer] = useState(""); // ユーザーのクイズ回答
+
+  // クイズのオプションを作成する関数（例として簡単なクイズを設定）
+  const generateQuiz = () => {
+    return ["炎", "氷", "雷", "風"];
+  };
+
 
   // ①音源の初期化
   useEffect(() => {
@@ -224,6 +233,8 @@ const Game = () => {
   const handleMagic = () => {
     if (currentEnemy && isPlayerTurn) {
       // 魔法確認ポップアップを表示する
+      setQuizOptions(generateQuiz()); // クイズの選択肢を生成
+      setIsQuizActive(true); // クイズをアクティブにする
       setIsMagicConfirmVisible(true);
 
       if (swordSound)
@@ -347,6 +358,7 @@ const Game = () => {
     );
   };
 
+
   return (
     <div style={{ textAlign: "center" }}>
       <h1>簡単なフィールドでの移動</h1>
@@ -418,8 +430,11 @@ const Game = () => {
           showMagicEffect={showMagicEffect}
           showEnemyAttackEffect={showEnemyAttackEffect}
           isMagicConfirmVisible={isMagicConfirmVisible}
+          isQuizActive={isQuizActive} // クイズがアクティブかどうか
+          quizOptions={quizOptions} // クイズの選択肢
         />
       )}
+
       {/* 勝利ポップアップ */}
       {isVictoryPopupVisible && (
         <VictoryPopup

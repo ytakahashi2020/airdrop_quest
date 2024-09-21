@@ -176,13 +176,30 @@ const CommandPopup: React.FC<{
   isPlayerTurn: boolean;
   onAttack: () => void;
   onMagic: () => void;
-}> = ({ enemyAttackMessage, enemy }) => {
+  isQuizActive: boolean; // クイズ中かどうかのフラグ
+  quizOptions?: string[]; // クイズの選択肢
+}> = ({
+  enemyAttackMessage,
+  enemy,
+  isQuizActive,
+  quizOptions,
+}) => {
   return (
     <div className={`${styles.commonPopup} ${styles.commandPopup}`}>
-      <p>
-        {/* 敵の名前を表示、攻撃メッセージがなければ「現れた！」メッセージ */}
-        {enemyAttackMessage || `${enemy?.name || "未知の敵"}が現れた！`}
-      </p>
+      {isQuizActive ? (
+        // クイズがアクティブな場合、クイズを表示する
+        <div className={styles.quizPopup}>
+          <p>クイズに答えてください！</p>
+          {quizOptions?.map((option, index) => (
+            <button key={index} onClick={() => onQuizAnswer?.(option)}>
+              {option}
+            </button>
+          ))}
+        </div>
+      ) : (
+        // クイズがアクティブでない場合、通常のメッセージを表示する
+        <p>{enemyAttackMessage || `${enemy?.name || "未知の敵"}が現れた！`}</p>
+      )}
     </div>
   );
 };
@@ -227,7 +244,10 @@ const BattlePopup: React.FC<BattlePopupProps> = (props) => {
         onAttack={props.onAttack}
         onMagic={props.onMagic}
         enemy={props.enemy}
+        isQuizActive={props.isQuizActive}  // クイズのアクティブ状態を渡す
+        quizOptions={props.quizOptions}    // クイズの選択肢を渡す
       />
+
     </>
   );
 };

@@ -29,7 +29,12 @@ export type BattlePopupProps = {
   showMagicEffect: boolean;
   showEnemyAttackEffect: boolean;
   isMagicConfirmVisible: boolean;
+  
+  // クイズ関連のプロパティ
+  isQuizActive: boolean; // クイズがアクティブかどうか
+  quizOptions: string[]; // クイズの選択肢
 };
+
 
 export type TileProps = {
   src: string; // 画像のパス
