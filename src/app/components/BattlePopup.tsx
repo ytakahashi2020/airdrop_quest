@@ -178,11 +178,13 @@ const CommandPopup: React.FC<{
   onMagic: () => void;
   isQuizActive: boolean; // クイズ中かどうかのフラグ
   quizOptions?: string[]; // クイズの選択肢
+  onQuizAnswer?: (answer: string) => void; // クイズの回答ハンドラ
 }> = ({
   enemyAttackMessage,
   enemy,
   isQuizActive,
   quizOptions,
+  onQuizAnswer,
 }) => {
   return (
     <div className={`${styles.commonPopup} ${styles.commandPopup}`}>
@@ -226,7 +228,7 @@ const BattlePopup: React.FC<BattlePopupProps> = (props) => {
       <EnemyPopup
         enemy={props.enemy}
         isPlayerTurn={props.isPlayerTurn}
-        onAttack={props.onAttack} // handleAttack を渡す
+        onAttack={props.onAttack}
         onMagic={props.onMagic}
         enemyOpacity={props.enemyOpacity}
         showAttackEffect={props.showAttackEffect}
@@ -244,8 +246,9 @@ const BattlePopup: React.FC<BattlePopupProps> = (props) => {
         onAttack={props.onAttack}
         onMagic={props.onMagic}
         enemy={props.enemy}
-        isQuizActive={props.isQuizActive}  // クイズのアクティブ状態を渡す
-        quizOptions={props.quizOptions}    // クイズの選択肢を渡す
+        isQuizActive={props.isQuizActive}
+        quizOptions={props.quizOptions}
+        onQuizAnswer={props.onQuizAnswer} 
       />
 
     </>

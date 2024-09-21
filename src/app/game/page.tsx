@@ -229,66 +229,69 @@ const Game = () => {
     }
   };
 
+  const [isMagicProcessing, setIsMagicProcessing] = useState(false); // 魔法処理の進行中かどうか
+
   // ⑦敵への攻撃(魔法)
   const handleMagic = () => {
-    if (currentEnemy && isPlayerTurn) {
-      // 魔法確認ポップアップを表示する
+    if (currentEnemy && isPlayerTurn && !isQuizActive && !isMagicProcessing) {
       setQuizOptions(generateQuiz()); // クイズの選択肢を生成
       setIsQuizActive(true); // クイズをアクティブにする
-      setIsMagicConfirmVisible(true);
+      setIsMagicProcessing(true); // 魔法処理開始を示す
+    }
+  };
 
-      if (swordSound)
-        swordSound
-          .play()
-          .catch((err) => console.error("Error playing sword sound:", err)); // エラーキャッチ
+  // クイズの回答処理
+  const handleQuizAnswer = (answer: string) => {
+    setQuizAnswer(answer);
+    setIsQuizActive(false); // クイズを非アクティブにする
 
+    if (answer === "炎") { // 仮に「炎」が正解だった場合の処理
+      // 正解の処理 (魔法を発動)
+      console.log("魔法が成功しました！");
       const newHp = currentEnemy.hp - PLAYER_MAGIC_DAMAGE;
-      setEnemyOpacity(0.5); // 敵がヒットした時の透明度
-      setShowMagicEffect(true); // 魔法エフェクトを表示
-      setTimeout(() => {
-        setEnemyOpacity(1);
-        setShowMagicEffect(false);
-      }, MAGIC_EFFECT_TIME);
+      setCurrentEnemy({ ...currentEnemy, hp: newHp });
 
-      // 敵のHPが0以下になったら
+      // 敵が倒された場合
       if (newHp <= 0) {
-        setCurrentEnemy({ ...currentEnemy, hp: 0 });
-        setTimeout(() => {
-          attemptHerbDrop(currentEnemy, setHerbCount, setHerbMessage);
-          // 経験値を獲得
-          const gainedExp = currentEnemy.experience;
-          // setPlayerExp((prevExp) => prevExp + gainedExp); // 経験値を追加
-          handleGainExperience(gainedExp);
-          setGainedExpMessage(`${gainedExp}の経験値を取得しました`); // メッセージを設定
-          console.log("leveledUp", leveledUp);
-          if (victorySound) victorySound.play();
-          setIsBattlePopupVisible(false);
-          setIsVictoryPopupVisible(true);
-
-          // レベルアップ時は長めに表示する
-          const popupDisplayTime = leveledUp
-            ? LEVEL_UP_POPUP_DISPLAY_TIME
-            : VICTORY_POPUP_DISPLAY_TIME;
-          console.log("popupDisplayTime", popupDisplayTime);
-          setTimeout(() => {
-            setIsVictoryPopupVisible(false);
-            setHerbMessage(""); // 勝利ポップアップが消える時にメッセージもリセット
-            // setGainedExpMessage("");
-            setLevelUpMessage(""); // レベルアップメッセージをリセット
-            setStatIncreaseMessage("");
-            startRandomBattleSteps(setNextBattleSteps, setSteps);
-          }, popupDisplayTime);
-        }, ENEMY_DEFEAT_DELAY);
-      }
-      // 敵のHPが残っていたら
-      else {
-        setCurrentEnemy({ ...currentEnemy, hp: newHp });
+        // 勝利処理
+        handleVictory();
+      } else {
+        // 敵が残った場合、敵のターンに移る
         setIsPlayerTurn(false);
         setTimeout(() => {
           handleEnemyAttack();
         }, ENEMY_ATTACK_DELAY);
       }
+    } else {
+      // 不正解の処理 (魔法が失敗する)
+      console.log("魔法が失敗しました。");
     }
+
+    // 魔法処理の終了
+    setIsMagicProcessing(false);
+  };
+
+  // 敵が倒されたときの処理
+  const handleVictory = () => {
+    setCurrentEnemy({ ...currentEnemy, hp: 0 });
+    attemptHerbDrop(currentEnemy, setHerbCount, setHerbMessage);
+    const gainedExp = currentEnemy.experience;
+    handleGainExperience(gainedExp);
+    setGainedExpMessage(`${gainedExp}の経験値を取得しました`);
+    if (victorySound) victorySound.play();
+    setIsBattlePopupVisible(false);
+    setIsVictoryPopupVisible(true);
+    // 勝利ポップアップの表示時間
+    const popupDisplayTime = leveledUp
+      ? LEVEL_UP_POPUP_DISPLAY_TIME
+      : VICTORY_POPUP_DISPLAY_TIME;
+    setTimeout(() => {
+      setIsVictoryPopupVisible(false);
+      setHerbMessage("");
+      setLevelUpMessage("");
+      setStatIncreaseMessage("");
+      startRandomBattleSteps(setNextBattleSteps, setSteps);
+    }, popupDisplayTime);
   };
 
   // useCallbackの中で関数を呼び出す
@@ -432,6 +435,7 @@ const Game = () => {
           isMagicConfirmVisible={isMagicConfirmVisible}
           isQuizActive={isQuizActive} // クイズがアクティブかどうか
           quizOptions={quizOptions} // クイズの選択肢
+          onQuizAnswer={handleQuizAnswer} // クイズ回答ハンドラ
         />
       )}
 

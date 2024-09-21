@@ -33,7 +33,9 @@ export type BattlePopupProps = {
   // クイズ関連のプロパティ
   isQuizActive: boolean; // クイズがアクティブかどうか
   quizOptions: string[]; // クイズの選択肢
+  onQuizAnswer: (answer: string) => void; // クイズ回答時の処理
 };
+
 
 
 export type TileProps = {
