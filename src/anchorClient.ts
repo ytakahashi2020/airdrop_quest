@@ -22,6 +22,7 @@ export async function createCounter(
   connection: Connection
 ) {
   const provider = createProvider(wallet, connection);
+  // @ts-ignore
   const program = new Program(IDL, programId_counter, provider);
 
   const [counter] = PublicKey.findProgramAddressSync(
