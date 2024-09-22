@@ -35,7 +35,7 @@ aws ecr-public get-login-password --region us-east-1 | docker login --username A
 
 ## Relayer API の叩き方
 
-```bash
+````bash
 curl -X POST "https://[固有値].execute-api.ap-northeast-1.amazonaws.com/prod/generateQuiz" -H "Content-Type: application/json" -H "x-api-key: [固有値]"
 ```
 
@@ -45,4 +45,4 @@ curl -X POST "https://[固有値].execute-api.ap-northeast-1.amazonaws.com/prod/
 {
   "content": "{\n  \"question\": \"What is the purpose of Session Keys in MagicBlock?\",\n  \"options\": [\n    \"To create blockchain wallets\",\n    \"To manage leaderboards in games\",\n    \"To improve user experience by eliminating repeated wallet popups\",\n    \"To generate random encryption keys\"\n  ],\n  \"answer\": \"To improve user experience by eliminating repeated wallet popups\"\n}"
 }
-```
+````

@@ -72,13 +72,29 @@ export const handler = async (
     const chain = setupAndRetrieval.pipe(prompt).pipe(model).pipe(outputParser);
     // プロンプトを実行
     const aiResponse = await chain.invoke(`
-        MagicBookについて簡単なクイズを作成してください。
+        MagicBookについて簡単なクイズを英語で作成してください。
         
         その際、回答は4択して正しい答えが1つだけになるようにしてください。
         問題と回答は1ペアだけ作成してください。
         問題文に答えが含まれないように注意してください。
 
-        問題と回答はJSON形式で出力してください。
+        問題と回答は次の例に従ってJSON形式で出力してください。
+        なお、correct_answerの値は必ずしも Aである必要はありません。
+
+        よろしくお願いします。
+
+        例：)
+
+          {
+            "question": "some question",
+            "answers": {
+              "A": "answer A",
+              "B": "answer B",
+              "C": "answer C",
+              "D": "answer D"
+            },
+            "correct_answer": "A"
+          }
     `);
     console.log("aiResponse:::", aiResponse);
 
@@ -87,7 +103,7 @@ export const handler = async (
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Headers": "Content-Type, X-API-KEY",
       },
       body: JSON.stringify({
         content: aiResponse,
@@ -101,7 +117,7 @@ export const handler = async (
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Headers": "Content-Type, X-API-KEY",
       },
       body: JSON.stringify({
         message: "send meta tx failed.",
