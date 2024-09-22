@@ -98,9 +98,13 @@ const Game = () => {
   const [isQuizActive, setIsQuizActive] = useState(false); // クイズがアクティブかどうか
   const [quizOptions, setQuizOptions] = useState<string[]>([]); // クイズの選択肢
   const [quizAnswer, setQuizAnswer] = useState(""); // ユーザーのクイズ回答
+  const [quizResultMessage, setQuizResultMessage] = useState(""); // クイズ結果メッセージの状態
+  const [correctAnswer, setCorrectAnswer] = useState(""); // クイズの正解を管理する状態
+
 
   // クイズのオプションを作成する関数（例として簡単なクイズを設定）
   const generateQuiz = () => {
+    setCorrectAnswer("炎"); // 正解を「炎」に設定
     return ["炎", "氷", "雷", "風"];
   };
 
@@ -245,29 +249,23 @@ const Game = () => {
     setQuizAnswer(answer);
     setIsQuizActive(false); // クイズを非アクティブにする
 
-    if (answer === "炎") { // 仮に「炎」が正解だった場合の処理
-      // 正解の処理 (魔法を発動)
-      console.log("魔法が成功しました！");
+    if (answer === correctAnswer) { // 正解の場合
+      setQuizResultMessage(`正解！魔法が成功しました！正解は${correctAnswer}でした。`);
       const newHp = currentEnemy.hp - PLAYER_MAGIC_DAMAGE;
       setCurrentEnemy({ ...currentEnemy, hp: newHp });
 
-      // 敵が倒された場合
       if (newHp <= 0) {
-        // 勝利処理
         handleVictory();
       } else {
-        // 敵が残った場合、敵のターンに移る
         setIsPlayerTurn(false);
         setTimeout(() => {
           handleEnemyAttack();
         }, ENEMY_ATTACK_DELAY);
       }
     } else {
-      // 不正解の処理 (魔法が失敗する)
-      console.log("魔法が失敗しました。");
+      setQuizResultMessage(`不正解...魔法が失敗しました。正解は${correctAnswer}でした。`);
     }
 
-    // 魔法処理の終了
     setIsMagicProcessing(false);
   };
 
@@ -436,6 +434,7 @@ const Game = () => {
           isQuizActive={isQuizActive} // クイズがアクティブかどうか
           quizOptions={quizOptions} // クイズの選択肢
           onQuizAnswer={handleQuizAnswer} // クイズ回答ハンドラ
+          quizResultMessage={quizResultMessage} // クイズ結果メッセージ
         />
       )}
 

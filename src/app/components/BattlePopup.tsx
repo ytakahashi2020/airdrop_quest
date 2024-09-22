@@ -179,12 +179,14 @@ const CommandPopup: React.FC<{
   isQuizActive: boolean; // クイズ中かどうかのフラグ
   quizOptions?: string[]; // クイズの選択肢
   onQuizAnswer?: (answer: string) => void; // クイズの回答ハンドラ
+  quizResultMessage?: string; // クイズ結果メッセージの追加
 }> = ({
   enemyAttackMessage,
   enemy,
   isQuizActive,
   quizOptions,
   onQuizAnswer,
+  quizResultMessage, // クイズ結果メッセージを受け取る
 }) => {
   return (
     <div className={`${styles.commonPopup} ${styles.commandPopup}`}>
@@ -201,12 +203,13 @@ const CommandPopup: React.FC<{
           </div>
         </div>
       ) : (
-        // クイズがアクティブでない場合、通常のメッセージを表示する
-        <p>{enemyAttackMessage || `${enemy?.name || "未知の敵"}が現れた！`}</p>
+        // クイズが非アクティブの場合は通常のメッセージまたはクイズ結果メッセージを表示
+        <p>{quizResultMessage || enemyAttackMessage || `${enemy?.name || "未知の敵"}が現れた！`}</p>
       )}
     </div>
   );
 };
+
 
 // 全体のコンポーネント
 const BattlePopup: React.FC<BattlePopupProps> = (props) => {
@@ -251,6 +254,7 @@ const BattlePopup: React.FC<BattlePopupProps> = (props) => {
         isQuizActive={props.isQuizActive}
         quizOptions={props.quizOptions}
         onQuizAnswer={props.onQuizAnswer}
+        quizResultMessage={props.quizResultMessage}
       />
     </>
   );
