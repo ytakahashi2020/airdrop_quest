@@ -96,7 +96,9 @@ const Game = () => {
   const [showEnemyAttackEffect, setShowEnemyAttackEffectEffect] =
     useState(false); // 敵からの攻撃エフェクトの表示状態
   const [isQuizActive, setIsQuizActive] = useState(false); // クイズがアクティブかどうか
+  const [quizText, setQuizText] = useState(""); // クイズの選択肢
   const [quizOptions, setQuizOptions] = useState<string[]>([]); // クイズの選択肢
+
   const [quizAnswer, setQuizAnswer] = useState(""); // ユーザーのクイズ回答
   const [quizResultMessage, setQuizResultMessage] = useState(""); // クイズ結果メッセージの状態
   const [correctAnswer, setCorrectAnswer] = useState(""); // クイズの正解を管理する状態
@@ -104,8 +106,9 @@ const Game = () => {
 
   // クイズのオプションを作成する関数（例として簡単なクイズを設定）
   const generateQuiz = () => {
-    setCorrectAnswer("炎"); // 正解を「炎」に設定
-    return ["炎", "氷", "雷", "風"];
+    setQuizText("Solanaのネイティブトークンの名前は何ですか？");
+    setCorrectAnswer("SOL"); // 正解を「SOL」に設定
+    return ["SLA", "SL", "SOL", "SOLA"];
   };
 
 
@@ -461,6 +464,7 @@ const Game = () => {
           showEnemyAttackEffect={showEnemyAttackEffect}
           isMagicConfirmVisible={isMagicConfirmVisible}
           isQuizActive={isQuizActive} // クイズがアクティブかどうか
+          quizText={quizText} // クイズのテキスト
           quizOptions={quizOptions} // クイズの選択肢
           onQuizAnswer={handleQuizAnswer} // クイズ回答ハンドラ
           quizResultMessage={quizResultMessage} // クイズ結果メッセージ
