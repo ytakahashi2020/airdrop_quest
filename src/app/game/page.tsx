@@ -278,6 +278,8 @@ const Game = () => {
 
   // 敵が倒されたときの処理
   const handleVictory = () => {
+    if (!currentEnemy) return; // Add null check for currentEnemy
+
     setCurrentEnemy({ ...currentEnemy, hp: 0 });
     
     // エフェクトを表示する
