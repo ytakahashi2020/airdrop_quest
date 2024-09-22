@@ -18,7 +18,6 @@ import {
   stopNormalMusic
 } from "../utils/audioManager"; // 音声管理ファイルをインポート
 
-import { enemies } from "../utils/enemies";
 import { playerImages } from "../utils/playerImages"; // playerImagesをインポート
 import {
   isTreePosition,
@@ -26,7 +25,7 @@ import {
   treePositions,
   waterPositions
 } from "../utils/positions";
-import { Enemy, QuizData } from "../utils/types"; // 型定義をインポート
+import { Enemy, MonsterNFTData, QuizData } from "../utils/types"; // 型定義をインポート
 
 import { gainExperience, levelUp } from "../utils/levelUp";
 
@@ -45,7 +44,7 @@ import {
 
 import styles from "../field.module.css"; // CSSモジュールのインポート
 
-import { generateQuizData } from "../utils/ai";
+import { generateMonsterData, generateQuizData } from "../utils/ai";
 
 const Game = () => {
   const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0 });
@@ -376,13 +375,25 @@ const Game = () => {
   }, [setNextBattleSteps, setSteps]);
 
   useEffect(() => {
-    if (steps >= nextBattleSteps) {
-      const randomEnemy = enemies[Math.floor(Math.random() * enemies.length)];
-      setCurrentEnemy(randomEnemy);
-      setIsBattlePopupVisible(true);
-      setIsPlayerTurn(true);
-      setEnemyAttackMessage("");
+    const generateEnemy = async() => {
+      if (steps >= nextBattleSteps) {
+        //const randomEnemy = enemies[Math.floor(Math.random() * enemies.length)]
+        // AIで敵モンスターのステータスを生成させる。
+        const monsterData: MonsterNFTData = await generateMonsterData();
+        const randomEnemy: Enemy = {
+          name: monsterData.name,
+          hp: Number(monsterData.health),
+          image: monsterData.imageUrl,
+          attackRange: [Number(monsterData.attack) - 10, Number(monsterData.attack)],
+          experience: Number(monsterData.health)
+        }
+        setCurrentEnemy(randomEnemy);
+        setIsBattlePopupVisible(true);
+        setIsPlayerTurn(true);
+        setEnemyAttackMessage("");
+      }
     }
+    generateEnemy();
   }, [steps, nextBattleSteps]);
 
   // ⑧レベルアップを処理する

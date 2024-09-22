@@ -5,7 +5,7 @@ import { MonsterNFTData, QuizData } from "./types";
 /**
  * generate Monster Data (Status & Image) method
  */
-export const generateMonsterData = async () => {
+export const generateMonsterData = async (): Promise<MonsterNFTData>  => {
   try {
     // NFTのメタデータを生成するAPIを呼びだす。
     const response = await axios.post("/api/ai");
@@ -34,6 +34,15 @@ export const generateMonsterData = async () => {
       console.error("Axiosのエラーが発生しました:", error);
     } else {
       console.error("Axios以外のエラーが発生しました:", error);
+    }
+    return {
+      name: "",
+      description: "",
+      imageUrl: "",
+      health: "",
+      attack: "",
+      defense: "",
+      rarity: "",
     }
   }
 };
