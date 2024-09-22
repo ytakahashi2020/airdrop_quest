@@ -250,7 +250,14 @@ const Game = () => {
     setIsQuizActive(false); // クイズを非アクティブにする
 
     if (answer === correctAnswer) { // 正解の場合
-      setQuizResultMessage(`正解！魔法が成功しました！正解は${correctAnswer}でした。`);
+      setQuizResultMessage(`正解！魔法が成功しました！`);
+      setEnemyOpacity(0.5); // 敵がヒットした時の透明度
+      setShowMagicEffect(true); // 魔法エフェクトを表示
+      setTimeout(() => {
+        setEnemyOpacity(1);
+        setShowMagicEffect(false);
+      }, MAGIC_EFFECT_TIME);
+
       const newHp = currentEnemy.hp - PLAYER_MAGIC_DAMAGE;
       setCurrentEnemy({ ...currentEnemy, hp: newHp });
 
@@ -272,24 +279,43 @@ const Game = () => {
   // 敵が倒されたときの処理
   const handleVictory = () => {
     setCurrentEnemy({ ...currentEnemy, hp: 0 });
-    attemptHerbDrop(currentEnemy, setHerbCount, setHerbMessage);
-    const gainedExp = currentEnemy.experience;
-    handleGainExperience(gainedExp);
-    setGainedExpMessage(`${gainedExp}の経験値を取得しました`);
-    if (victorySound) victorySound.play();
-    setIsBattlePopupVisible(false);
-    setIsVictoryPopupVisible(true);
-    // 勝利ポップアップの表示時間
-    const popupDisplayTime = leveledUp
-      ? LEVEL_UP_POPUP_DISPLAY_TIME
-      : VICTORY_POPUP_DISPLAY_TIME;
+    
+    // エフェクトを表示する
+    setEnemyOpacity(0.5); // 敵がヒットした時の透明度を変更
+    setShowAttackEffect(true); // 攻撃エフェクトを表示
+    setShowMagicEffect(true); // 魔法エフェクトを表示（必要に応じて）
+  
+    // エフェクト表示時間を確保
     setTimeout(() => {
-      setIsVictoryPopupVisible(false);
-      setHerbMessage("");
-      setLevelUpMessage("");
-      setStatIncreaseMessage("");
-      startRandomBattleSteps(setNextBattleSteps, setSteps);
-    }, popupDisplayTime);
+      setEnemyOpacity(1); // 透明度を戻す
+      setShowAttackEffect(false); // 攻撃エフェクトを非表示
+      setShowMagicEffect(false); // 魔法エフェクトを非表示
+    
+      // やくそうドロップ処理
+      attemptHerbDrop(currentEnemy, setHerbCount, setHerbMessage);
+    
+      // 経験値を獲得
+      const gainedExp = currentEnemy.experience;
+      handleGainExperience(gainedExp);
+      setGainedExpMessage(`${gainedExp}の経験値を取得しました`);
+    
+      if (victorySound) victorySound.play();
+      
+      // 勝利ポップアップを表示
+      setIsBattlePopupVisible(false);
+      setIsVictoryPopupVisible(true);
+    
+      // 勝利ポップアップの表示時間
+      const popupDisplayTime = leveledUp ? LEVEL_UP_POPUP_DISPLAY_TIME : VICTORY_POPUP_DISPLAY_TIME;
+    
+      setTimeout(() => {
+        setIsVictoryPopupVisible(false);
+        setHerbMessage(""); // 勝利ポップアップが消える時にメッセージもリセット
+        setLevelUpMessage(""); // レベルアップメッセージをリセット
+        setStatIncreaseMessage("");
+        startRandomBattleSteps(setNextBattleSteps, setSteps); // 次のバトルステップを設定
+      }, popupDisplayTime);
+    }, ATTACK_EFFECT_TIME); // エフェクトの表示時間分遅延させる
   };
 
   // useCallbackの中で関数を呼び出す
