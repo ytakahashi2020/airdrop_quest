@@ -177,6 +177,7 @@ const CommandPopup: React.FC<{
   onAttack: () => void;
   onMagic: () => void;
   isQuizActive: boolean; // クイズ中かどうかのフラグ
+  quizText?: string;
   quizOptions?: string[]; // クイズの選択肢
   onQuizAnswer?: (answer: string) => void; // クイズの回答ハンドラ
   quizResultMessage?: string; // クイズ結果メッセージの追加
@@ -185,6 +186,7 @@ const CommandPopup: React.FC<{
   enemy,
   isQuizActive,
   quizOptions,
+  quizText,
   onQuizAnswer,
   quizResultMessage, // クイズ結果メッセージを受け取る
 }) => {
@@ -193,7 +195,7 @@ const CommandPopup: React.FC<{
       {isQuizActive ? (
         // クイズがアクティブな場合、クイズを表示する
         <div className={styles.quizPopup}>
-          <p>クイズに答えてください！</p>
+          <p> {quizText} </p>
           <div className={styles.quizOptions}>
             {quizOptions?.map((option, index) => (
               <button key={index} onClick={() => onQuizAnswer?.(option)}>
@@ -252,6 +254,7 @@ const BattlePopup: React.FC<BattlePopupProps> = (props) => {
         onMagic={props.onMagic}
         enemy={props.enemy}
         isQuizActive={props.isQuizActive}
+        quizText={props.quizText}
         quizOptions={props.quizOptions}
         onQuizAnswer={props.onQuizAnswer}
         quizResultMessage={props.quizResultMessage}
