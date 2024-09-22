@@ -250,21 +250,24 @@ const Game = () => {
   // クイズの回答処理
   const handleQuizAnswer = (answer: string) => {
     if (!currentEnemy) return; // Add null check for currentEnemy
+  
     setQuizAnswer(answer);
     setIsQuizActive(false); // クイズを非アクティブにする
-
-    if (answer === correctAnswer) { // 正解の場合
+  
+    const resetMagicEffect = () => {
+      setEnemyOpacity(1);
+      setShowMagicEffect(false);
+      setQuizResultMessage("");
+    };
+  
+    const handleMagicSuccess = () => {
       setQuizResultMessage(`正解！魔法が成功しました！`);
       setEnemyOpacity(0.5); // 敵がヒットした時の透明度
       setShowMagicEffect(true); // 魔法エフェクトを表示
-      setTimeout(() => {
-        setEnemyOpacity(1);
-        setShowMagicEffect(false);
-      }, MAGIC_EFFECT_TIME);
-
+    
       const newHp = currentEnemy.hp - PLAYER_MAGIC_DAMAGE;
       setCurrentEnemy({ ...currentEnemy, hp: newHp });
-
+    
       if (newHp <= 0) {
         handleVictory();
       } else {
@@ -273,10 +276,27 @@ const Game = () => {
           handleEnemyAttack();
         }, ENEMY_ATTACK_DELAY);
       }
+    
+      setTimeout(resetMagicEffect, MAGIC_EFFECT_TIME);
+    };
+  
+    const handleMagicFailure = () => {
+      setQuizResultMessage(`不正解...魔法が失敗しました。`);
+      setIsPlayerTurn(false);
+      
+      setTimeout(() => {
+        handleEnemyAttack();
+      }, ENEMY_ATTACK_DELAY);
+    
+      setTimeout(resetMagicEffect, MAGIC_EFFECT_TIME);
+    };
+  
+    if (answer === correctAnswer) {
+      handleMagicSuccess();
     } else {
-      setQuizResultMessage(`不正解...魔法が失敗しました。正解は${correctAnswer}でした。`);
+      handleMagicFailure();
     }
-
+  
     setIsMagicProcessing(false);
   };
 
