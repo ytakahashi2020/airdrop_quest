@@ -192,11 +192,13 @@ const CommandPopup: React.FC<{
         // クイズがアクティブな場合、クイズを表示する
         <div className={styles.quizPopup}>
           <p>クイズに答えてください！</p>
-          {quizOptions?.map((option, index) => (
-            <button key={index} onClick={() => onQuizAnswer?.(option)}>
-              {option}
-            </button>
-          ))}
+          <div className={styles.quizOptions}>
+            {quizOptions?.map((option, index) => (
+              <button key={index} onClick={() => onQuizAnswer?.(option)}>
+                {option}
+              </button>
+            ))}
+          </div>
         </div>
       ) : (
         // クイズがアクティブでない場合、通常のメッセージを表示する
@@ -248,11 +250,11 @@ const BattlePopup: React.FC<BattlePopupProps> = (props) => {
         enemy={props.enemy}
         isQuizActive={props.isQuizActive}
         quizOptions={props.quizOptions}
-        onQuizAnswer={props.onQuizAnswer} 
+        onQuizAnswer={props.onQuizAnswer}
       />
-
     </>
   );
 };
 
 export default BattlePopup;
+
