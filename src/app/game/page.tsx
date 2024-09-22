@@ -246,6 +246,7 @@ const Game = () => {
 
   // クイズの回答処理
   const handleQuizAnswer = (answer: string) => {
+    if (!currentEnemy) return; // Add null check for currentEnemy
     setQuizAnswer(answer);
     setIsQuizActive(false); // クイズを非アクティブにする
 
@@ -278,6 +279,8 @@ const Game = () => {
 
   // 敵が倒されたときの処理
   const handleVictory = () => {
+    if (!currentEnemy) return; // Add null check for currentEnemy
+
     setCurrentEnemy({ ...currentEnemy, hp: 0 });
     
     // エフェクトを表示する
