@@ -60,11 +60,13 @@ export type MonsterNFTData = {
 
 export type QuizData = {
   question: string;
-  answers: {
-    A: string;
-    B: string;
-    C: string;
-    D: string;
-  };
+  answers: Answers;
   correct_answer: string;
+}
+
+type Answers = {
+  A: string;
+  B: string;
+  C: string;
+  D: string;
 }

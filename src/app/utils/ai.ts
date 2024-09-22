@@ -3,9 +3,9 @@ import { AWS_API_GATEWAY_ENDPOINT } from "./constants";
 import { MonsterNFTData, QuizData } from "./types";
 
 /**
- * generate NFT Data (Status & Image) method
+ * generate Monster Data (Status & Image) method
  */
-export const generateNftData = async () => {
+export const generateMonsterData = async () => {
   try {
     // NFTのメタデータを生成するAPIを呼びだす。
     const response = await axios.post("/api/ai");
@@ -35,14 +35,13 @@ export const generateNftData = async () => {
     } else {
       console.error("Axios以外のエラーが発生しました:", error);
     }
-    return null;
   }
 };
 
 /**
  * generate Quiz data method
  */
-export const generateQuizData = async () => {
+export const generateQuizData = async (): Promise<QuizData> => {
   try {
     // ヘッダー情報
     const headers = {
@@ -63,6 +62,15 @@ export const generateQuizData = async () => {
     } else {
       console.error("Axios以外のエラーが発生しました:", error);
     }
-    return null;
+    return {
+      question: "",
+      answers: {
+        A: "",
+        B: "",
+        C: "",
+        D: ""
+      },
+      correct_answer: ""
+    }
   }
 };

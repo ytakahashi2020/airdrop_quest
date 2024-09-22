@@ -93,7 +93,7 @@ export const handler = async (
               "C": "answer C",
               "D": "answer D"
             },
-            "correct_answer": "A"
+            "correct_answer": "answer A"
           }
     `);
     console.log("aiResponse:::", aiResponse);
