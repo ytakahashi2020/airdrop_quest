@@ -34,3 +34,27 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## API Info
+
+- **setUp**
+
+  you must create OpenAI API Key.
+
+  [https://platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+
+- **API Methods**
+
+  | No. | Name                     | method | path                  | Overview                    |
+  | :-- | :----------------------- | :----- | :-------------------- | :-------------------------- |
+  | 1   | geneate Moster data API  | POST   | /api/ai               | generate Monster status     |
+  | 2   | geneate Moster Image API | POST   | /api/ai/generateImage | generate Monster Image data |
+
+  以下の API のみ AWS CDK を使って AWS 上にサーバーレス API としてデプロイしています。  
+  ※ 実行には API キーが必要です。
+
+  エンドポイント： **https://aga2m7qtr3.execute-api.ap-northeast-1.amazonaws.com**
+
+  | No. | Name                 | method | path          | Overview                       |
+  | :-- | :------------------- | :----- | :------------ | :----------------------------- |
+  | 1   | geneate Question API | POST   | /generateQuiz | generate Quiz about MagicBlock |
