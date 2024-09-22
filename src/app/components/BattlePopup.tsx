@@ -176,16 +176,40 @@ const CommandPopup: React.FC<{
   isPlayerTurn: boolean;
   onAttack: () => void;
   onMagic: () => void;
-}> = ({ enemyAttackMessage, enemy }) => {
+  isQuizActive: boolean; // クイズ中かどうかのフラグ
+  quizOptions?: string[]; // クイズの選択肢
+  onQuizAnswer?: (answer: string) => void; // クイズの回答ハンドラ
+  quizResultMessage?: string; // クイズ結果メッセージの追加
+}> = ({
+  enemyAttackMessage,
+  enemy,
+  isQuizActive,
+  quizOptions,
+  onQuizAnswer,
+  quizResultMessage, // クイズ結果メッセージを受け取る
+}) => {
   return (
     <div className={`${styles.commonPopup} ${styles.commandPopup}`}>
-      <p>
-        {/* 敵の名前を表示、攻撃メッセージがなければ「現れた！」メッセージ */}
-        {enemyAttackMessage || `${enemy?.name || "未知の敵"}が現れた！`}
-      </p>
+      {isQuizActive ? (
+        // クイズがアクティブな場合、クイズを表示する
+        <div className={styles.quizPopup}>
+          <p>クイズに答えてください！</p>
+          <div className={styles.quizOptions}>
+            {quizOptions?.map((option, index) => (
+              <button key={index} onClick={() => onQuizAnswer?.(option)}>
+                {option}
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : (
+        // クイズが非アクティブの場合は通常のメッセージまたはクイズ結果メッセージを表示
+        <p>{quizResultMessage || enemyAttackMessage || `${enemy?.name || "未知の敵"}が現れた！`}</p>
+      )}
     </div>
   );
 };
+
 
 // 全体のコンポーネント
 const BattlePopup: React.FC<BattlePopupProps> = (props) => {
@@ -209,7 +233,7 @@ const BattlePopup: React.FC<BattlePopupProps> = (props) => {
       <EnemyPopup
         enemy={props.enemy}
         isPlayerTurn={props.isPlayerTurn}
-        onAttack={props.onAttack} // handleAttack を渡す
+        onAttack={props.onAttack}
         onMagic={props.onMagic}
         enemyOpacity={props.enemyOpacity}
         showAttackEffect={props.showAttackEffect}
@@ -227,9 +251,14 @@ const BattlePopup: React.FC<BattlePopupProps> = (props) => {
         onAttack={props.onAttack}
         onMagic={props.onMagic}
         enemy={props.enemy}
+        isQuizActive={props.isQuizActive}
+        quizOptions={props.quizOptions}
+        onQuizAnswer={props.onQuizAnswer}
+        quizResultMessage={props.quizResultMessage}
       />
     </>
   );
 };
 
 export default BattlePopup;
+

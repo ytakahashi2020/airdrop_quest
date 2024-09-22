@@ -95,6 +95,19 @@ const Game = () => {
   const [isMagicConfirmVisible, setIsMagicConfirmVisible] = useState(false); // 魔法の確認ポップアップの表示状態
   const [showEnemyAttackEffect, setShowEnemyAttackEffectEffect] =
     useState(false); // 敵からの攻撃エフェクトの表示状態
+  const [isQuizActive, setIsQuizActive] = useState(false); // クイズがアクティブかどうか
+  const [quizOptions, setQuizOptions] = useState<string[]>([]); // クイズの選択肢
+  const [quizAnswer, setQuizAnswer] = useState(""); // ユーザーのクイズ回答
+  const [quizResultMessage, setQuizResultMessage] = useState(""); // クイズ結果メッセージの状態
+  const [correctAnswer, setCorrectAnswer] = useState(""); // クイズの正解を管理する状態
+
+
+  // クイズのオプションを作成する関数（例として簡単なクイズを設定）
+  const generateQuiz = () => {
+    setCorrectAnswer("炎"); // 正解を「炎」に設定
+    return ["炎", "氷", "雷", "風"];
+  };
+
 
   // ①音源の初期化
   useEffect(() => {
@@ -220,18 +233,24 @@ const Game = () => {
     }
   };
 
+  const [isMagicProcessing, setIsMagicProcessing] = useState(false); // 魔法処理の進行中かどうか
+
   // ⑦敵への攻撃(魔法)
   const handleMagic = () => {
-    if (currentEnemy && isPlayerTurn) {
-      // 魔法確認ポップアップを表示する
-      setIsMagicConfirmVisible(true);
+    if (currentEnemy && isPlayerTurn && !isQuizActive && !isMagicProcessing) {
+      setQuizOptions(generateQuiz()); // クイズの選択肢を生成
+      setIsQuizActive(true); // クイズをアクティブにする
+      setIsMagicProcessing(true); // 魔法処理開始を示す
+    }
+  };
 
-      if (swordSound)
-        swordSound
-          .play()
-          .catch((err) => console.error("Error playing sword sound:", err)); // エラーキャッチ
+  // クイズの回答処理
+  const handleQuizAnswer = (answer: string) => {
+    setQuizAnswer(answer);
+    setIsQuizActive(false); // クイズを非アクティブにする
 
-      const newHp = currentEnemy.hp - PLAYER_MAGIC_DAMAGE;
+    if (answer === correctAnswer) { // 正解の場合
+      setQuizResultMessage(`正解！魔法が成功しました！`);
       setEnemyOpacity(0.5); // 敵がヒットした時の透明度
       setShowMagicEffect(true); // 魔法エフェクトを表示
       setTimeout(() => {
@@ -239,45 +258,64 @@ const Game = () => {
         setShowMagicEffect(false);
       }, MAGIC_EFFECT_TIME);
 
-      // 敵のHPが0以下になったら
-      if (newHp <= 0) {
-        setCurrentEnemy({ ...currentEnemy, hp: 0 });
-        setTimeout(() => {
-          attemptHerbDrop(currentEnemy, setHerbCount, setHerbMessage);
-          // 経験値を獲得
-          const gainedExp = currentEnemy.experience;
-          // setPlayerExp((prevExp) => prevExp + gainedExp); // 経験値を追加
-          handleGainExperience(gainedExp);
-          setGainedExpMessage(`${gainedExp}の経験値を取得しました`); // メッセージを設定
-          console.log("leveledUp", leveledUp);
-          if (victorySound) victorySound.play();
-          setIsBattlePopupVisible(false);
-          setIsVictoryPopupVisible(true);
+      const newHp = currentEnemy.hp - PLAYER_MAGIC_DAMAGE;
+      setCurrentEnemy({ ...currentEnemy, hp: newHp });
 
-          // レベルアップ時は長めに表示する
-          const popupDisplayTime = leveledUp
-            ? LEVEL_UP_POPUP_DISPLAY_TIME
-            : VICTORY_POPUP_DISPLAY_TIME;
-          console.log("popupDisplayTime", popupDisplayTime);
-          setTimeout(() => {
-            setIsVictoryPopupVisible(false);
-            setHerbMessage(""); // 勝利ポップアップが消える時にメッセージもリセット
-            // setGainedExpMessage("");
-            setLevelUpMessage(""); // レベルアップメッセージをリセット
-            setStatIncreaseMessage("");
-            startRandomBattleSteps(setNextBattleSteps, setSteps);
-          }, popupDisplayTime);
-        }, ENEMY_DEFEAT_DELAY);
-      }
-      // 敵のHPが残っていたら
-      else {
-        setCurrentEnemy({ ...currentEnemy, hp: newHp });
+      if (newHp <= 0) {
+        handleVictory();
+      } else {
         setIsPlayerTurn(false);
         setTimeout(() => {
           handleEnemyAttack();
         }, ENEMY_ATTACK_DELAY);
       }
+    } else {
+      setQuizResultMessage(`不正解...魔法が失敗しました。正解は${correctAnswer}でした。`);
     }
+
+    setIsMagicProcessing(false);
+  };
+
+  // 敵が倒されたときの処理
+  const handleVictory = () => {
+    setCurrentEnemy({ ...currentEnemy, hp: 0 });
+    
+    // エフェクトを表示する
+    setEnemyOpacity(0.5); // 敵がヒットした時の透明度を変更
+    setShowAttackEffect(true); // 攻撃エフェクトを表示
+    setShowMagicEffect(true); // 魔法エフェクトを表示（必要に応じて）
+  
+    // エフェクト表示時間を確保
+    setTimeout(() => {
+      setEnemyOpacity(1); // 透明度を戻す
+      setShowAttackEffect(false); // 攻撃エフェクトを非表示
+      setShowMagicEffect(false); // 魔法エフェクトを非表示
+    
+      // やくそうドロップ処理
+      attemptHerbDrop(currentEnemy, setHerbCount, setHerbMessage);
+    
+      // 経験値を獲得
+      const gainedExp = currentEnemy.experience;
+      handleGainExperience(gainedExp);
+      setGainedExpMessage(`${gainedExp}の経験値を取得しました`);
+    
+      if (victorySound) victorySound.play();
+      
+      // 勝利ポップアップを表示
+      setIsBattlePopupVisible(false);
+      setIsVictoryPopupVisible(true);
+    
+      // 勝利ポップアップの表示時間
+      const popupDisplayTime = leveledUp ? LEVEL_UP_POPUP_DISPLAY_TIME : VICTORY_POPUP_DISPLAY_TIME;
+    
+      setTimeout(() => {
+        setIsVictoryPopupVisible(false);
+        setHerbMessage(""); // 勝利ポップアップが消える時にメッセージもリセット
+        setLevelUpMessage(""); // レベルアップメッセージをリセット
+        setStatIncreaseMessage("");
+        startRandomBattleSteps(setNextBattleSteps, setSteps); // 次のバトルステップを設定
+      }, popupDisplayTime);
+    }, ATTACK_EFFECT_TIME); // エフェクトの表示時間分遅延させる
   };
 
   // useCallbackの中で関数を呼び出す
@@ -346,6 +384,7 @@ const Game = () => {
       setLeveledUp
     );
   };
+
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -418,8 +457,13 @@ const Game = () => {
           showMagicEffect={showMagicEffect}
           showEnemyAttackEffect={showEnemyAttackEffect}
           isMagicConfirmVisible={isMagicConfirmVisible}
+          isQuizActive={isQuizActive} // クイズがアクティブかどうか
+          quizOptions={quizOptions} // クイズの選択肢
+          onQuizAnswer={handleQuizAnswer} // クイズ回答ハンドラ
+          quizResultMessage={quizResultMessage} // クイズ結果メッセージ
         />
       )}
+
       {/* 勝利ポップアップ */}
       {isVictoryPopupVisible && (
         <VictoryPopup
