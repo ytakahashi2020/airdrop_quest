@@ -46,3 +46,27 @@ export type TileProps = {
   isVisible: boolean; // 画像を表示するかどうか
   size?: number; // タイルのサイズを指定 (デフォルト: 100)
 };
+
+
+export type MonsterNFTData = {
+  name: string;
+  description: string;
+  imageUrl: string;
+  health: any;
+  attack: any;
+  defense: any;
+  rarity: any;
+}
+
+export type QuizData = {
+  question: string;
+  answers: Answers;
+  correct_answer: string;
+}
+
+type Answers = {
+  A: string;
+  B: string;
+  C: string;
+  D: string;
+}

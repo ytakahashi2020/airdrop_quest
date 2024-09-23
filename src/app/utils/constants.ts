@@ -21,3 +21,5 @@ export const ATTACK_EFFECT_TIME = 500;
 export const MAGIC_EFFECT_TIME = 2000;
 // Open AI APIのURL
 export const OPENAI_API_URL = "https://api.openai.com/v1/images/generations";
+// AWS API GatewayのAPIエンドポイント
+export const AWS_API_GATEWAY_ENDPOINT = "https://aga2m7qtr3.execute-api.ap-northeast-1.amazonaws.com/prod"

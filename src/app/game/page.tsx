@@ -4,51 +4,48 @@ import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import BattlePopup from "../components/BattlePopup";
 import VictoryPopup from "../components/VictoryPopup";
 import {
-  handleUseHerb,
   attemptHerbDrop,
   enemyAttack,
   handleKeyPress,
+  handleUseHerb,
   startRandomBattleSteps,
 } from "../utils/gameFunctions";
 
 import {
-  initializeAudio,
-  playNormalMusic,
-  stopNormalMusic,
   playBattleMusic,
+  playNormalMusic,
   stopBattleMusic,
-  playEnemyAttackSound,
+  stopNormalMusic
 } from "../utils/audioManager"; // 音声管理ファイルをインポート
 
-import { Enemy } from "../utils/types"; // 型定義をインポート
 import { enemies } from "../utils/enemies";
 import { playerImages } from "../utils/playerImages"; // playerImagesをインポート
 import {
-  treePositions,
-  waterPositions,
-  grassPositions,
   isTreePosition,
   isWaterPosition,
+  treePositions,
+  waterPositions
 } from "../utils/positions";
+import { Enemy, QuizData } from "../utils/types"; // 型定義をインポート
 
-import { levelUp, gainExperience } from "../utils/levelUp";
+import { gainExperience, levelUp } from "../utils/levelUp";
 
 import Tile from "../utils/tile";
 
 import {
+  ATTACK_EFFECT_TIME,
+  ENEMY_ATTACK_DELAY,
+  ENEMY_DEFEAT_DELAY,
+  LEVEL_UP_POPUP_DISPLAY_TIME,
+  MAGIC_EFFECT_TIME,
   PLAYER_ATTACK_DAMAGE,
   PLAYER_MAGIC_DAMAGE,
-  ENEMY_DEFEAT_DELAY,
   VICTORY_POPUP_DISPLAY_TIME,
-  ENEMY_ATTACK_DELAY,
-  LEVEL_UP_POPUP_DISPLAY_TIME,
-  ATTACK_EFFECT_TIME,
-  MAGIC_EFFECT_TIME,
 } from "../utils/constants";
 
 import styles from "../field.module.css"; // CSSモジュールのインポート
 
-import Image from "next/image";
+import { generateQuizData } from "../utils/ai";
 
 const Game = () => {
   const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0 });
@@ -128,10 +125,12 @@ const Game = () => {
 
 
   // クイズのオプションを作成する関数（例として簡単なクイズを設定）
-  const generateQuiz = () => {
-    setQuizText("Solanaのネイティブトークンの名前は何ですか？");
-    setCorrectAnswer("SOL"); // 正解を「SOL」に設定
-    return ["SLA", "SL", "SOL", "SOLA"];
+  const generateQuiz = async() => {
+    // APIを呼び出してクイズを自動生成する。
+    const quizData: QuizData = await generateQuizData();
+    setQuizText(quizData?.question!);
+    setCorrectAnswer(quizData?.correct_answer!);
+    return [quizData?.answers.A, quizData?.answers.B, quizData?.answers.C, quizData.answers.D];
   };
 
 
@@ -262,9 +261,9 @@ const Game = () => {
   const [isMagicProcessing, setIsMagicProcessing] = useState(false); // 魔法処理の進行中かどうか
 
   // ⑦敵への攻撃(魔法)
-  const handleMagic = () => {
+  const handleMagic = async() => {
     if (currentEnemy && isPlayerTurn && !isQuizActive && !isMagicProcessing) {
-      setQuizOptions(generateQuiz()); // クイズの選択肢を生成
+      setQuizOptions(await generateQuiz()); // クイズの選択肢を生成
       setIsQuizActive(true); // クイズをアクティブにする
       setIsMagicProcessing(true); // 魔法処理開始を示す
     }
