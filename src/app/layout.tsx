@@ -1,10 +1,10 @@
 "use client";
 
-import AppWalletProvider from "../components/AppWalletProvider";
 import "@/app/globals.css";
-import Link from "next/link";
+import UtilProvider from "@/context/UtilProvider";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import AppWalletProvider from "../context/AppWalletProvider";
 
 export default function RootLayout({
   children,
@@ -25,14 +25,16 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <AppWalletProvider>
-          <header className="p-4 bg-gray-800 text-white">
-            <nav className="flex justify-end items-center space-x-4">
-              <div className="ml-4">
-                <WalletMultiButton style={{}} />
-              </div>
-            </nav>
-          </header>
-          {children}
+          <UtilProvider>
+            <header className="p-4 bg-gray-800 text-white">
+              <nav className="flex justify-end items-center space-x-4">
+                <div className="ml-4">
+                  <WalletMultiButton style={{}} />
+                </div>
+              </nav>
+            </header>
+            {children}
+          </UtilProvider>
         </AppWalletProvider>
       </body>
     </html>

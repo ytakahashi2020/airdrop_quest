@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef, useMemo } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import BattlePopup from "../components/BattlePopup";
 import VictoryPopup from "../components/VictoryPopup";
 import {
@@ -21,8 +21,6 @@ import {
 import { enemies } from "../utils/enemies";
 import { playerImages } from "../utils/playerImages"; // playerImagesをインポート
 import {
-  isTreePosition,
-  isWaterPosition,
   treePositions,
   waterPositions
 } from "../utils/positions";
@@ -45,6 +43,8 @@ import {
 
 import styles from "../field.module.css"; // CSSモジュールのインポート
 
+import { UtilContext } from "@/context/UtilProvider";
+import Loading from "../components/Loading";
 import { generateQuizData } from "../utils/ai";
 
 const Game = () => {
@@ -102,7 +102,8 @@ const Game = () => {
 
   // スクロール用の ref を作成
   const gameContainerRef = useRef<HTMLDivElement | null>(null);
-
+  // UtilContext コンテキストを作成
+  const utilContext = useContext(UtilContext);
 
   // プレイヤーの位置に基づいてスクロールする処理
   useEffect(() => {
@@ -126,10 +127,13 @@ const Game = () => {
 
   // クイズのオプションを作成する関数（例として簡単なクイズを設定）
   const generateQuiz = async() => {
+    utilContext.setLoading(true);
+    console.log("loading", utilContext.loading);
     // APIを呼び出してクイズを自動生成する。
     const quizData: QuizData = await generateQuizData();
     setQuizText(quizData?.question!);
     setCorrectAnswer(quizData?.correct_answer!);
+    utilContext.setLoading(false);
     return [quizData?.answers.A, quizData?.answers.B, quizData?.answers.C, quizData.answers.D];
   };
 
@@ -401,7 +405,10 @@ const Game = () => {
   useEffect(() => {
     if (steps >= nextBattleSteps) {
       const randomEnemy = enemies[Math.floor(Math.random() * enemies.length)];
+      utilContext.setLoading(true);
+      // AIを呼び出してモンスターのステータスを設定する。
       setCurrentEnemy(randomEnemy);
+      utilContext.setLoading(false);
       setIsBattlePopupVisible(true);
       setIsPlayerTurn(true);
       setEnemyAttackMessage("");
@@ -435,75 +442,83 @@ const Game = () => {
 
 
   return (
-      <div
-      ref={gameContainerRef}  // スクロール用の ref を追加
-      className={styles.gameContainer}  // ここで後述の CSS を適用
-      style={{ width: "100%", height: "100vh", overflow: "auto", position: "relative" }}
-      >
-      <div className={styles.gridContainer}>
-        {Array.from({ length: (1280 / 32) * (960 / 32) }).map((_, index) => {
-          const x = index % (1280 / 32);
-          const y = Math.floor(index / (1280 / 32));
+    <>
+      {utilContext.loading ? 
+        <Loading /> 
+      : (
+        <>
+          <div
+            ref={gameContainerRef}  // スクロール用の ref を追加
+            className={styles.gameContainer}  // ここで後述の CSS を適用
+            style={{ width: "100%", height: "100vh", overflow: "auto", position: "relative" }}
+          >
+            <div className={styles.gridContainer}>
+              {Array.from({ length: (1280 / 32) * (960 / 32) }).map((_, index) => {
+                const x = index % (1280 / 32);
+                const y = Math.floor(index / (1280 / 32));
 
-          const isPlayer = playerPosition.x === x && playerPosition.y === y;
+                const isPlayer = playerPosition.x === x && playerPosition.y === y;
 
-          return (
-            <div key={index} className={styles.gridField}>
-              <Tile
-                x={x}
-                y={y}
-                isPlayer={isPlayer}
-                playerImageSrc={playerImages[direction][animationFrame]} // プレイヤーの画像を渡す
-              />
+                return (
+                  <div key={index} className={styles.gridField}>
+                    <Tile
+                      x={x}
+                      y={y}
+                      isPlayer={isPlayer}
+                      playerImageSrc={playerImages[direction][animationFrame]} // プレイヤーの画像を渡す
+                    />
+                  </div>
+                );
+              })}
             </div>
-          );
-        })}
-      </div>
-      {/* 戦闘ポップアップ */}
-      {isBattlePopupVisible && currentEnemy && (
-        <BattlePopup
-          enemy={currentEnemy}
-          isPlayerTurn={isPlayerTurn}
-          onAttack={handleAttack}
-          onMagic={handleMagic}
-          enemyAttackMessage={enemyAttackMessage}
-          herbCount={herbCount}
-          onUseHerb={() =>
-            handleUseHerb(
-              herbCount,
-              playerHp,
-              setPlayerHp,
-              setHerbCount,
-              setEnemyAttackMessage,
-              herbSound
-            )
-          } // useHerbは通常の関数として使用
-          playerHp={playerHp}
-          playerMp={playerMp}
-          playerLevel={playerLevel}
-          enemyOpacity={enemyOpacity}
-          showAttackEffect={showAttackEffect}
-          showMagicEffect={showMagicEffect}
-          showEnemyAttackEffect={showEnemyAttackEffect}
-          isMagicConfirmVisible={isMagicConfirmVisible}
-          isQuizActive={isQuizActive} // クイズがアクティブかどうか
-          quizText={quizText} // クイズのテキスト
-          quizOptions={quizOptions} // クイズの選択肢
-          onQuizAnswer={handleQuizAnswer} // クイズ回答ハンドラ
-          quizResultMessage={quizResultMessage} // クイズ結果メッセージ
-        />
-      )}
+            {/* 戦闘ポップアップ */}
+            {isBattlePopupVisible && currentEnemy && (
+              <BattlePopup
+                enemy={currentEnemy}
+                isPlayerTurn={isPlayerTurn}
+                onAttack={handleAttack}
+                onMagic={handleMagic}
+                enemyAttackMessage={enemyAttackMessage}
+                herbCount={herbCount}
+                onUseHerb={() =>
+                  handleUseHerb(
+                    herbCount,
+                    playerHp,
+                    setPlayerHp,
+                    setHerbCount,
+                    setEnemyAttackMessage,
+                    herbSound
+                  )
+                } // useHerbは通常の関数として使用
+                playerHp={playerHp}
+                playerMp={playerMp}
+                playerLevel={playerLevel}
+                enemyOpacity={enemyOpacity}
+                showAttackEffect={showAttackEffect}
+                showMagicEffect={showMagicEffect}
+                showEnemyAttackEffect={showEnemyAttackEffect}
+                isMagicConfirmVisible={isMagicConfirmVisible}
+                isQuizActive={isQuizActive} // クイズがアクティブかどうか
+                quizText={quizText} // クイズのテキスト
+                quizOptions={quizOptions} // クイズの選択肢
+                onQuizAnswer={handleQuizAnswer} // クイズ回答ハンドラ
+                quizResultMessage={quizResultMessage} // クイズ結果メッセージ
+              />
+            )}
 
-      {/* 勝利ポップアップ */}
-      {isVictoryPopupVisible && (
-        <VictoryPopup
-          herbMessage={herbMessage}
-          gainedExpMessage={gainedExpMessage}
-          levelUpMessage={levelUpMessage}
-          statIncreaseMessage={statIncreaseMessage}
-        />
+            {/* 勝利ポップアップ */}
+            {isVictoryPopupVisible && (
+              <VictoryPopup
+                herbMessage={herbMessage}
+                gainedExpMessage={gainedExpMessage}
+                levelUpMessage={levelUpMessage}
+                statIncreaseMessage={statIncreaseMessage}
+              />
+            )}
+          </div>
+        </>
       )}
-    </div>
+    </>
   );
 };
 
