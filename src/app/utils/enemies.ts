@@ -4,22 +4,22 @@ export const enemies: Enemy[] = [
   {
     name: "まどうし",
     image: "/images/enemy1.png",
-    hp: 1,
+    hp: 5,
     attackRange: [1, 3],
-    experience: 100,
+    experience: 30,
   },
   {
     name: "かべ男",
     image: "/images/enemy2.png",
-    hp: 1,
+    hp: 6,
     attackRange: [4, 6],
-    experience: 120,
+    experience: 40,
   },
   {
     name: "ブルードラゴン",
     image: "/images/enemy3.png",
-    hp: 1,
+    hp: 12,
     attackRange: [7, 9],
-    experience: 150,
+    experience: 50,
   },
 ];
