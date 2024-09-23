@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import BattlePopup from "../components/BattlePopup";
 import VictoryPopup from "../components/VictoryPopup";
 import {
@@ -99,6 +99,29 @@ const Game = () => {
   const [quizAnswer, setQuizAnswer] = useState(""); // ユーザーのクイズ回答
   const [quizResultMessage, setQuizResultMessage] = useState(""); // クイズ結果メッセージの状態
   const [correctAnswer, setCorrectAnswer] = useState(""); // クイズの正解を管理する状態
+
+  // スクロール用の ref を作成
+  const gameContainerRef = useRef<HTMLDivElement | null>(null);
+
+
+  // プレイヤーの位置に基づいてスクロールする処理
+  useEffect(() => {
+    if (gameContainerRef.current) {
+      const container = gameContainerRef.current;
+      const tileWidth = 32; // タイルの幅
+      const tileHeight = 32; // タイルの高さ
+
+      // プレイヤーが中央にくるようにスクロール位置を計算
+      const scrollX = playerPosition.x * tileWidth - container.clientWidth / 2;
+      const scrollY = playerPosition.y * tileHeight - container.clientHeight / 2;
+
+      container.scrollTo({
+        left: scrollX,
+        top: scrollY,
+        behavior: "smooth", // スムーズスクロール
+      });
+    }
+  }, [playerPosition]);
 
 
   // クイズのオプションを作成する関数（例として簡単なクイズを設定）
@@ -412,44 +435,25 @@ const Game = () => {
 
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <h1>簡単なフィールドでの移動</h1>
-      <div style={{ marginBottom: "20px" }}>
-        {/* <h2>主人公のHP: {playerHp}</h2>
-        <h2>主人公のMP: {playerMp}</h2>
-        <h2>レベル: {playerLevel}</h2>
-        <h2>経験値: {playerExp}</h2>
-        <h2>攻撃力: {playerAttack}</h2>
-        <h2>防御力: {playerDefense}</h2>
-        <h2>やくそう: {herbCount}個</h2> */}
-      </div>
-
+      <div
+      ref={gameContainerRef}  // スクロール用の ref を追加
+      className={styles.gameContainer}  // ここで後述の CSS を適用
+      style={{ width: "100%", height: "100vh", overflow: "auto", position: "relative" }}
+      >
       <div className={styles.gridContainer}>
-        {Array.from({ length: 20 * 20 }).map((_, index) => {
-          const x = index % 20;
-          const y = Math.floor(index / 20);
+        {Array.from({ length: (1280 / 32) * (960 / 32) }).map((_, index) => {
+          const x = index % (1280 / 32);
+          const y = Math.floor(index / (1280 / 32));
+
           const isPlayer = playerPosition.x === x && playerPosition.y === y;
-          const isTree = isTreePosition(x, y);
-          const isWater = isWaterPosition(x, y);
 
           return (
             <div key={index} className={styles.gridField}>
               <Tile
-                src={playerImages[direction][animationFrame]}
-                alt="Player"
-                isVisible={isPlayer}
-              />
-
-              <Tile
-                src="/images/map/water_frame_4.png"
-                alt="Water"
-                isVisible={isWater}
-              />
-
-              <Tile
-                src="/images/map/grass_frame_4.png"
-                alt="Tree"
-                isVisible={isTree}
+                x={x}
+                y={y}
+                isPlayer={isPlayer}
+                playerImageSrc={playerImages[direction][animationFrame]} // プレイヤーの画像を渡す
               />
             </div>
           );

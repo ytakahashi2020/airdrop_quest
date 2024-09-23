@@ -1,16 +1,13 @@
+
 .gridContainer {
   display: grid;
-  grid-template-columns: repeat(20, 30px);
-  grid-template-rows: repeat(20, 30px);
-  gap: 2px;
+  grid-template-columns: repeat(40, 32px); /* 横に40列 */
+  grid-template-rows: repeat(30, 32px); /* 縦に30行 */
 }
 
 .gridField {
   width: 32px;
   height: 32px;
-  background-color: green;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
 }
+
+
