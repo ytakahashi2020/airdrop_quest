@@ -1,21 +1,25 @@
-.commonPopup {
+/* 共通スタイル */
+.commonPopup, .enemyAttackPopup {
   position: fixed;
   color: white;
   background-color: black;
-  border: 3px solid white;
   border-radius: 7px;
   padding: 10px;
   z-index: 1000;
 }
 
+.commonPopup {
+  border: 3px solid white;
+}
+
 .enemyAttackPopup {
-  position: fixed;
-  color: white;
-  background-color: black;
   border: 3px solid red;
-  border-radius: 7px;
+}
+
+/* 戦闘ポップアップ */
+.battlePopup, .commandPopup, .enemyPopup, .enemyAttackImagePopup {
+  position: fixed;
   padding: 10px;
-  z-index: 1000;
 }
 
 .battlePopup {
@@ -30,40 +34,31 @@
 .commandPopup {
   bottom: 10%;
   left: 10%;
-  width: 800px;
+  width: 100%;
+  max-width: 800px;
   height: 300px;
-  padding: 10px;
-  z-index: 1000;
 }
 
-.enemyPopup {
+.enemyPopup, .enemyAttackImagePopup {
   top: 20%;
   left: 20%;
-  padding: 20px;
-  padding-top: 30px;
-  z-index: 1000;
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
   height: 250px;
   background-image: url("/images/fields/pipo-battlebg001a.jpg");
   background-size: cover;
   background-position: center;
   display: flex;
   justify-content: center;
+}
+
+.enemyPopup {
+  padding: 20px 30px;
 }
 
 .enemyAttackImagePopup {
   top: 30%;
-  left: 20%;
-  padding: 20px;
-  padding-top: 30px;
-  z-index: 1000;
-  width: 600px;
-  height: 250px;
-  background-image: url("/images/fields/pipo-battlebg001a.jpg");
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  justify-content: center;
+  padding: 20px 30px;
 }
 
 .enemyAttackImagePopup::before {
@@ -77,6 +72,7 @@
   z-index: 2000;
 }
 
+/* バトルコマンド */
 .battleCommand {
   width: 100%;
   padding: 5px;
@@ -93,6 +89,7 @@
   cursor: not-allowed;
 }
 
+/* 共通エフェクト */
 .commonEffect {
   position: absolute;
   top: 0;
@@ -102,6 +99,7 @@
   z-index: 3000;
 }
 
+/* 敵画像 */
 .enemyImage {
   width: 150px;
   height: 150px;
@@ -109,6 +107,7 @@
   transition: opacity 0.3s;
 }
 
+/* クイズポップアップ */
 .quizPopup {
   display: flex;
   flex-direction: column;
@@ -119,12 +118,12 @@
 
 .quizOptions {
   display: flex;
-  flex-direction: column; /* 縦並びに変更 */
-  gap: 10px; /* 各ボタンの間隔を設定 */
+  flex-direction: column;
+  width: 80%;
+  gap: 10px;
 }
 
 .quizOptions button {
-  width: 200px;
   padding: 10px;
   background-color: #444;
   color: white;
@@ -136,5 +135,21 @@
 
 .quizOptions button:hover {
   background-color: #666;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .battlePopup, .commandPopup, .enemyPopup, .enemyAttackImagePopup {
+    left: 5%;
+    width: 90%;
+  }
+
+  .commandPopup {
+    height: auto;
+  }
+
+  .enemyPopup, .enemyAttackImagePopup {
+    width: 100%;
+  }
 }
 
