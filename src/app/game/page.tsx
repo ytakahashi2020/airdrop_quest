@@ -414,43 +414,20 @@ const Game = () => {
 
   return (
     <div style={{ textAlign: "center" }}>
-      <h1>簡単なフィールドでの移動</h1>
-      <div style={{ marginBottom: "20px" }}>
-        {/* <h2>主人公のHP: {playerHp}</h2>
-        <h2>主人公のMP: {playerMp}</h2>
-        <h2>レベル: {playerLevel}</h2>
-        <h2>経験値: {playerExp}</h2>
-        <h2>攻撃力: {playerAttack}</h2>
-        <h2>防御力: {playerDefense}</h2>
-        <h2>やくそう: {herbCount}個</h2> */}
-      </div>
-
       <div className={styles.gridContainer}>
-        {Array.from({ length: 20 * 20 }).map((_, index) => {
-          const x = index % 20;
-          const y = Math.floor(index / 20);
+        {Array.from({ length: (1280 / 32) * (960 / 32) }).map((_, index) => {
+          const x = index % (1280 / 32);
+          const y = Math.floor(index / (1280 / 32));
+        
           const isPlayer = playerPosition.x === x && playerPosition.y === y;
-          const isTree = isTreePosition(x, y);
-          const isWater = isWaterPosition(x, y);
-
+        
           return (
             <div key={index} className={styles.gridField}>
               <Tile
-                src={playerImages[direction][animationFrame]}
-                alt="Player"
-                isVisible={isPlayer}
-              />
-
-              <Tile
-                src="/images/map/water_frame_4.png"
-                alt="Water"
-                isVisible={isWater}
-              />
-
-              <Tile
-                src="/images/map/grass_frame_4.png"
-                alt="Tree"
-                isVisible={isTree}
+                x={x}
+                y={y}
+                isPlayer={isPlayer}
+                playerImageSrc={playerImages[direction][animationFrame]} // プレイヤーの画像を渡す
               />
             </div>
           );
