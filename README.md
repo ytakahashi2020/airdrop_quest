@@ -31,3 +31,32 @@
   | No. | Name                 | method | path          | Overview                       |
   | :-- | :------------------- | :----- | :------------ | :----------------------------- |
   | 1   | geneate Question API | POST   | /generateQuiz | generate Quiz about MagicBlock |
+
+## How to work
+
+- **setUp**
+
+  You must create `.env.local` file & set below values
+
+  ```txt
+  NEXT_PUBLIC_OPENAI_API_KEY=""
+  NEXT_PUBLIC_AWS_APIGATEWAY_API_KEY=""
+  ```
+
+  and you must install modules
+
+  ```bash
+  yarn
+  ```
+
+- **build frontend**
+
+  ```bash
+  yarn build
+  ```
+
+- **start frontend**
+
+  ```bash
+  yarn dev
+  ```
