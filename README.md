@@ -1,6 +1,6 @@
 # Q-drop Adventure
 
-![](./docs/img/cutin.jpeg)
+![](./docs/img/title.jpg)
 
 ## About Q-drop Adventure
 
