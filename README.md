@@ -1,5 +1,7 @@
 # Q-drop Adventure
 
+[![passing](https://github.com/ytakahashi2020/airdrop_quest/actions/workflows/ci.yml/badge.svg)](https://github.com/ytakahashi2020/airdrop_quest/actions/workflows/ci.yml)
+
 ![](./docs/img/title.jpg)
 
 ## About Q-drop Adventure
