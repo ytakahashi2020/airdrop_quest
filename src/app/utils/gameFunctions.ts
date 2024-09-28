@@ -3,6 +3,7 @@ import { RANDOM_STEP_MULTIPLIER, RANDOM_STEP_OFFSET } from "./constants";
 import { Enemy } from "./types"; // 型定義をインポート
 import { playEnemyAttackSound } from "./audioManager"; // 音声管理ファイルをインポート
 import { isPassablePosition } from "./positions";
+let moveCooldown = false; // Add a cooldown flag
 
 export const handleKeyPress = (
   e: KeyboardEvent,
@@ -12,13 +13,18 @@ export const handleKeyPress = (
   >,
   setDirection: React.Dispatch<
     React.SetStateAction<"up" | "down" | "left" | "right">
-  >, // 型を修正
+  >,
   treePositions: Array<{ x: number; y: number }>,
   waterPositions: Array<{ x: number; y: number }>,
   setSteps: React.Dispatch<React.SetStateAction<number>>,
   isBattlePopupVisible: boolean
 ) => {
-  if (isBattlePopupVisible) return;
+  if (isBattlePopupVisible || moveCooldown) return; // Prevent movement if cooldown is active
+
+  moveCooldown = true; // Activate cooldown
+  setTimeout(() => {
+    moveCooldown = false; // Reset cooldown after 200ms (adjust as necessary)
+  }, 50);
 
   setPlayerPosition((prev) => {
     let newPos = { ...prev };
@@ -27,25 +33,25 @@ export const handleKeyPress = (
       case "ArrowUp":
         if (prev.y > 0 && isPassablePosition(prev.x, prev.y - 1)) {
           newPos.y -= 1;
-          setDirection("up"); // 上向きに変更
+          setDirection("up");
         }
         break;
       case "ArrowDown":
-        if (prev.y < 19 && isPassablePosition(prev.x, prev.y + 1)) {
+        if (prev.y < 59 && isPassablePosition(prev.x, prev.y + 1)) {
           newPos.y += 1;
-          setDirection("down"); // 下向きに変更
+          setDirection("down");
         }
         break;
       case "ArrowLeft":
         if (prev.x > 0 && isPassablePosition(prev.x - 1, prev.y)) {
           newPos.x -= 1;
-          setDirection("left"); // 左向きに変更
+          setDirection("left");
         }
         break;
       case "ArrowRight":
-        if (prev.x < 19 && isPassablePosition(prev.x + 1, prev.y)) {
+        if (prev.x < 79 && isPassablePosition(prev.x + 1, prev.y)) {
           newPos.x += 1;
-          setDirection("right"); // 右向きに変更
+          setDirection("right");
         }
         break;
       default:
@@ -56,6 +62,7 @@ export const handleKeyPress = (
 
   setSteps((prevSteps) => prevSteps + 1);
 };
+
 
 // 敵の攻撃
 export const enemyAttack = (

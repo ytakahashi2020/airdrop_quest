@@ -26,7 +26,7 @@ const Tile: React.FC<TileProps> = ({
         position: "relative",
         backgroundImage: 'url("/images/map.png")', // 1280x960の全体画像
         backgroundPosition: backgroundPosition,
-        backgroundSize: "1280px 960px",
+        backgroundSize: "2560px 1920px",
       }}
     >
       {isPlayer && (
