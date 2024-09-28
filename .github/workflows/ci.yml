@@ -67,7 +67,7 @@ jobs:
         run: yarn install
       # ビルドコマンドを実行
       - name: Build
-        run: yarn frontend build
+        run: yarn build
         env:
           NEXT_PUBLIC_OPENAI_API_KEY: ${{ secrets.NEXT_PUBLIC_OPENAI_API_KEY }}
           NEXT_PUBLIC_AWS_APIGATEWAY_API_KEY: ${{ secrets.NEXT_PUBLIC_AWS_APIGATEWAY_API_KEY }}
