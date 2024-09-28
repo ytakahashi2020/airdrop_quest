@@ -49,7 +49,7 @@ export const generateQuizData = async (): Promise<QuizData> => {
       'Content-Type': 'application/json'  
     };
     // 問題と回答を自動生成するAPIを呼び出す。
-    const response: any = await await fetch(`${AWS_API_GATEWAY_ENDPOINT}/generateQuiz`,  {method: 'POST',headers: headers});
+    const response: any = await fetch(`${AWS_API_GATEWAY_ENDPOINT}/generateQuiz`,  {method: 'POST',headers: headers});
     const responseContent = await response.json()
     console.log("response:::", responseContent);
     console.log("content:::", responseContent.content);
