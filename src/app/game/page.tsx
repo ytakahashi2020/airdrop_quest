@@ -112,10 +112,19 @@ const Game = () => {
       const tileWidth = 32; // タイルの幅
       const tileHeight = 32; // タイルの高さ
 
-      // プレイヤーが中央にくるようにスクロール位置を計算
-      const scrollX = playerPosition.x * tileWidth - container.clientWidth / 2;
-      const scrollY = playerPosition.y * tileHeight - container.clientHeight / 2;
+      // プレイヤーの位置に基づいてスクロール位置を計算
+      let scrollX = playerPosition.x * tileWidth - container.clientWidth / 2;
+      let scrollY = playerPosition.y * tileHeight - container.clientHeight / 2;
 
+      // スクロール可能な範囲の最大値を計算
+      const maxScrollX = container.scrollWidth - container.clientWidth;
+      const maxScrollY = container.scrollHeight - container.clientHeight;
+
+      //// スクロール位置が範囲外に行かないように制限
+      scrollX = Math.max(0, Math.min(scrollX, maxScrollX));
+      scrollY = Math.max(0, Math.min(scrollY, maxScrollY));
+
+      // スクロールの実行
       container.scrollTo({
         left: scrollX,
         top: scrollY,
@@ -447,12 +456,12 @@ return (
     <div
       ref={gameContainerRef}  // スクロール用の ref を追加
       className={styles.gameContainer}  // ここで後述の CSS を適用
-      style={{ width: "100%", height: "100vh", overflow: "auto", position: "relative" }}
+      style={{ width: "100%", height: "100%", overflow: "hidden", position: "relative", }}
     >
       <div className={styles.gridContainer}>
-        {Array.from({ length: (1280 / 32) * (960 / 32) }).map((_, index) => {
-          const x = index % (1280 / 32);
-          const y = Math.floor(index / (1280 / 32));
+        {Array.from({ length: (2560 / 32) * (1920 / 32) }).map((_, index) => {
+          const x = index % (2560 / 32);
+          const y = Math.floor(index / (2560 / 32));
 
           const isPlayer = playerPosition.x === x && playerPosition.y === y;
 
@@ -462,7 +471,7 @@ return (
                 x={x}
                 y={y}
                 isPlayer={isPlayer}
-                playerImageSrc={playerImages[direction][animationFrame]} // プレイヤーの画像を渡す
+                playerImageSrc={playerImages[direction][animationFrame]}
               />
             </div>
           );

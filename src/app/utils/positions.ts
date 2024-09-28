@@ -31,8 +31,8 @@ export const isWaterPosition = (x: number, y: number) => {
 
 // 通れるかどうかをチェックする関数
 export const isPassablePosition = (x: number, y: number) => {
-  if (isTreePosition(x, y) || isWaterPosition(x, y)) {
-    return false; // 通れない場合
-  }
+  //if (isTreePosition(x, y) || isWaterPosition(x, y)) {
+  //  return false; // 通れない場合
+  //}
   return true; // 通れる場合
 };
