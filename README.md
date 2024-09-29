@@ -1,6 +1,6 @@
 # Q-drop Adventure
 
-[![passing](https://github.com/ytakahashi2020/airdrop_quest/actions/workflows/ci.yml/badge.svg)](https://github.com/ytakahashi2020/airdrop_quest/actions/workflows/ci.yml)
+[![Build on GitHub Actions](https://github.com/ytakahashi2020/airdrop_quest/actions/workflows/ci.yml/badge.svg)](https://github.com/ytakahashi2020/airdrop_quest/actions/workflows/ci.yml)
 
 ![](./docs/img/title.jpg)
 
@@ -9,6 +9,19 @@
 ![](./docs/img/map.png)
 
 ## Live Demo
+
+[vercel - ]()
+
+## Silde
+
+[]()
+
+## Team Info
+
+- [ytakahashi2020](https://github.com/ytakahashi2020)
+- [harukaoda15](https://github.com/harukaoda15)
+- [CobaltSato](https://github.com/CobaltSato)
+- [mashharuki](https://github.com/mashharuki)
 
 ## API Info
 
