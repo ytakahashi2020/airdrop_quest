@@ -30,7 +30,7 @@ export async function POST() {
       {
         prompt, // 生成する画像のプロンプトを指定
         n: 1, // 生成する画像の数
-        size: "1280x1280", // 画像サイズ
+        size: "1024x1024", // 画像サイズ
       },
       {
         headers: {
