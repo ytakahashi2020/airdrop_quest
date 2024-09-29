@@ -4,7 +4,7 @@ import axios from "axios";
 import { NextResponse } from "next/server";
 import { OPENAI_API_URL } from "./../../../utils/constants";
 
-const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY!;
+const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY_V2!;
 
 /**
  * OpenAIのAPIを呼び出す
