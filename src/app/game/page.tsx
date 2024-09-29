@@ -46,6 +46,7 @@ import styles from "../field.module.css"; // CSSモジュールのインポー�
 import { UtilContext } from "@/context/UtilProvider";
 import Loading from "../components/Loading";
 import { generateQuizData } from "../utils/ai";
+import {generateMonsterData} from "../utils/ai";
 
 const Game = () => {
   const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0 });
@@ -413,16 +414,44 @@ const Game = () => {
 
   useEffect(() => {
     if (steps >= nextBattleSteps) {
-      const randomEnemy = enemies[Math.floor(Math.random() * enemies.length)];
       utilContext.setLoading(true);
-      // AIを呼び出してモンスターのステータスを設定する。
-      setCurrentEnemy(randomEnemy);
-      utilContext.setLoading(false);
-      setIsBattlePopupVisible(true);
-      setIsPlayerTurn(true);
-      setEnemyAttackMessage("");
+
+      // Fetch monster data using generateMonsterData
+      const fetchMonsterData = async () => {
+        const generatedMonster = await generateMonsterData();
+
+        if (generatedMonster) {
+          const enemyData = {
+            name: generatedMonster.name,
+            image: generatedMonster.imageUrl,
+            hp: generatedMonster.health,
+            experience: generatedMonster.rarity * 10,  // You can adjust experience calculation
+          };
+          // Enemy型をつくる
+          const enemy: Enemy = {
+            name: enemyData.name,
+            image: enemyData.image,
+            hp: enemyData.hp,
+            attackRange: [generatedMonster.attack - 5, generatedMonster.attack + 5],
+            experience: enemyData.experience,
+            //description: generatedMonster.description,
+            //defense: generatedMonster.defense,
+          }
+          setCurrentEnemy(enemy);
+        } else {
+          // Fallback in case monster generation fails, use a random static enemy
+          const randomEnemy = enemies[Math.floor(Math.random() * enemies.length)];
+          setCurrentEnemy(randomEnemy);
+        }
+        utilContext.setLoading(false);
+        setIsBattlePopupVisible(true);
+        setIsPlayerTurn(true);
+        setEnemyAttackMessage("");
+      };
+
+      fetchMonsterData();  // Call the monster generation function
     }
-  }, [steps, nextBattleSteps]);
+  }, [steps, nextBattleSteps]);;
 
   // ⑧レベルアップを処理する
   const handleLevelUp = () => {
