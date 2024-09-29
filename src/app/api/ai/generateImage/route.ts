@@ -4,7 +4,7 @@ import axios from "axios";
 import { NextResponse } from "next/server";
 import { OPENAI_API_URL } from "./../../../utils/constants";
 
-const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY_V2!;
+const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY!;
 
 /**
  * OpenAIのAPIを呼び出す
@@ -30,7 +30,7 @@ export async function POST() {
       {
         prompt, // 生成する画像のプロンプトを指定
         n: 1, // 生成する画像の数
-        size: "128x128", // 画像サイズ
+        size: "1280x1280", // 画像サイズ
       },
       {
         headers: {
