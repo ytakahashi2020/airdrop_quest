@@ -57,11 +57,8 @@ export const generateQuizData = async (): Promise<QuizData> => {
     const quizData: QuizData = JSON.parse(responseContent.content);
     return quizData;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error("Axiosのエラーが発生しました:", error);
-    } else {
-      console.error("Axios以外のエラーが発生しました:", error);
-    }
+    console.error("クイズ生成用APIを呼び出している途中でエラーが発生しました:", error);
+    
     return {
       question: "",
       answers: {
