@@ -28,7 +28,7 @@ export async function POST() {
     );
 
     // バックエンド用の鍵ペアを読み込む
-    const keyData = fs.readFileSync(path.join(process.cwd(), "data", "id.json"));
+    const keyData = fs.readFileSync(path.join(process.cwd(), "src", "data", "id.json"));
     const walletFile = JSON.parse(keyData.toString());
     // キーペアを作成
     let keypair = umi.eddsa.createKeypairFromSecretKey(

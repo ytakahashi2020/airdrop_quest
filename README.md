@@ -24,6 +24,7 @@
   | :-- | :----------------------- | :----- | :-------------------- | :-------------------------- |
   | 1   | geneate Moster data API  | POST   | /api/ai               | generate Monster status     |
   | 2   | geneate Moster Image API | POST   | /api/ai/generateImage | generate Monster Image data |
+  | 2   | mint Metaplex NFT API    | POST   | /api/metaplex         | mint Metaplex NFT           |
 
   以下の API のみ AWS CDK を使って AWS 上にサーバーレス API としてデプロイしています。  
   ※ 実行には API キーが必要です。
@@ -34,7 +35,7 @@
   | :-- | :------------------- | :----- | :------------ | :----------------------------- |
   | 1   | geneate Question API | POST   | /generateQuiz | generate Quiz about MagicBlock |
 
-## Backend Wallet Info
+## Backend Wallet for minting Metaplex NFT
 
 [9Vp31rJaFAbJSvNE3jjuyKAsbEtGefzAJdXeHmcn1TFz](https://explorer.solana.com/address/9Vp31rJaFAbJSvNE3jjuyKAsbEtGefzAJdXeHmcn1TFz?cluster=devnet)
 
