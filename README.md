@@ -37,6 +37,9 @@
 
 ## Backend Wallet for minting Metaplex NFT
 
+**This key is a development key!!**  
+**Please don't use this key on mainnet**
+
 [9Vp31rJaFAbJSvNE3jjuyKAsbEtGefzAJdXeHmcn1TFz](https://explorer.solana.com/address/9Vp31rJaFAbJSvNE3jjuyKAsbEtGefzAJdXeHmcn1TFz?cluster=devnet)
 
 ## How to work
