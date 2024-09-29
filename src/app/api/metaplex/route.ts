@@ -38,7 +38,7 @@ export async function POST() {
     umi.use(keypairIdentity(keypair));
 
     // Upload image data
-    const imageFile = fs.readFileSync(path.join(process.cwd(), 'public/images/enemy1.png'));
+    const imageFile = fs.readFileSync(path.join(process.cwd(), 'public/images/nft/winnerNft.png'));
     const umiImageFile = createGenericFile(imageFile, "image.png", {
       tags: [{ name: "Content-Type", value: "image/png" }],
     });
