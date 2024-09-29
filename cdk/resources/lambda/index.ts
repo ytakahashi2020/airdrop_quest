@@ -24,16 +24,16 @@ export const handler = async (
 ): Promise<APIGatewayProxyResult> => {
   
   console.log(`
-    ================================ [START] ================================
+    ================================ [Generate Quiz API START] ================================
   `);
 
   // S3バケット名を指定
   const bucketName = 'solana-radar-hackathon2024'; 
   // ファイル名を指定
   const objectKey = 'MagicBlock.md'; 
-
+  // S3バケットからオブジェクトを取得する。
   const content = await getS3Object(bucketName, objectKey);
-  // ベクトルデータストア
+  // ベクトルデータストアを作成
   const vectorStore = await HNSWLib.fromDocuments(
     [new Document({pageContent: content})],
     new OpenAIEmbeddings()
@@ -51,12 +51,12 @@ export const handler = async (
     ["human", "{question}"],
   ]);
 
-  // モデルを指定
+  // ChatOpenAIインスタンスを生成
   const model = new ChatOpenAI({
     apiKey: OPENAI_API_KEY!,
   });
   const outputParser = new StringOutputParser();
-
+  // セットアップ
   const setupAndRetrieval = RunnableMap.from({
     context: new RunnableLambda({
       func: (input: string) =>
@@ -125,7 +125,7 @@ export const handler = async (
     };
   } finally {
     console.log(`
-      ================================ [END] ================================
+      ================================ [Generate Quiz API END] ================================
     `);
   }
 

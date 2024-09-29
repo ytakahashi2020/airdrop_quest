@@ -11,6 +11,12 @@ import path = require("path");
  * SolanaRadarAPIServerStack
  */
 export class SolanaRadarAPIServerStack extends cdk.Stack {
+  /**
+   * コンストラクター
+   * @param scope 
+   * @param id 
+   * @param props 
+   */
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
@@ -38,7 +44,7 @@ export class SolanaRadarAPIServerStack extends cdk.Stack {
     // S3からファイルを取得するためのポリシー
     const s3ReadPolicy = new iam.PolicyStatement({
       actions: ['s3:GetObject'],
-      resources: ['arn:aws:s3:::solana-radar-hackathon2024/*'], // 必要なS3バケット名に変更
+      resources: ['arn:aws:s3:::solana-radar-hackathon2024/*'], 
     });
 
     // Lambda関数にS3アクセス権限を追加
