@@ -27,6 +27,8 @@ export async function POST() {
             2. attack
             3. defense
             4. rarity
+          
+        healthは5-30,attackは5-20のランダムな数値を割り当ててください。
         
         なお、attributesの中身も json形式で出力してください。
     `;
