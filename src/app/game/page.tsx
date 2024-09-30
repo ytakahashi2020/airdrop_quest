@@ -298,7 +298,9 @@ const handleMagic = async () => {
     // Trigger quiz mode
     setIsQuizActive(true); // Keep the circle visible by setting quiz to active
     setIsMagicProcessing(true); // Start magic processing
-    setQuizOptions(await generateQuiz());
+    if (quizText === "") {
+      setQuizOptions(await generateQuiz());
+    }
   }
 };
 
