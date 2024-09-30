@@ -379,8 +379,6 @@ const handleQuizAnswer = (answer: string) => {
     
     // エフェクトを表示する
     setEnemyOpacity(0.5); // 敵がヒットした時の透明度を変更
-    setShowAttackEffect(true); // 攻撃エフェクトを表示
-    setShowMagicEffect(true); // 魔法エフェクトを表示（必要に応じて）
   
     // エフェクト表示時間を確保
     setTimeout(() => {
