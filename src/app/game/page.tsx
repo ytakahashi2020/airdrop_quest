@@ -61,7 +61,7 @@ const Game = () => {
 
   const [herbCount, setHerbCount] = useState(0); // やくそうの所持数
   const [isBattlePopupVisible, setIsBattlePopupVisible] = useState(false);
-  const [nextBattleSteps, setNextBattleSteps] = useState<number>(0);
+  const [nextBattleSteps, setNextBattleSteps] = useState<number>(10);
   const [steps, setSteps] = useState<number>(0);
 
   const [currentEnemy, setCurrentEnemy] = useState<Enemy | null>(null);
