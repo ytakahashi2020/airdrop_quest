@@ -80,6 +80,7 @@ export const handler = async (
 
         問題と回答は次の例に従ってJSON形式で出力してください。
         なお、correct_answerの値は必ずしも Aである必要はありません。
+        correct_answerの値はきごうではなく、回答の内容を指定してください。
 
         よろしくお願いします。
 

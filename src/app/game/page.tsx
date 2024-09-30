@@ -318,6 +318,8 @@ const handleQuizAnswer = (answer: string) => {
   if (!quizOptions.includes(correctAnswer)) {
     setQuizText(""); // クイズをリセット
     setQuizOptions([]); // オプションをリセット
+    setCorrectAnswer(""); // 正解をリセット
+    setIsQuizActive(false); // クイズを非アクティブにする
     setIsMagicProcessing(false); // 魔法処理をリセット
     return;
   }
@@ -354,6 +356,7 @@ const handleQuizAnswer = (answer: string) => {
     // 正解後、クイズをリセットして次回のターンで新しいクイズが出題される
     setQuizText(""); // 正解後はクイズをリセット
     setQuizOptions([]); // 正解後はクイズをリセット
+    setCorrectAnswer(""); // 正解後はクイズをリセット
     setIsMagicProcessing(false); // 魔法処理終了
   };
 
