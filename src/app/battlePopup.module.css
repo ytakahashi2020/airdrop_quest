@@ -51,6 +51,8 @@
   background-position: center;
   display: flex;
   justify-content: center;
+  border-radius: 20px; /* 角丸 */
+  border: 6px solid white; /* 白い枠を6pxに設定 */
 }
 
 .enemyPopup {

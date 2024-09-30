@@ -425,26 +425,26 @@ const handleQuizAnswer = (answer: string) => {
 
       // Fetch monster data using generateMonsterData
       const fetchMonsterData = async () => {
-        //const generatedMonster = await generateMonsterData();
-        //if (generateMonsterData) {
-        //  const enemyData = {
-        //    name: generatedMonster.name,
-        //    image: generatedMonster.imageUrl,
-        //    hp: generatedMonster.health,
-        //    experience: generatedMonster.rarity * 10,  // You can adjust experience calculation
-        //  };
-        //  // Enemy型をつくる
-        //  const enemy: Enemy = {
-        //    name: enemyData.name,
-        //    image: enemyData.image,
-        //    hp: enemyData.hp,
-        //    attackRange: [generatedMonster.attack - 5, generatedMonster.attack + 5],
-        //    experience: enemyData.experience,
-        //    //description: generatedMonster.description,
-        //    //defense: generatedMonster.defense,
-        //  }
-        //  setCurrentEnemy(enemy);
-        //} 
+       // const generatedMonster = await generateMonsterData();
+       // if (generatedMonster != null) {
+       //   const enemyData = {
+       //     name: generatedMonster.name,
+       //     image: generatedMonster.imageUrl,
+       //     hp: generatedMonster.health,
+       //     experience: generatedMonster.rarity * 10,  // You can adjust experience calculation
+       //   };
+       //   // Enemy型をつくる
+       //   const enemy: Enemy = {
+       //     name: enemyData.name,
+       //     image: enemyData.image,
+       //     hp: enemyData.hp,
+       //     attackRange: [generatedMonster.attack - 5, generatedMonster.attack + 5],
+       //     experience: enemyData.experience,
+       //     //description: generatedMonster.description,
+       //     //defense: generatedMonster.defense,
+       //   }
+       //   setCurrentEnemy(enemy);
+       // } 
 
         // Fallback in case monster generation fails, use a random static enemy
         const randomEnemy = enemies[Math.floor(Math.random() * enemies.length)];

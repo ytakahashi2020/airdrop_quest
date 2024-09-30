@@ -23,6 +23,7 @@ export async function POST() {
         - A posture that gives off an intimidating presence
         - A design reminiscent of old-school games
         - Please make the background transparent.
+        - background ground color is #000000
     `;
 
     const response = await axios.post(
