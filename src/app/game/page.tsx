@@ -44,6 +44,7 @@ import { UtilContext } from "@/context/UtilProvider";
 import Loading from "../components/Loading";
 import { generateQuizData } from "../utils/ai";
 import {generateMonsterData} from "../utils/ai";
+import { set } from "@metaplex-foundation/umi/serializers";
 
 const Game = () => {
   const [playerPosition, setPlayerPosition] = useState({ x: 10, y: 10 });
@@ -325,6 +326,7 @@ const handleQuizAnswer = (answer: string) => {
 
     // 正解後、クイズをリセットして次回のターンで新しいクイズが出題される
     setQuizText(""); // 正解後はクイズをリセット
+    setQuizOptions([]); // 正解後はクイズをリセット
     setIsMagicProcessing(false); // 魔法処理終了
   };
 
