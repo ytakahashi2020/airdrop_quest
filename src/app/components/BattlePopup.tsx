@@ -37,6 +37,36 @@ const PlayerStatusPopup: React.FC<{
   );
 };
 
+const EnemyStatusPopup: React.FC<{
+  enemyName: string;
+  enemyHp: number;
+}> = ({ enemyName, enemyHp }) => {
+  return (
+    <div
+      style={{
+        position: "fixed",
+        top: "13%",
+        left: "7%",
+        width: "20%",
+        height: "15%",
+        paddingTop: "20px",
+        color: "white",
+        backgroundColor: "black",
+        border: "6px solid white",
+        borderRadius: "16px",
+        zIndex: 10000,
+        textAlign: "left",
+        paddingLeft: "40px", // 左右に余白を作成
+      }}
+    >
+      <div> {enemyName} </div>
+      <div style={{paddingTop: "8px"}}>
+        <p>HP: {enemyHp}</p>
+      </div>
+    </div>
+  );
+};
+
 // 戦闘の選択ポップアップ
 const BattleOptionsPopup: React.FC<{
   onAttack: () => void;
@@ -171,6 +201,11 @@ const BattlePopup: React.FC<BattlePopupProps> = (props) => {
   return (
     <>
       {/* 左側：主人公のステータス */}
+      <EnemyStatusPopup
+        enemyName={props.enemy.name}
+        enemyHp={props.enemy.hp}
+        ></EnemyStatusPopup>
+
       <PlayerStatusPopup
         playerHp={props.playerHp}
         playerMp={props.playerMp}
