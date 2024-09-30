@@ -45,6 +45,7 @@ import Loading from "../components/Loading";
 import { generateQuizData } from "../utils/ai";
 import {generateMonsterData} from "../utils/ai";
 import { set } from "@metaplex-foundation/umi/serializers";
+import { randomInt } from "crypto";
 
 const Game = () => {
   const [playerPosition, setPlayerPosition] = useState({ x: 10, y: 10 });
@@ -144,7 +145,6 @@ const Game = () => {
     utilContext.setLoading(false);
     return [quizData?.answers.A, quizData?.answers.B, quizData?.answers.C, quizData.answers.D];
   };
-
 
   // ①音源の初期化
   useEffect(() => {
@@ -298,8 +298,10 @@ const handleMagic = async () => {
     // Trigger quiz mode
     setIsQuizActive(true); // Keep the circle visible by setting quiz to active
     setIsMagicProcessing(true); // Start magic processing
-    if (quizText === ""){
-      setQuizOptions(await generateQuiz());
+    setQuizOptions(await generateQuiz());
+    if (quizText === "") {
+      setIsQuizActive(false); // Keep the circle visible by setting quiz to active
+      setIsMagicProcessing(false); // Start magic processing
     }
   }
 };
