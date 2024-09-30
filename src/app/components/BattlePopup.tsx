@@ -22,9 +22,10 @@ const PlayerStatusPopup: React.FC<{
         border: "3px solid white",
         borderRadius: "7px",
         zIndex: 1000,
+        textAlign: "center",
       }}
     >
-      <h3>ユウキ</h3>
+      <h3>Qudo</h3>
       <div
         style={{
           height: "1px",
@@ -85,7 +86,7 @@ const BattleOptionsPopup: React.FC<{
     <div className={`${styles.commonPopup} ${styles.battlePopup}`}>
       {/* ボタンの配置 */}
       <div style={{ marginBottom: "10px", textAlign: "center" }}>
-        <h3>ユウキ</h3>
+        <h3>Qudo</h3>
         <div
           style={{
             height: "2px",
@@ -94,17 +95,17 @@ const BattleOptionsPopup: React.FC<{
           }}
         />
         <button onClick={onAttack} className={styles.battleCommand}>
-          たたかう
+          Attack
         </button>
         <button onClick={onMagic} className={styles.battleCommand}>
-          まほう
+          Magic
         </button>
         <button
           onClick={onUseHerb}
           disabled={herbCount === 0} // やくそうがない場合は無効化
           className={styles.battleCommand}
         >
-          やくそう ({herbCount}個)
+          Herb ({herbCount})
         </button>
       </div>
     </div>
@@ -206,7 +207,7 @@ const CommandPopup: React.FC<{
         </div>
       ) : (
         // クイズが非アクティブの場合は通常のメッセージまたはクイズ結果メッセージを表示
-        <p>{quizResultMessage || enemyAttackMessage || `${enemy?.name || "未知の敵"}が現れた！`}</p>
+        <p>{quizResultMessage || enemyAttackMessage || `${enemy?.name || "Enemy"} appeared!`}</p>
       )}
     </div>
   );

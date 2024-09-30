@@ -6,7 +6,7 @@ export const RANDOM_STEP_OFFSET = 7;
 // プレイヤーが攻撃で与えるダメージ
 export const PLAYER_ATTACK_DAMAGE = 6;
 // プレイヤーが魔法で与えるダメージ
-export const PLAYER_MAGIC_DAMAGE = 14;
+export const PLAYER_MAGIC_DAMAGE = 18;
 // 敵を倒した後の遅延時間
 export const ENEMY_DEFEAT_DELAY = 500;
 // 勝利ポップアップの表示時間

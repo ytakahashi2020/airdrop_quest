@@ -237,7 +237,8 @@ const Game = () => {
           const gainedExp = currentEnemy.experience;
           // setPlayerExp((prevExp) => prevExp + gainedExp); // 経験値を追加
           handleGainExperience(gainedExp);
-          setGainedExpMessage(`${gainedExp}の経験値を取得しました`); // メッセージを設定
+          setGainedExpMessage(`Gained ${gainedExp} experience points`); // Set message
+
           console.log("leveledUp", leveledUp);
           if (victorySound) victorySound.play();
           setIsBattlePopupVisible(false);
@@ -294,7 +295,8 @@ const Game = () => {
     };
   
     const handleMagicSuccess = () => {
-      setQuizResultMessage(`正解！魔法が成功しました！`);
+      setQuizResultMessage(`Correct! The spell was successful!`);
+
       setEnemyOpacity(0.5); // 敵がヒットした時の透明度
       setShowMagicEffect(true); // 魔法エフェクトを表示
     
@@ -314,7 +316,8 @@ const Game = () => {
     };
   
     const handleMagicFailure = () => {
-      setQuizResultMessage(`不正解...魔法が失敗しました。`);
+      setQuizResultMessage(`Incorrect... The spell failed.`);
+
       setIsPlayerTurn(false);
       
       setTimeout(() => {
@@ -356,7 +359,7 @@ const Game = () => {
       // 経験値を獲得
       const gainedExp = currentEnemy.experience;
       handleGainExperience(gainedExp);
-      setGainedExpMessage(`${gainedExp}の経験値を取得しました`);
+      setGainedExpMessage(`Gained ${gainedExp} experience points`);
     
       if (victorySound) victorySound.play();
       

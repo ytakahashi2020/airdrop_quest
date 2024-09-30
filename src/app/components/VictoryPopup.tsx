@@ -18,10 +18,11 @@ const VictoryPopup: React.FC<VictoryPopupProps> = ({
         backgroundColor: "white",
         padding: "20px",
         border: "2px solid black",
+        color: "black",
         zIndex: 1000,
       }}
     >
-      <h2>敵を倒しました！</h2>
+      <h2>You defeated the enemy!</h2>
       {herbMessage && <p>{herbMessage}</p>}
       {gainedExpMessage && <p>{gainedExpMessage}</p>}{" "}
       {/* 取得した経験値メッセージを表示 */}

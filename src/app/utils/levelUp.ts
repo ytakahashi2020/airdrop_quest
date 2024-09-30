@@ -21,10 +21,10 @@ export const levelUp = (
   setPlayerAttack((prevAttack) => prevAttack + attackIncrease);
   setPlayerDefense((prevDefense) => prevDefense + defenseIncrease);
 
-  // レベルアップメッセージを設定
-  setLevelUpMessage(`レベルが${playerLevel + 1}に上がりました！`);
+  // Set level up message
+  setLevelUpMessage(`Leveled up to ${playerLevel + 1}!`);
   setStatIncreaseMessage(
-    `HP: +${hpIncrease} MP: +${mpIncrease} 攻撃力: +${attackIncrease} 防御力: +${defenseIncrease}`
+    `HP: +${hpIncrease} MP: +${mpIncrease} Attack: +${attackIncrease} Defense: +${defenseIncrease}`
   );
 };
 

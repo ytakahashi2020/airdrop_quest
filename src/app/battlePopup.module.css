@@ -6,6 +6,7 @@
   border-radius: 7px;
   padding: 10px;
   z-index: 1000;
+  text-align: center;
 }
 
 .commonPopup {
@@ -56,10 +57,6 @@
   padding: 20px 30px;
 }
 
-.enemyAttackImagePopup {
-  top: 30%;
-  padding: 20px 30px;
-}
 
 .enemyAttackImagePopup::before {
   content: "";
