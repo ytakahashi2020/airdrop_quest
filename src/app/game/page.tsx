@@ -228,6 +228,8 @@ const Game = () => {
         setShowAttackEffect(false);
       }, ATTACK_EFFECT_TIME);
 
+      setEnemyAttackMessage(`Dealt ${PLAYER_ATTACK_DAMAGE} damage`); // Display damage
+
       // 敵のHPが0以下になったら
       if (newHp <= 0) {
         setCurrentEnemy({ ...currentEnemy, hp: 0 });
