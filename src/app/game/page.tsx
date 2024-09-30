@@ -356,6 +356,7 @@ const handleQuizAnswer = (answer: string) => {
   // 敵が倒されたときの処理
   const handleVictory = () => {
     if (!currentEnemy) return; // Add null check for currentEnemy
+    setSteps(0);
 
     setCurrentEnemy({ ...currentEnemy, hp: 0 });
     
@@ -429,10 +430,12 @@ const handleQuizAnswer = (answer: string) => {
 
   useEffect(() => {
     if (steps >= nextBattleSteps) {
+      setIsBattlePopupVisible(true);
+      setSteps(0);
       utilContext.setLoading(true);
 
       // Fetch monster data using generateMonsterData
-      const fetchMonsterData = async () => {
+      //const fetchMonsterData = async () => {
        // const generatedMonster = await generateMonsterData();
        // if (generatedMonster != null) {
        //   const enemyData = {
@@ -458,12 +461,9 @@ const handleQuizAnswer = (answer: string) => {
         const randomEnemy = enemies[Math.floor(Math.random() * enemies.length)];
         setCurrentEnemy(randomEnemy);
         utilContext.setLoading(false);
-        setIsBattlePopupVisible(true);
         setIsPlayerTurn(true);
         setEnemyAttackMessage("");
-      };
-
-      fetchMonsterData();  // Call the monster generation function
+        //fetchMonsterData();  // Call the monster generation function
     }
   }, [steps, nextBattleSteps]);;
 
