@@ -14,8 +14,6 @@ export const handleKeyPress = (
   setDirection: React.Dispatch<
     React.SetStateAction<"up" | "down" | "left" | "right">
   >,
-  treePositions: Array<{ x: number; y: number }>,
-  waterPositions: Array<{ x: number; y: number }>,
   setSteps: React.Dispatch<React.SetStateAction<number>>,
   isBattlePopupVisible: boolean
 ) => {
@@ -136,7 +134,7 @@ export const startRandomBattleSteps = (
   setSteps: React.Dispatch<React.SetStateAction<number>>
 ) => {
   const randomSteps =
-    Math.floor(Math.random() * RANDOM_STEP_MULTIPLIER) + RANDOM_STEP_OFFSET;
+    Math.floor(Math.random() * RANDOM_STEP_MULTIPLIER) + RANDOM_STEP_OFFSET + 100;
   setNextBattleSteps(randomSteps);
   setSteps(0);
 };
