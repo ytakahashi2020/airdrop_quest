@@ -4,22 +4,22 @@ export const enemies: Enemy[] = [
   {
     name: "Pallot Yyvern",
     image: "/images/enemy1.png",
-    hp: 6,
-    attackRange: [1, 3],
+    hp: 7,
+    attackRange: [3, 5],
     experience: 30,
   },
   {
     name: "Space Alien",
     image: "/images/enemy2.png",
     hp: 18,
-    attackRange: [4, 6],
+    attackRange: [4, 7],
     experience: 40,
   },
   {
     name: "Shadow Behemoth",
     image: "/images/enemy3.png",
-    hp: 36,
-    attackRange: [7, 9],
+    hp: 24,
+    attackRange: [7, 12],
     experience: 50,
   },
 ];

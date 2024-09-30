@@ -48,7 +48,7 @@ import { set } from "@metaplex-foundation/umi/serializers";
 
 const Game = () => {
   const [playerPosition, setPlayerPosition] = useState({ x: 10, y: 10 });
-  const [playerHp, setPlayerHp] = useState(50); // HP
+  const [playerHp, setPlayerHp] = useState(40); // HP
   const [playerMp, setPlayerMp] = useState(30); // MP
   const [playerLevel, setPlayerLevel] = useState(1); // レベル
   const [playerExp, setPlayerExp] = useState(0); // 累積経験値
@@ -211,7 +211,24 @@ const Game = () => {
       enemyAttackSound,
       setShowEnemyAttackEffectEffect
     );
+
   };
+
+  useEffect(() => {
+    // player HPが0以下になったら
+    if (playerHp <= 0) {
+      handleGameOver();
+    }
+  })
+
+  const handleGameOver = () => {
+  setPlayerHp(50); // HPのリセット
+  setPlayerMp(30); // MPのリセット
+  setPlayerPosition({ x: 10, y: 10 }); // プレイヤー位置のリセット
+  setIsBattlePopupVisible(false); // バトル画面を閉じる
+  setIsVictoryPopupVisible(false); // 勝利画面を閉じる
+  setSteps(0); // 歩数のリセット
+  }
 
   // ⑦敵への攻撃
   const handleAttack = () => {
