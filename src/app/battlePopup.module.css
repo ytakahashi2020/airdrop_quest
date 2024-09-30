@@ -22,7 +22,7 @@
 }
 
 .battlePopup {
-  text-align: center;
+  text-align: left;
   border-radius: 16px;
   bottom: 13%;
   font-size: 16px;
@@ -119,25 +119,23 @@
 .quizPopup {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  text-align: left;
   gap: 10px;
 }
 
 .quizOptions {
   display: flex;
   flex-direction: column;
-  width: 80%;
-  gap: 10px;
+  width: 100%;
+  gap: 5px;
 }
 
 .quizOptions button {
-  padding: 10px;
-  background-color: #444;
   color: white;
-  border: 2px solid white;
+  text-align: left;
   border-radius: 5px;
   cursor: pointer;
-  text-align: center;
+  padding: 4px;
 }
 
 .quizOptions button:hover {

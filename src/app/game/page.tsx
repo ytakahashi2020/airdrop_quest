@@ -214,7 +214,7 @@ const Game = () => {
 
   // ⑦敵への攻撃
   const handleAttack = () => {
-    if (currentEnemy && isPlayerTurn) {
+    if (currentEnemy && isPlayerTurn && !isQuizActive) {
       if (swordSound)
         swordSound
           .play()
