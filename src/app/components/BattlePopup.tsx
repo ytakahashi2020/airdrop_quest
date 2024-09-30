@@ -192,6 +192,7 @@ const CommandPopup: React.FC<{
       {isQuizActive ? (
         // クイズがアクティブな場合、クイズを表示する
         <div className={styles.quizPopup}>
+          <div> {quizText == "" ?  "Qudo quietly raised his wonder wand." : "" }</div>
           <p> {quizText} </p>
           <div className={styles.quizOptions}>
             {quizOptions?.map((option, index) => (
