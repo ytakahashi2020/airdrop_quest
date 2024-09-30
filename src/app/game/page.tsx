@@ -300,6 +300,11 @@ const handleMagic = async () => {
     setIsMagicProcessing(true); // Start magic processing
     if (quizText === "") {
       setQuizOptions(await generateQuiz());
+      if (correctAnswer === "NONE") {
+        setIsQuizActive(false);
+        setIsMagicProcessing(false);
+        return;
+      }
     }
   }
 };
