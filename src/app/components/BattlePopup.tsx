@@ -105,6 +105,7 @@ const EnemyPopup: React.FC<{
   showAttackEffect: boolean;
   showMagicEffect: boolean;
   showEnemyAttackEffect: boolean;
+  isQuizActive: boolean; // Add this prop to check if the quiz is active
 }> = ({
   enemy,
   isPlayerTurn,
@@ -114,6 +115,7 @@ const EnemyPopup: React.FC<{
   showAttackEffect,
   showMagicEffect,
   showEnemyAttackEffect,
+  isQuizActive, // Receive this prop
 }) => {
   return (
     <div
@@ -137,17 +139,29 @@ const EnemyPopup: React.FC<{
           className={styles.commonEffect}
         />
       )}
-      <img
-        src={enemy.image}
-        alt="Enemy"
-        style={{
-          opacity: enemyOpacity,
-        }}
-        className={styles.enemyImage}
-      />
+<div className={styles.enemyImageContainer}>
+  <img
+    src={enemy.image}
+    alt="Enemy"
+    style={{
+      opacity: enemyOpacity,
+    }}
+    className={styles.enemyImage}
+  />
+
+  {isQuizActive && (
+    <img
+      src="/images/spinningImage.png" // Replace with your spinning PNG image path
+      alt="Spinning Image"
+      className={styles.spinningImage}
+    />
+  )}
+</div>
+
     </div>
   );
 };
+
 
 // メッセージやコマンドを表示するポップアップ
 const CommandPopup: React.FC<{
@@ -221,15 +235,16 @@ const BattlePopup: React.FC<BattlePopupProps> = (props) => {
 
       {/* 中央：敵の画像 */}
       <EnemyPopup
-        enemy={props.enemy}
-        isPlayerTurn={props.isPlayerTurn}
-        onAttack={props.onAttack}
-        onMagic={props.onMagic}
-        enemyOpacity={props.enemyOpacity}
-        showAttackEffect={props.showAttackEffect}
-        showMagicEffect={props.showMagicEffect}
-        showEnemyAttackEffect={props.showEnemyAttackEffect}
-      />
+  enemy={props.enemy}
+  isPlayerTurn={props.isPlayerTurn}
+  onAttack={props.onAttack}
+  onMagic={props.onMagic}
+  enemyOpacity={props.enemyOpacity}
+  showAttackEffect={props.showAttackEffect}
+  showMagicEffect={props.showMagicEffect}
+  showEnemyAttackEffect={props.showEnemyAttackEffect}
+  isQuizActive={props.isQuizActive} // Pass this prop
+/>
 
       {/* 下：コマンドやメッセージ */}
       <CommandPopup

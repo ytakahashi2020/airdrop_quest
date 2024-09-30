@@ -277,14 +277,17 @@ const Game = () => {
 // ⑦敵への攻撃(魔法)
 const handleMagic = async () => {
   if (currentEnemy && isPlayerTurn && !isQuizActive && !isMagicProcessing) {
-    // クイズがまだない場合、新しいクイズを生成
+    // Trigger quiz mode
+    setIsQuizActive(true); // Keep the circle visible by setting quiz to active
+
+    // The rest of your logic for generating and displaying the quiz
     if (!quizText) {
-      setQuizOptions(await generateQuiz()); // クイズの選択肢を生成
+      setQuizOptions(await generateQuiz());
     }
-    setIsQuizActive(true); // クイズをアクティブにする
-    setIsMagicProcessing(true); // 魔法処理開始を示す
+    setIsMagicProcessing(true); // Start magic processing
   }
 };
+
 
 // クイズの回答処理
 const handleQuizAnswer = (answer: string) => {
