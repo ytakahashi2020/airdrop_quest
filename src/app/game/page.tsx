@@ -20,10 +20,7 @@ import {
 
 import { enemies } from "../utils/enemies";
 import { playerImages } from "../utils/playerImages"; // playerImagesをインポート
-import {
-  treePositions,
-  waterPositions
-} from "../utils/positions";
+
 import { Enemy, QuizData } from "../utils/types"; // 型定義をインポート
 
 import { gainExperience, levelUp } from "../utils/levelUp";
@@ -388,8 +385,6 @@ const Game = () => {
         playerPosition,
         setPlayerPosition,
         setDirection,
-        treePositions,
-        waterPositions,
         setSteps,
         isBattlePopupVisible
       );
