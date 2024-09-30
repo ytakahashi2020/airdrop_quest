@@ -85,7 +85,7 @@ export const enemyAttack = (
     const damage =
       Math.floor(Math.random() * (maxAttack - minAttack + 1)) + minAttack;
     setPlayerHp((prevHp) => Math.max(prevHp - damage, 0));
-    setEnemyAttackMessage(`${currentEnemy.name}による攻撃: ${damage} ダメージ`);
+    setEnemyAttackMessage(`${currentEnemy.name} Attacked: ${damage} damage`);
     setIsPlayerTurn(true);
   }
 };
@@ -105,7 +105,8 @@ export const handleUseHerb = (
       return Math.min(prevHp + healAmount, 50); // HPが50を超えないようにする
     });
     setHerbCount((prev) => prev - 1); // やくそうの数を減らす
-    setEnemyAttackMessage(`やくそうを使ってHPが${healAmount}回復した！`);
+    setEnemyAttackMessage(`Used an herb and restored ${healAmount} HP!`);
+
     if (herbSound)
       herbSound
         .play()
@@ -122,7 +123,7 @@ export const attemptHerbDrop = (
   const herbDrop = Math.random() < 0.9; // 50%の確率でやくそうをドロップ
   if (herbDrop) {
     setHerbCount((prev) => prev + 1); // やくそうの数を増やす
-    setHerbMessage(`${currentEnemy?.name}はやくそうをおとした`);
+    setHerbMessage(`${currentEnemy?.name} dropped an herb`);
   } else {
     setHerbMessage(""); // やくそうを入手しなかった場合はリセット
   }
@@ -134,7 +135,7 @@ export const startRandomBattleSteps = (
   setSteps: React.Dispatch<React.SetStateAction<number>>
 ) => {
   const randomSteps =
-    Math.floor(Math.random() * RANDOM_STEP_MULTIPLIER) + RANDOM_STEP_OFFSET + 100;
+    Math.floor(Math.random() * RANDOM_STEP_MULTIPLIER) + RANDOM_STEP_OFFSET + 10;
   setNextBattleSteps(randomSteps);
   setSteps(0);
 };

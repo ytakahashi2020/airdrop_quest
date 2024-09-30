@@ -3,10 +3,9 @@ import Link from "next/link";
 const Home = () => {
   return (
     <div style={{ textAlign: "center" }}>
-      <h1>RPGフィールドゲーム</h1>
-      <p>フィールドでプレイヤーを動かしてみよう！</p>
+      <h1>Qdrop Adventures</h1>
       <Link href="/game">
-        <button>ゲームを開始</button>
+        <button>Play</button>
       </Link>
     </div>
   );
