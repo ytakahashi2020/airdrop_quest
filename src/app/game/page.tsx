@@ -298,12 +298,8 @@ const handleMagic = async () => {
     // Trigger quiz mode
     setIsQuizActive(true); // Keep the circle visible by setting quiz to active
     setIsMagicProcessing(true); // Start magic processing
-    setQuizText("Qudo quietly raised his magic wand."); // Reset the quiz text
-
-    // The rest of your logic for generating and displaying the quiz
-    if (!quizText) {
-      setQuizOptions(await generateQuiz());
-    }
+    setQuizText("Qudo quietly raised his wonder wand."); // Reset the quiz text
+    setQuizOptions(await generateQuiz());
   }
 };
 
@@ -379,8 +375,6 @@ const handleQuizAnswer = (answer: string) => {
     
     // エフェクトを表示する
     setEnemyOpacity(0.5); // 敵がヒットした時の透明度を変更
-    setShowAttackEffect(true); // 攻撃エフェクトを表示
-    setShowMagicEffect(true); // 魔法エフェクトを表示（必要に応じて）
   
     // エフェクト表示時間を確保
     setTimeout(() => {
