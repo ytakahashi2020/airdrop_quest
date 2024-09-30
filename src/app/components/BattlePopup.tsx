@@ -16,42 +16,22 @@ const PlayerStatusPopup: React.FC<{
         right: "3%",
         width: "15%",
         height: "30%",
-        paddingTop: "10px",
-        paddingBottom: "10px",
+        paddingTop: "20px",
         color: "white",
         backgroundColor: "black",
         border: "6px solid white",
         borderRadius: "16px",
         zIndex: 10000,
-        textAlign: "center",
+        textAlign: "left",
+        paddingLeft: "40px", // 左右に余白を作成
       }}
     >
-      <h3>Qudo</h3>
-
-      {/* ここで右端揃えと空白調整 */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          paddingLeft: "40px", // 左右に余白を作成
-          paddingRight: "40px",
-          gap: "10px", // 左と右のテキストの間に隙間を作成
-        }}
-      >
-        <p>HP</p>
-        <p>{playerHp}</p>
+      <div >Qudo</div>
+      <div style={{paddingTop: "8px"}}>
+        <p>HP: {playerHp}</p>
       </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          paddingLeft: "40px", // 左右に余白を作成
-          paddingRight: "40px",
-          gap: "10px",
-        }}
-      >
-        <p>Lv</p>
-        <p>{playerLevel}</p>
+      <div >
+        <p>LV: {playerLevel}</p>
       </div>
     </div>
   );
@@ -66,16 +46,7 @@ const BattleOptionsPopup: React.FC<{
 }> = ({ onAttack, onMagic, onUseHerb, herbCount }) => {
   return (
     <div className={`${styles.commonPopup} ${styles.battlePopup}`}>
-      {/* ボタンの配置 */}
-      <div style={{ marginBottom: "10px", textAlign: "center" }}>
-        <h3>Qudo</h3>
-        <div
-          style={{
-            height: "2px",
-            backgroundColor: "white",
-            margin: "10px 0", // 上下の余白を調整
-          }}
-        />
+      <div>
         <button onClick={onAttack} className={styles.battleCommand}>
           Attack
         </button>
