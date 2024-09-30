@@ -309,6 +309,19 @@ const handleMagic = async () => {
 const handleQuizAnswer = (answer: string) => {
   if (!currentEnemy) return; // currentEnemyが存在しない場合は終了
 
+  console.log("Answered:", answer);
+  console.log("Correct Answer:", correctAnswer);
+  console.log("Quiz Text:", quizText);
+  console.log("Quiz Options:", quizOptions);
+
+  // オプションの中に正解が含まれていない場合
+  if (!quizOptions.includes(correctAnswer)) {
+    setQuizText(""); // クイズをリセット
+    setQuizOptions([]); // オプションをリセット
+    setIsMagicProcessing(false); // 魔法処理をリセット
+    return;
+  }
+
   setQuizAnswer(answer);
   setIsQuizActive(false); // クイズを非アクティブにする
 
