@@ -2,7 +2,7 @@ import { Enemy } from "./types"; // 必要であれば、Enemyの型を定義し
 
 export const enemies: Enemy[] = [
   {
-    name: "Pallot Yyvern",
+    name: "Pallot Wyvern",
     image: "/images/enemy1.png",
     hp: 7,
     attackRange: [3, 5],
