@@ -67,7 +67,7 @@ export const generateQuizData = async (): Promise<QuizData> => {
         C: "",
         D: ""
       },
-      correct_answer: ""
+      correct_answer: "NONE"
     }
   }
 };
