@@ -12,27 +12,21 @@ const PlayerStatusPopup: React.FC<{
     <div
       style={{
         position: "fixed",
-        top: "30%",
-        left: "7%",
-        width: "145px",
+        top: "60%",
+        right: "3%",
+        width: "15%",
+        height: "30%",
         paddingTop: "10px",
         paddingBottom: "10px",
         color: "white",
         backgroundColor: "black",
-        border: "3px solid white",
-        borderRadius: "7px",
-        zIndex: 1000,
+        border: "6px solid white",
+        borderRadius: "16px",
+        zIndex: 10000,
         textAlign: "center",
       }}
     >
       <h3>Qudo</h3>
-      <div
-        style={{
-          height: "1px",
-          backgroundColor: "white",
-          margin: "10px 0", // 上下の余白を調整
-        }}
-      />
 
       {/* ここで右端揃えと空白調整 */}
       <div
@@ -44,20 +38,8 @@ const PlayerStatusPopup: React.FC<{
           gap: "10px", // 左と右のテキストの間に隙間を作成
         }}
       >
-        <p>H</p>
+        <p>HP</p>
         <p>{playerHp}</p>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          paddingLeft: "40px", // 左右に余白を作成
-          paddingRight: "40px",
-          gap: "10px",
-        }}
-      >
-        <p>M</p>
-        <p>{playerMp}</p>
       </div>
       <div
         style={{
@@ -162,7 +144,6 @@ const EnemyPopup: React.FC<{
         }}
         className={styles.enemyImage}
       />
-      <p>HP: {enemy.hp}</p>
     </div>
   );
 };
