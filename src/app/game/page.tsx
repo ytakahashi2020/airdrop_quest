@@ -214,7 +214,7 @@ const Game = () => {
 
   // ⑦敵への攻撃
   const handleAttack = () => {
-    if (currentEnemy && isPlayerTurn) {
+    if (currentEnemy && isPlayerTurn && !isQuizActive) {
       if (swordSound)
         swordSound
           .play()
@@ -227,6 +227,8 @@ const Game = () => {
         setEnemyOpacity(1);
         setShowAttackEffect(false);
       }, ATTACK_EFFECT_TIME);
+
+      setEnemyAttackMessage(`Dealt ${PLAYER_ATTACK_DAMAGE} damage`); // Display damage
 
       // 敵のHPが0以下になったら
       if (newHp <= 0) {
@@ -275,14 +277,18 @@ const Game = () => {
 // ⑦敵への攻撃(魔法)
 const handleMagic = async () => {
   if (currentEnemy && isPlayerTurn && !isQuizActive && !isMagicProcessing) {
-    // クイズがまだない場合、新しいクイズを生成
+    // Trigger quiz mode
+    setIsQuizActive(true); // Keep the circle visible by setting quiz to active
+    setIsMagicProcessing(true); // Start magic processing
+    setQuizText("Qudo quietly raised his magic wand."); // Reset the quiz text
+
+    // The rest of your logic for generating and displaying the quiz
     if (!quizText) {
-      setQuizOptions(await generateQuiz()); // クイズの選択肢を生成
+      setQuizOptions(await generateQuiz());
     }
-    setIsQuizActive(true); // クイズをアクティブにする
-    setIsMagicProcessing(true); // 魔法処理開始を示す
   }
 };
+
 
 // クイズの回答処理
 const handleQuizAnswer = (answer: string) => {
@@ -545,6 +551,7 @@ return (
           quizOptions={quizOptions} // クイズの選択肢
           onQuizAnswer={handleQuizAnswer} // クイズ回答ハンドラ
           quizResultMessage={quizResultMessage} // クイズ結果メッセージ
+          isMagicProcessing={isMagicProcessing} // 魔法処理中かどうか
         />
       )}
 

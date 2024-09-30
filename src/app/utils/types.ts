@@ -29,6 +29,7 @@ export type BattlePopupProps = {
   showMagicEffect: boolean;
   showEnemyAttackEffect: boolean;
   isMagicConfirmVisible: boolean;
+  isMagicProcessing: boolean;
   
   // クイズ関連のプロパティ
   isQuizActive: boolean; // クイズがアクティブかどうか

@@ -22,14 +22,14 @@
 }
 
 .battlePopup {
-  text-align: center;
+  text-align: left;
   border-radius: 16px;
   bottom: 13%;
   font-size: 16px;
   left: 7%;
   height: 27%;
   width: 15%;
-  z-index: 100000;
+  
 }
 
 .commandPopup {
@@ -42,6 +42,7 @@
   padding-left: 5%;
   padding-right: 5%;
   font-size: 20px;
+  z-index: 1000000000;
 }
 
 .enemyPopup, .enemyAttackImagePopup {
@@ -101,13 +102,6 @@
 
 /* 敵画像 */
 .enemyImage {
-  object-fit: contain;
-  transition: opacity 0.3s;
-  position: relative;
-  top: 15%;
-  height: 70%;
-  border-radius: 10px; /* 角丸 */
-  border: 5px solid white; /* 白い枠を6pxに設定 */
   /* 
   @media (max-width: 768px) {
   }
@@ -119,30 +113,87 @@
 .quizPopup {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  text-align: left;
   gap: 10px;
 }
 
 .quizOptions {
   display: flex;
   flex-direction: column;
-  width: 80%;
-  gap: 10px;
+  width: 100%;
+  gap: 5px;
 }
 
 .quizOptions button {
-  padding: 10px;
-  background-color: #444;
   color: white;
-  border: 2px solid white;
+  text-align: left;
   border-radius: 5px;
   cursor: pointer;
-  text-align: center;
+  padding: 4px;
 }
 
 .quizOptions button:hover {
   background-color: #666;
 }
 
+.enemyImageContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px; /* Set the width to control the size of the circular area */
+  height: 300px;
+  margin: auto;
+  border-radius: 5px;
+  
+}
+
+.circularContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%; /* Makes the container circular */
+  overflow: hidden; /* Ensures that content outside the circle is hidden */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.enemyImage {
+  width: 70%; /* Adjust this to fit inside the spinning circle */
+  height: 70%; /* Adjust this to fit inside the spinning circle */
+  position: absolute;
+  z-index: 1; /* Ensure it stays above the spinning image */
+}
+
+.spinningImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: spin 2s linear infinite;
+  z-index: 1000000000;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 
+/* battlePopup.module.css */
+
+.darkOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.25); /* 画面を暗くする色 */
+  z-index: 99999999; /* ポップアップや画面の他の要素より前に表示 */
+}
