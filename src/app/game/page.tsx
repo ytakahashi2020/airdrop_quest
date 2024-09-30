@@ -298,12 +298,8 @@ const handleMagic = async () => {
     // Trigger quiz mode
     setIsQuizActive(true); // Keep the circle visible by setting quiz to active
     setIsMagicProcessing(true); // Start magic processing
-    setQuizText("Qudo quietly raised his magic wand."); // Reset the quiz text
-
-    // The rest of your logic for generating and displaying the quiz
-    if (!quizText) {
-      setQuizOptions(await generateQuiz());
-    }
+    setQuizText("Qudo quietly raised his wonder wand."); // Reset the quiz text
+    setQuizOptions(await generateQuiz());
   }
 };
 
