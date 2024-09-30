@@ -4,7 +4,7 @@ export const enemies: Enemy[] = [
   {
     name: "Pallot Yyvern",
     image: "/images/enemy1.png",
-    hp: 6,
+    hp: 7,
     attackRange: [1, 3],
     experience: 30,
   },
@@ -18,7 +18,7 @@ export const enemies: Enemy[] = [
   {
     name: "Shadow Behemoth",
     image: "/images/enemy3.png",
-    hp: 36,
+    hp: 24,
     attackRange: [7, 9],
     experience: 50,
   },

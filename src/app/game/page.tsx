@@ -48,7 +48,7 @@ import { set } from "@metaplex-foundation/umi/serializers";
 
 const Game = () => {
   const [playerPosition, setPlayerPosition] = useState({ x: 10, y: 10 });
-  const [playerHp, setPlayerHp] = useState(5); // HP
+  const [playerHp, setPlayerHp] = useState(40); // HP
   const [playerMp, setPlayerMp] = useState(30); // MP
   const [playerLevel, setPlayerLevel] = useState(1); // レベル
   const [playerExp, setPlayerExp] = useState(0); // 累積経験値
