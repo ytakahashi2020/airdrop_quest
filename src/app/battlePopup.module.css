@@ -102,6 +102,8 @@
 
 /* 敵画像 */
 .enemyImage {
+  border-radius: 16px;
+  border: 4px solid white;
   /* 
   @media (max-width: 768px) {
   }
