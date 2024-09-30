@@ -272,69 +272,78 @@ const Game = () => {
 
   const [isMagicProcessing, setIsMagicProcessing] = useState(false); // 魔法処理の進行中かどうか
 
-  // ⑦敵への攻撃(魔法)
-  const handleMagic = async() => {
-    if (currentEnemy && isPlayerTurn && !isQuizActive && !isMagicProcessing) {
+// ⑦敵への攻撃(魔法)
+const handleMagic = async () => {
+  if (currentEnemy && isPlayerTurn && !isQuizActive && !isMagicProcessing) {
+    // クイズがまだない場合、新しいクイズを生成
+    if (!quizText) {
       setQuizOptions(await generateQuiz()); // クイズの選択肢を生成
-      setIsQuizActive(true); // クイズをアクティブにする
-      setIsMagicProcessing(true); // 魔法処理開始を示す
     }
+    setIsQuizActive(true); // クイズをアクティブにする
+    setIsMagicProcessing(true); // 魔法処理開始を示す
+  }
+};
+
+// クイズの回答処理
+const handleQuizAnswer = (answer: string) => {
+  if (!currentEnemy) return; // currentEnemyが存在しない場合は終了
+
+  setQuizAnswer(answer);
+  setIsQuizActive(false); // クイズを非アクティブにする
+
+  const resetMagicEffect = () => {
+    setEnemyOpacity(1);
+    setShowMagicEffect(false);
+    setQuizResultMessage("");
   };
 
-  // クイズの回答処理
-  const handleQuizAnswer = (answer: string) => {
-    if (!currentEnemy) return; // Add null check for currentEnemy
-  
-    setQuizAnswer(answer);
-    setIsQuizActive(false); // クイズを非アクティブにする
-  
-    const resetMagicEffect = () => {
-      setEnemyOpacity(1);
-      setShowMagicEffect(false);
-      setQuizResultMessage("");
-    };
-  
-    const handleMagicSuccess = () => {
-      setQuizResultMessage(`Correct! The spell was successful!`);
+  const handleMagicSuccess = async () => {
+    setQuizResultMessage(`Correct! The spell was successful!`);
 
-      setEnemyOpacity(0.5); // 敵がヒットした時の透明度
-      setShowMagicEffect(true); // 魔法エフェクトを表示
-    
-      const newHp = currentEnemy.hp - PLAYER_MAGIC_DAMAGE;
-      setCurrentEnemy({ ...currentEnemy, hp: newHp });
-    
-      if (newHp <= 0) {
-        handleVictory();
-      } else {
-        setIsPlayerTurn(false);
-        setTimeout(() => {
-          handleEnemyAttack();
-        }, ENEMY_ATTACK_DELAY);
-      }
-    
-      setTimeout(resetMagicEffect, MAGIC_EFFECT_TIME);
-    };
-  
-    const handleMagicFailure = () => {
-      setQuizResultMessage(`Incorrect... The spell failed.`);
+    setEnemyOpacity(0.5); // 敵がヒットした時の透明度
+    setShowMagicEffect(true); // 魔法エフェクトを表示
 
-      setIsPlayerTurn(false);
-      
-      setTimeout(() => {
-        handleEnemyAttack();
-      }, ENEMY_ATTACK_DELAY);
-    
-      setTimeout(resetMagicEffect, MAGIC_EFFECT_TIME);
-    };
-  
-    if (answer === correctAnswer) {
-      handleMagicSuccess();
+    const newHp = currentEnemy.hp - PLAYER_MAGIC_DAMAGE;
+    setCurrentEnemy({ ...currentEnemy, hp: newHp });
+
+    if (newHp <= 0) {
+      handleVictory(); // 敵が倒れた場合の処理
     } else {
-      handleMagicFailure();
+      setIsPlayerTurn(false); // プレイヤーのターンを終了
+      setTimeout(() => {
+        handleEnemyAttack(); // 敵の攻撃を実行
+      }, ENEMY_ATTACK_DELAY);
     }
-  
-    setIsMagicProcessing(false);
+
+    setTimeout(resetMagicEffect, MAGIC_EFFECT_TIME);
+
+    // 正解後、クイズをリセットして次回のターンで新しいクイズが出題される
+    setQuizText(""); // 正解後はクイズをリセット
+    setIsMagicProcessing(false); // 魔法処理終了
   };
+
+  const handleMagicFailure = () => {
+    setQuizResultMessage(`Incorrect... The spell failed.`);
+
+    setIsPlayerTurn(false); // プレイヤーのターンを終了
+
+    setTimeout(() => {
+      handleEnemyAttack(); // 敵の攻撃を実行
+    }, ENEMY_ATTACK_DELAY);
+
+    setTimeout(resetMagicEffect, MAGIC_EFFECT_TIME);
+
+    // 不正解の場合、クイズはリセットしないため次回も同じクイズが出題される
+    setIsMagicProcessing(false); // 魔法処理終了
+  };
+
+  if (answer === correctAnswer) {
+    handleMagicSuccess(); // 正解した場合の処理
+  } else {
+    handleMagicFailure(); // 不正解の場合の処理
+  }
+};
+
 
   // 敵が倒されたときの処理
   const handleVictory = () => {

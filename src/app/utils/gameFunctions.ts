@@ -135,7 +135,7 @@ export const startRandomBattleSteps = (
   setSteps: React.Dispatch<React.SetStateAction<number>>
 ) => {
   const randomSteps =
-    Math.floor(Math.random() * RANDOM_STEP_MULTIPLIER) + RANDOM_STEP_OFFSET + 100;
+    Math.floor(Math.random() * RANDOM_STEP_MULTIPLIER) + RANDOM_STEP_OFFSET + 10;
   setNextBattleSteps(randomSteps);
   setSteps(0);
 };
