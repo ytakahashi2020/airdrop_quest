@@ -10,3 +10,45 @@
   height: 32px;
 }
 
+
+.gameOverPopup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  text-align: center;
+  border: 2px solid white;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+}
+
+.gameOverPopup h2 {
+  margin: 0 0 10px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.gameOverPopup p {
+  margin: 10px 0;
+  font-size: 18px;
+}
+
+.gameOverPopup button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  font-size: 16px;
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.gameOverPopup button:hover {
+  background-color: #f0f0f0;
+}
