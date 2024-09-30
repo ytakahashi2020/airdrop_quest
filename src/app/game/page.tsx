@@ -279,12 +279,13 @@ const handleMagic = async () => {
   if (currentEnemy && isPlayerTurn && !isQuizActive && !isMagicProcessing) {
     // Trigger quiz mode
     setIsQuizActive(true); // Keep the circle visible by setting quiz to active
+    setIsMagicProcessing(true); // Start magic processing
+    setQuizText("Qudo quietly raised his magic wand."); // Reset the quiz text
 
     // The rest of your logic for generating and displaying the quiz
     if (!quizText) {
       setQuizOptions(await generateQuiz());
     }
-    setIsMagicProcessing(true); // Start magic processing
   }
 };
 
@@ -550,6 +551,7 @@ return (
           quizOptions={quizOptions} // クイズの選択肢
           onQuizAnswer={handleQuizAnswer} // クイズ回答ハンドラ
           quizResultMessage={quizResultMessage} // クイズ結果メッセージ
+          isMagicProcessing={isMagicProcessing} // 魔法処理中かどうか
         />
       )}
 

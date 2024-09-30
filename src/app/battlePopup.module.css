@@ -29,7 +29,7 @@
   left: 7%;
   height: 27%;
   width: 15%;
-  z-index: 100000;
+  
 }
 
 .commandPopup {
@@ -42,6 +42,7 @@
   padding-left: 5%;
   padding-right: 5%;
   font-size: 20px;
+  z-index: 1000000000;
 }
 
 .enemyPopup, .enemyAttackImagePopup {
@@ -172,7 +173,7 @@
   width: 100%;
   height: 100%;
   animation: spin 2s linear infinite;
-  z-index: 10; /* Ensure it stays behind the enemy image */
+  z-index: 1000000000;
 }
 
 @keyframes spin {
@@ -184,3 +185,15 @@
   }
 }
 
+
+/* battlePopup.module.css */
+
+.darkOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.25); /* 画面を暗くする色 */
+  z-index: 99999999; /* ポップアップや画面の他の要素より前に表示 */
+}

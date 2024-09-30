@@ -214,11 +214,14 @@ const CommandPopup: React.FC<{
 const BattlePopup: React.FC<BattlePopupProps> = (props) => {
   return (
     <>
+      {/* 画面を暗くするオーバーレイ (魔法の進行中にのみ表示) */}
+      {props.isMagicProcessing && <div className={styles.darkOverlay}></div>}
+
       {/* 左側：主人公のステータス */}
       <EnemyStatusPopup
         enemyName={props.enemy.name}
         enemyHp={props.enemy.hp}
-        ></EnemyStatusPopup>
+      ></EnemyStatusPopup>
 
       <PlayerStatusPopup
         playerHp={props.playerHp}
@@ -235,16 +238,16 @@ const BattlePopup: React.FC<BattlePopupProps> = (props) => {
 
       {/* 中央：敵の画像 */}
       <EnemyPopup
-  enemy={props.enemy}
-  isPlayerTurn={props.isPlayerTurn}
-  onAttack={props.onAttack}
-  onMagic={props.onMagic}
-  enemyOpacity={props.enemyOpacity}
-  showAttackEffect={props.showAttackEffect}
-  showMagicEffect={props.showMagicEffect}
-  showEnemyAttackEffect={props.showEnemyAttackEffect}
-  isQuizActive={props.isQuizActive} // Pass this prop
-/>
+        enemy={props.enemy}
+        isPlayerTurn={props.isPlayerTurn}
+        onAttack={props.onAttack}
+        onMagic={props.onMagic}
+        enemyOpacity={props.enemyOpacity}
+        showAttackEffect={props.showAttackEffect}
+        showMagicEffect={props.showMagicEffect}
+        showEnemyAttackEffect={props.showEnemyAttackEffect}
+        isQuizActive={props.isQuizActive} // Pass this prop
+      />
 
       {/* 下：コマンドやメッセージ */}
       <CommandPopup
