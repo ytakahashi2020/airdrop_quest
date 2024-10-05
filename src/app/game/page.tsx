@@ -428,7 +428,7 @@ const handleQuizAnswer = (answer: string) => {
         setStatIncreaseMessage("");
         startRandomBattleSteps(setNextBattleSteps, setSteps); // 次のバトルステップを設定
       }, popupDisplayTime);
-    }, ATTACK_EFFECT_TIME); // エフェクトの表示時間分遅延させる
+    }, MAGIC_EFFECT_TIME); // エフェクトの表示時間分遅延させる
   };
 
   // useCallbackの中で関数を呼び出す

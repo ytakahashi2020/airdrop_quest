@@ -134,7 +134,7 @@ const EnemyPopup: React.FC<{
       )}
       {showMagicEffect && (
         <img
-          src="/images/effect/magic.gif" // 魔法エフェクトのGIF
+          src="/images/effect/magic2.gif" // 魔法エフェクトのGIF
           alt="Magic Effect"
           className={styles.commonEffect}
         />
@@ -143,12 +143,9 @@ const EnemyPopup: React.FC<{
         <img
           src={enemy.image}
           alt="Enemy"
-          style={{
-            opacity: enemyOpacity,
-          }}
-          className={`${styles.enemyImage} ${showAttackEffect ? styles.enemyImageRedOverlay : ""}`}
+          className={`${styles.enemyImage} ${showAttackEffect || showMagicEffect ? styles.enemyImageRedOverlay : ""}`}
         />
-        
+
         {isQuizActive && (
           <img
             src="/images/spinningImage.png"
