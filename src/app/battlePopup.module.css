@@ -4,7 +4,7 @@
   color: white;
   background-color: 212121;
   padding: 10px;
-  z-index: 100;
+  z-index: 1000; /* ベースのポップアップ層 */
 }
 
 .commonPopup {
@@ -29,7 +29,7 @@
   left: 7%;
   height: 27%;
   width: 15%;
-  
+  z-index: 1100; /* 他のポップアップより前に表示 */
 }
 
 .commandPopup {
@@ -42,7 +42,7 @@
   padding-left: 5%;
   padding-right: 5%;
   font-size: 20px;
-  z-index: 300;
+  z-index: 2000; /* コマンドポップアップがバトルポップアップより上 */
 }
 
 .enemyPopup, .enemyAttackImagePopup {
@@ -60,8 +60,8 @@
   justify-content: center;
   border-radius: 30px; /* 角丸 */
   border: 6px solid white; /* 白い枠を6pxに設定 */
+  z-index: 1500; /* 他のポップアップより前に表示 */
 }
-
 
 .enemyAttackImagePopup::before {
   content: "";
@@ -70,9 +70,10 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 200;
+  z-index: 2000; /* 攻撃イメージがポップアップより前に表示される */
 }
 
+/* 回転エフェクト */
 .enemyImageContainer {
   position: relative;
   display: flex;
@@ -83,12 +84,12 @@
   margin: auto;
   border-radius: 5px;
   overflow: hidden; /* オーバーレイが外に出ないようにする */
+  z-index: 1300; /* 回転エフェクトは他のポップアップより下に表示される */
 }
-
 .enemyImage {
   width: 100%;
   height: auto;
-  z-index: 100;
+  z-index: 1;
   border-radius: 16px; /* 敵画像の角丸 */
   border: 4px solid white; /* 白い枠 */
 }
@@ -121,7 +122,7 @@
   left: 0;
   width: 120%;
   height: 120%;
-  z-index: 300;
+  z-index: 3000;
 }
 
 /* 敵画像 */
@@ -190,7 +191,7 @@
   width: 70%; /* Adjust this to fit inside the spinning circle */
   height: 70%; /* Adjust this to fit inside the spinning circle */
   position: absolute;
-  z-index: 100; /* Ensure it stays above the spinning image */
+  z-index: 1; /* Ensure it stays above the spinning image */
 }
 
 .spinningImage {
@@ -200,10 +201,8 @@
   width: 100%;
   height: 100%;
   animation: spin 2s linear infinite;
-  background-color: rgba(0, 0, 0, 0); /* 画面を暗くする色 */
-  z-index: 1000; /* ポップアップや画面の他の要素より前に表示 */
+  z-index: 10000; /* 回転イメージが全ての要素より上に表示される */
 }
-
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -214,8 +213,18 @@
 }
 
 
-/* battlePopup.module.css */
 
+/* エフェクト用共通クラス */
+.commonEffect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120%;
+  height: 120%;
+  z-index: 3000; /* ポップアップより前に表示されるエフェクト */
+}
+
+/* 画面暗くするオーバーレイ */
 .darkOverlay {
   position: fixed;
   top: 0;
@@ -223,5 +232,6 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.25); /* 画面を暗くする色 */
-  z-index: 900; /* ポップアップや画面の他の要素より前に表示 */
+  z-index: 9999; /* 画面全体を覆うため、全ての要素より手前に表示 */
 }
+
