@@ -4,7 +4,7 @@
   color: white;
   background-color: 212121;
   padding: 10px;
-  z-index: 1000; /* ベースのポップアップ層 */
+  z-index: 1000;
 }
 
 .commonPopup {
@@ -30,6 +30,7 @@
   height: 27%;
   width: 15%;
   z-index: 1100; /* 他のポップアップより前に表示 */
+  
 }
 
 .commandPopup {
@@ -42,7 +43,7 @@
   padding-left: 5%;
   padding-right: 5%;
   font-size: 20px;
-  z-index: 2000; /* コマンドポップアップがバトルポップアップより上 */
+  z-index: 10000;
 }
 
 .enemyPopup, .enemyAttackImagePopup {
@@ -60,8 +61,9 @@
   justify-content: center;
   border-radius: 30px; /* 角丸 */
   border: 6px solid white; /* 白い枠を6pxに設定 */
-  z-index: 1500; /* 他のポップアップより前に表示 */
+  z-index: 4000; /* 他のポップアップより前に表示 */
 }
+
 
 .enemyAttackImagePopup::before {
   content: "";
@@ -70,10 +72,9 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 2000; /* 攻撃イメージがポップアップより前に表示される */
+  z-index: 2000;
 }
 
-/* 回転エフェクト */
 .enemyImageContainer {
   position: relative;
   display: flex;
@@ -147,7 +148,7 @@
 .quizOptions {
   display: flex;
   flex-direction: column;
-  margin-top: 8px;
+  margin-top: 4px;
   width: 100%;
   gap: 5px;
 }
@@ -158,6 +159,7 @@
   border-radius: 5px;
   cursor: pointer;
   padding: 4px;
+  z-index: 10000;
 }
 
 .quizOptions button:hover {
@@ -173,7 +175,6 @@
   height: 300px;
   margin: auto;
   border-radius: 5px;
-  
 }
 
 .circularContainer {
@@ -203,6 +204,7 @@
   animation: spin 2s linear infinite;
   z-index: 10000; /* 回転イメージが全ての要素より上に表示される */
 }
+
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -212,9 +214,6 @@
   }
 }
 
-
-
-/* エフェクト用共通クラス */
 .commonEffect {
   position: absolute;
   top: 0;
@@ -224,7 +223,7 @@
   z-index: 3000; /* ポップアップより前に表示されるエフェクト */
 }
 
-/* 画面暗くするオーバーレイ */
+/* battlePopup.module.css */
 .darkOverlay {
   position: fixed;
   top: 0;
@@ -232,6 +231,7 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.25); /* 画面を暗くする色 */
-  z-index: 9999; /* 画面全体を覆うため、全ての要素より手前に表示 */
+  z-index: 3000; /* ポップアップや画面の他の要素より前に表示 */
 }
+
 
