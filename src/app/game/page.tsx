@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { use, useCallback, useContext, useEffect, useRef, useState } from "react";
 import BattlePopup from "../components/BattlePopup";
 import VictoryPopup from "../components/VictoryPopup";
 import {
@@ -136,13 +136,12 @@ const Game = () => {
 
   // クイズのオプションを作成する関数（例として簡単なクイズを設定）
   const generateQuiz = async() => {
-    utilContext.setLoading(true);
     console.log("loading", utilContext.loading);
     // APIを呼び出してクイズを自動生成する。
     const quizData: QuizData = await generateQuizData();
+    console.log("quizData", quizData);
     setQuizText(quizData?.question!);
     setCorrectAnswer(quizData?.correct_answer!);
-    utilContext.setLoading(false);
     return [quizData?.answers.A, quizData?.answers.B, quizData?.answers.C, quizData.answers.D];
   };
 
@@ -300,11 +299,7 @@ const handleMagic = async () => {
     setIsMagicProcessing(true); // Start magic processing
     if (quizText === "") {
       setQuizOptions(await generateQuiz());
-      if (correctAnswer === "NONE") {
-        setIsQuizActive(false);
-        setIsMagicProcessing(false);
-        return;
-      }
+
     }
   }
 };
@@ -328,6 +323,7 @@ const handleQuizAnswer = (answer: string) => {
     setIsMagicProcessing(false); // 魔法処理をリセット
     return;
   }
+
 
   setQuizAnswer(answer);
   setIsQuizActive(false); // クイズを非アクティブにする
@@ -456,6 +452,16 @@ const handleQuizAnswer = (answer: string) => {
       window.removeEventListener("keydown", handleKeyPressCallback);
     };
   }, [isBattlePopupVisible, handleKeyPressCallback]);
+
+
+  useEffect(() => {
+    if (correctAnswer === "NONE") {
+      console.log("Quiz generation failed. Resetting quiz...");
+      setIsQuizActive(false);
+      setIsMagicProcessing(false);
+      return;
+    }
+  })
 
   useEffect(() => {
     startRandomBattleSteps(setNextBattleSteps, setSteps);
