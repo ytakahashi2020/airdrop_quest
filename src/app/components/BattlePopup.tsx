@@ -134,30 +134,26 @@ const EnemyPopup: React.FC<{
       )}
       {showMagicEffect && (
         <img
-          src="/images/effect/magic.gif" // 魔法エフェクトのGIF
+          src="/images/effect/magic2.gif" // 魔法エフェクトのGIF
           alt="Magic Effect"
           className={styles.commonEffect}
         />
       )}
-<div className={styles.enemyImageContainer}>
-  <img
-    src={enemy.image}
-    alt="Enemy"
-    style={{
-      opacity: enemyOpacity,
-    }}
-    className={styles.enemyImage}
-  />
+      <div className={styles.enemyImageContainer}>
+        <img
+          src={enemy.image}
+          alt="Enemy"
+          className={`${styles.enemyImage} ${showAttackEffect || showMagicEffect ? styles.enemyImageRedOverlay : ""}`}
+        />
 
-  {isQuizActive && (
-    <img
-      src="/images/spinningImage.png" // Replace with your spinning PNG image path
-      alt="Spinning Image"
-      className={styles.spinningImage}
-    />
-  )}
-</div>
-
+        {isQuizActive && (
+          <img
+            src="/images/spinningImage.png"
+            alt="Spinning Image"
+            className={styles.spinningImage}
+          />
+        )}
+      </div>
     </div>
   );
 };

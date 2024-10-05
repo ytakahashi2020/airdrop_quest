@@ -2,9 +2,9 @@
 .commonPopup, .enemyAttackPopup {
   position: fixed;
   color: white;
-  background-color: black;
+  background-color: 212121;
   padding: 10px;
-  z-index: 1000;
+  z-index: 100;
 }
 
 .commonPopup {
@@ -42,7 +42,7 @@
   padding-left: 5%;
   padding-right: 5%;
   font-size: 20px;
-  z-index: 1000000000;
+  z-index: 300;
 }
 
 .enemyPopup, .enemyAttackImagePopup {
@@ -70,9 +70,33 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 0, 0, 0.6);
-  z-index: 2000;
+  z-index: 200;
 }
+
+.enemyImageContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+  margin: auto;
+  border-radius: 5px;
+  overflow: hidden; /* オーバーレイが外に出ないようにする */
+}
+
+.enemyImage {
+  width: 100%;
+  height: auto;
+  z-index: 100;
+  border-radius: 16px; /* 敵画像の角丸 */
+  border: 4px solid white; /* 白い枠 */
+}
+
+.enemyImageRedOverlay {
+  filter: brightness(0.6) sepia(1) hue-rotate(-50deg) saturate(5); /* 赤みを強調するフィルター */
+}
+
 
 /* バトルコマンド */
 .battleCommand {
@@ -95,9 +119,9 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 3000;
+  width: 120%;
+  height: 120%;
+  z-index: 300;
 }
 
 /* 敵画像 */
@@ -122,6 +146,7 @@
 .quizOptions {
   display: flex;
   flex-direction: column;
+  margin-top: 8px;
   width: 100%;
   gap: 5px;
 }
@@ -165,7 +190,7 @@
   width: 70%; /* Adjust this to fit inside the spinning circle */
   height: 70%; /* Adjust this to fit inside the spinning circle */
   position: absolute;
-  z-index: 1; /* Ensure it stays above the spinning image */
+  z-index: 100; /* Ensure it stays above the spinning image */
 }
 
 .spinningImage {
@@ -175,7 +200,8 @@
   width: 100%;
   height: 100%;
   animation: spin 2s linear infinite;
-  z-index: 1000000000;
+  background-color: rgba(0, 0, 0, 0); /* 画面を暗くする色 */
+  z-index: 1000; /* ポップアップや画面の他の要素より前に表示 */
 }
 
 @keyframes spin {
@@ -197,5 +223,5 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.25); /* 画面を暗くする色 */
-  z-index: 99999999; /* ポップアップや画面の他の要素より前に表示 */
+  z-index: 900; /* ポップアップや画面の他の要素より前に表示 */
 }
