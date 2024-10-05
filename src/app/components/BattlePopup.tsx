@@ -139,25 +139,24 @@ const EnemyPopup: React.FC<{
           className={styles.commonEffect}
         />
       )}
-<div className={styles.enemyImageContainer}>
-  <img
-    src={enemy.image}
-    alt="Enemy"
-    style={{
-      opacity: enemyOpacity,
-    }}
-    className={styles.enemyImage}
-  />
-
-  {isQuizActive && (
-    <img
-      src="/images/spinningImage.png" // Replace with your spinning PNG image path
-      alt="Spinning Image"
-      className={styles.spinningImage}
-    />
-  )}
-</div>
-
+      <div className={styles.enemyImageContainer}>
+        <img
+          src={enemy.image}
+          alt="Enemy"
+          style={{
+            opacity: enemyOpacity,
+          }}
+          className={`${styles.enemyImage} ${showAttackEffect ? styles.enemyImageRedOverlay : ""}`}
+        />
+        
+        {isQuizActive && (
+          <img
+            src="/images/spinningImage.png"
+            alt="Spinning Image"
+            className={styles.spinningImage}
+          />
+        )}
+      </div>
     </div>
   );
 };
