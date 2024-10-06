@@ -116,15 +116,7 @@
   cursor: not-allowed;
 }
 
-/* 共通エフェクト */
-.commonEffect {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 120%;
-  height: 120%;
-  z-index: 3000;
-}
+
 
 /* 敵画像 */
 .enemyImage {
@@ -216,10 +208,10 @@
 
 .commonEffect {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 120%;
-  height: 120%;
+  top: 20%;
+  left: 15%;
+  width: 70%;
+  height: 70%;
   z-index: 3000; /* ポップアップより前に表示されるエフェクト */
 }
 
@@ -231,7 +223,7 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.25); /* 画面を暗くする色 */
-  z-index: 3000; /* ポップアップや画面の他の要素より前に表示 */
+  z-index: 7000; /* ポップアップや画面の他の要素より前に表示 */
 }
 
 
