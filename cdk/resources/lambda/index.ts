@@ -80,7 +80,7 @@ export const handler = async (
 
         問題と回答は次の例に従ってJSON形式で出力してください。
         なお、correct_answerの値は必ずしも Aである必要はありません。
-        correct_answerの値はきごうではなく、回答の内容を指定してください。
+        correct_answerの値は「A」などではなく、「apple」のような回答文を指定してください。
 
         よろしくお願いします。
 
@@ -89,12 +89,12 @@ export const handler = async (
           {
             "question": "some question",
             "answers": {
-              "A": "answer A",
-              "B": "answer B",
-              "C": "answer C",
-              "D": "answer D"
+              "A": "apple",
+              "B": "banana",
+              "C": "grenn apple",
+              "D": "tomato"
             },
-            "correct_answer": "answer A"
+            "correct_answer": "apple"
           }
     `);
     console.log("aiResponse:::", aiResponse);
