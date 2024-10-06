@@ -18,12 +18,12 @@ const PlayerStatusPopup: React.FC<{
         height: "30%",
         paddingTop: "20px",
         color: "white",
-        backgroundColor: "black",
+        backgroundColor: "#212121",
         border: "6px solid white",
         borderRadius: "16px",
         zIndex: 1000,
         textAlign: "left",
-        paddingLeft: "40px", // 左右に余白を作成
+        paddingLeft: "20px", // 左右に余白を作成
       }}
     >
       <div >Qudo</div>
@@ -51,12 +51,12 @@ const EnemyStatusPopup: React.FC<{
         height: "15%",
         paddingTop: "20px",
         color: "white",
-        backgroundColor: "black",
+        backgroundColor: "#212121",
         border: "6px solid white",
         borderRadius: "16px",
         zIndex: 5000,
         textAlign: "left",
-        paddingLeft: "40px", // 左右に余白を作成
+        paddingLeft: "20px", // 左右に余白を作成
       }}
     >
       <div> {enemyName} </div>
