@@ -72,30 +72,29 @@ export const handler = async (
     const chain = setupAndRetrieval.pipe(prompt).pipe(model).pipe(outputParser);
     // プロンプトを実行
     const aiResponse = await chain.invoke(`
-        MagicBookについて簡単なクイズを英語で作成してください。
-        
-        その際、回答は4択して正しい答えが1つだけになるようにしてください。
-        問題と回答は1ペアだけ作成してください。
-        問題文に答えが含まれないように注意してください。
+      MagicBookについて簡単なクイズを英語で作成してください。
 
-        問題と回答は次の例に従ってJSON形式で出力してください。
-        なお、correct_answerの値は必ずしも Aである必要はありません。
-        correct_answerの値は「A」などではなく、「apple」のような回答文を指定してください。
+      その際、回答は4択で、正しい答えが1つだけになるようにしてください。  
+      問題文に答えが含まれないように注意してください。
 
-        よろしくお願いします。
+      問題と回答は1ペアだけ作成してください。  
+      なお、correct_answerは回答のキーではなく、answersオブジェクト内の4つの選択肢のいずれかの値と文字列一致させてください。  
+      正解は選択肢A〜Dの中でランダムに設定してください。
 
-        例：)
+      問題と回答は次の形式でJSONとして出力してください：
 
-          {
-            "question": "some question",
-            "answers": {
-              "A": "apple",
-              "B": "banana",
-              "C": "grenn apple",
-              "D": "tomato"
-            },
-            "correct_answer": "apple"
-          }
+      {
+        "question": "問題文",
+        "answers": {
+          "A": "選択肢A",
+          "B": "選択肢B",
+          "C": "選択肢C",
+          "D": "選択肢D"
+        },
+        "correct_answer": "正しい回答（選択肢A〜Dのいずれかと一致する値）"
+      }
+
+      よろしくお願いします。
     `);
     console.log("aiResponse:::", aiResponse);
 
