@@ -1,7 +1,7 @@
 // ランダムステップの範囲
 export const RANDOM_STEP_MULTIPLIER = 15;
 // ステップ数のオフセット（最小値）
-export const RANDOM_STEP_OFFSET = 7;
+export const RANDOM_STEP_OFFSET = 15;
 
 // プレイヤーが攻撃で与えるダメージ
 export const PLAYER_ATTACK_DAMAGE = 6;

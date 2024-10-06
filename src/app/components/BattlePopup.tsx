@@ -54,7 +54,7 @@ const EnemyStatusPopup: React.FC<{
         backgroundColor: "black",
         border: "6px solid white",
         borderRadius: "16px",
-        zIndex: 1000,
+        zIndex: 5000,
         textAlign: "left",
         paddingLeft: "40px", // 左右に余白を作成
       }}

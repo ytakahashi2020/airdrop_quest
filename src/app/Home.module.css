@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 水平方向に中央配置 */
+  justify-content: center; /* 垂直方向に中央配置 */
+  height: 100vh;
+  background-image: url('/images/map.png');
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+}
+
+.title {
+  display: flex;
+  justify-content: center; /* 水平方向に中央配置 */
+  align-items: center; /* 垂直方向に中央配置 */
+}
+
+.titleImage {
+  max-width: 50%; /* 画像の最大幅を50%に設定 */
+  height: auto; /* 高さは自動調整 */
+  margin-bottom: 20px;
+}
+
+.playButton {
+  font-size: 2rem; /* フォントサイズを1.5remから2remに拡大 */
+  padding: 15px 30px; /* ボタンの内側余白を広げる */
+  background-color: #f8c471;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.playButton:hover {
+  background-color: #f39c12;
+}
+
