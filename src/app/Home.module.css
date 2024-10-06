@@ -23,9 +23,10 @@
 }
 
 .playButton {
-  font-size: 2rem; /* フォントサイズを1.5remから2remに拡大 */
-  padding: 15px 30px; /* ボタンの内側余白を広げる */
-  background-color: #f8c471;
+  font-size: 2.5rem; /* Increased from 2rem to 2.5rem */
+  padding: 10px 30px; /* Increased padding for a larger button */
+  background: linear-gradient(90deg, #9945FF, #14F195); /* Solana-inspired gradient */
+  color: white;
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -33,6 +34,18 @@
 }
 
 .playButton:hover {
-  background-color: #f39c12;
+  background-color: #5e34b1; /* Darker shade for hover effect */
+}
+
+
+.pcOnlyMessage {
+  font-size: 1.5rem; /* Increased font size for better readability */
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background for contrast */
+  margin-top: 20px;
+  padding: 10px 20px; /* Add padding around the text */
+  border-radius: 8px; /* Rounded corners for a modern look */
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add a subtle shadow for more emphasis */
 }
 

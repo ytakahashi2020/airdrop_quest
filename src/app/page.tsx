@@ -10,8 +10,10 @@ const Home = () => {
       <Link href="/game">
         <button className={styles.playButton}>Play</button>
       </Link>
+      <p className={styles.pcOnlyMessage}>This game is only supported on PC.</p>
     </div>
   );
 };
 
 export default Home;
+
