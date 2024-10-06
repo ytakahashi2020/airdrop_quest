@@ -134,15 +134,14 @@
   display: flex;
   flex-direction: column;
   text-align: left;
-  gap: 10px;
+  gap: 5px;
 }
 
 .quizOptions {
   display: flex;
   flex-direction: column;
-  margin-top: 4px;
   width: 100%;
-  gap: 5px;
+  gap: 2px;
 }
 
 .quizOptions button {
