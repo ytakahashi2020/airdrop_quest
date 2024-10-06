@@ -80,18 +80,30 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 300px;
-  height: 300px;
+  height: 250px;
+  width: 250px;
   margin: auto;
   border-radius: 5px;
   overflow: hidden; /* オーバーレイが外に出ないようにする */
   z-index: 1300; /* 回転エフェクトは他のポップアップより下に表示される */
 }
+
 .enemyImage {
-  width: 100%;
-  height: auto;
+  position: absolute;
+  height: 70%;
+  width: 70%;
+  left: 15%;
+  top: 15%;
+  z-index: 2000; /* 回転エフェクトは他のポップアップより下に表示される */
   border-radius: 16px; /* 敵画像の角丸 */
   border: 4px solid white; /* 白い枠 */
+}
+
+.commonEffect {
+  position: absolute;
+  height: 300px;
+  width: 300px;
+  z-index: 3000; /* ポップアップより前に表示されるエフェクト */
 }
 
 .enemyImageRedOverlay {
@@ -116,17 +128,6 @@
 }
 
 
-
-/* 敵画像 */
-.enemyImage {
-  border-radius: 16px;
-  border: 4px solid white;
-  /* 
-  @media (max-width: 768px) {
-  }
-  レスポンシブ対応 
-  */
-}
 
 /* クイズポップアップ */
 .quizPopup {
@@ -175,16 +176,7 @@
 }
 
 
-.enemyImageContainer {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 300px; /* Set the width to control the size of the circular area */
-  height: 300px;
-  margin: auto;
-  border-radius: 5px;
-}
+
 
 .circularContainer {
   position: relative;
@@ -195,13 +187,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.enemyImage {
-  width: 70%; /* Adjust this to fit inside the spinning circle */
-  height: 70%; /* Adjust this to fit inside the spinning circle */
-  position: absolute;
-  z-index: 1; /* Ensure it stays above the spinning image */
 }
 
 .spinningImage {
@@ -223,12 +208,7 @@
   }
 }
 
-.commonEffect {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  z-index: 3000; /* ポップアップより前に表示されるエフェクト */
-}
+
 
 /* battlePopup.module.css */
 .darkOverlay {
