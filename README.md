@@ -2,21 +2,21 @@
 
 [![Build on GitHub Actions](https://github.com/ytakahashi2020/airdrop_quest/actions/workflows/ci.yml/badge.svg)](https://github.com/ytakahashi2020/airdrop_quest/actions/workflows/ci.yml)
 
-![](./docs/slide/（英語）.png)
+![](./docs/slide/1.png)
 
 ## About Q-drop Adventure
 
-![](<./docs/slide/（英語）%20(2).png>)
+![](./docs/slide/2.png)
 
-![](<./docs/slide/（英語）%20(3).png>)
+![](./docs/slide/3.png)
 
-![](<./docs/slide/（英語）%20(4).png>)
+![](./docs/slide/4.png)
 
-![](<./docs/slide/（英語）%20(5).png>)
+![](./docs/slide/5.png)
 
-![](<./docs/slide/（英語）%20(6).png>)
+![](./docs/slide/6.png)
 
-![](<./docs/slide/（英語）%20(7).png>)
+![](./docs/slide/7.png)
 
 ## Regarding Certain Behaviors:
 
