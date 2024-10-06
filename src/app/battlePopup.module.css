@@ -90,7 +90,6 @@
 .enemyImage {
   width: 100%;
   height: auto;
-  z-index: 1;
   border-radius: 16px; /* 敵画像の角丸 */
   border: 4px solid white; /* 白い枠 */
 }
@@ -226,6 +225,7 @@
 
 .commonEffect {
   position: absolute;
+  top: 0;
   height: 100%;
   z-index: 3000; /* ポップアップより前に表示されるエフェクト */
 }

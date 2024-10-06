@@ -125,21 +125,21 @@ const EnemyPopup: React.FC<{
         showEnemyAttackEffect ? styles.enemyAttackImagePopup : styles.enemyPopup
       }`}
     >
-      {showAttackEffect && (
-        <img
-          src="/images/effect/sword.gif" // 攻撃エフェクトのGIF
-          alt="Attack Effect"
-          className={styles.commonEffect}
-        />
-      )}
-      {showMagicEffect && (
-        <img
-          src="/images/effect/magic2.gif" // 魔法エフェクトのGIF
-          alt="Magic Effect"
-          className={styles.commonEffect}
-        />
-      )}
       <div className={styles.enemyImageContainer}>
+        {showAttackEffect && (
+          <img
+            src="/images/effect/sword.gif" // 攻撃エフェクトのGIF
+            alt="Attack Effect"
+            className={`${styles.commonEffect} } `}
+          />
+        )}
+        {showMagicEffect && (
+          <img
+            src="/images/effect/magic2.gif" // 魔法エフェクトのGIF
+            alt="Magic Effect"
+            className={`${styles.commonEffect} `}
+          />
+        )}
         <img
           src={enemy.image}
           alt="Enemy"
