@@ -2,6 +2,8 @@
 
 [![Build on GitHub Actions](https://github.com/ytakahashi2020/airdrop_quest/actions/workflows/ci.yml/badge.svg)](https://github.com/ytakahashi2020/airdrop_quest/actions/workflows/ci.yml)
 
+![Vercel](https://vercelbadge.vercel.app/api/ytakahashi2020/airdrop_quest)
+
 ![](./docs/slide/1.png)
 
 ## About Q-drop Adventure
