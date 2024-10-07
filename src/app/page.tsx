@@ -10,8 +10,8 @@ const Home = () => {
       <Link href="/game">
         <button className={styles.playButton}>PLAY</button>
       </Link>
-      <p className={styles.pcOnlyMessage}>💻 This game is only supported on PC.</p>
-      <p className={styles.audioWarning}>🔈  Audio will play during the game.</p>
+      <p className={styles.pcOnlyMessage}>💻 This game is currently only supported on PC.</p>
+      <p className={styles.audioWarning}>🔈 Audio will play during the game.</p>
 
     </div>
   );
