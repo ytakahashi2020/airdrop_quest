@@ -26,7 +26,7 @@ export default function RootLayout({
       <body>
         <AppWalletProvider>
           <UtilProvider>
-            <header className="p-4 bg-gray-800 text-white fixed z-20  w-full">
+          <header className="p-4 fixed z-20 w-full" style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
               <nav className="flex justify-end items-center space-x-4">
                 <div className="ml-4">
                   <WalletMultiButton style={{}} />
