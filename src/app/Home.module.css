@@ -8,18 +8,34 @@
   background-size: cover;
   background-position: center;
   text-align: center;
+  z-index: 0; 
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* 20%の黒いオーバーレイ */
+  z-index: 1; 
 }
 
 .title {
   display: flex;
   justify-content: center; /* 水平方向に中央配置 */
   align-items: center; /* 垂直方向に中央配置 */
+  position: relative; /* 必要 */
 }
 
 .titleImage {
-  max-width: 50%; /* 画像の最大幅を50%に設定 */
+  max-width: 40%; /* 画像の最大幅を50%に設定 */
   height: auto; /* 高さは自動調整 */
-  margin-bottom: 20px;
+  margin-top: 120px;
+  margin-bottom: 36px;
+  z-index: 2; 
+  position: relative; /* 必要 */
 }
 
 .playButton {
@@ -28,24 +44,41 @@
   background: linear-gradient(90deg, #9945FF, #14F195); /* Solana-inspired gradient */
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 100px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  width: 280px;
+  z-index: 2 !important; 
+  position: relative; /* 必要 */
+  font-weight: 700;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+
 }
 
 .playButton:hover {
   background-color: #5e34b1; /* Darker shade for hover effect */
+  z-index: 2; 
 }
 
 
 .pcOnlyMessage {
-  font-size: 1.5rem; /* Increased font size for better readability */
+  font-size: 1rem; /* Increased font size for better readability */
   color: #ffffff;
   background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background for contrast */
-  margin-top: 20px;
-  padding: 10px 20px; /* Add padding around the text */
-  border-radius: 8px; /* Rounded corners for a modern look */
+  margin-top: 40px;
+  padding: 10px 12px; /* Add padding around the text */
+  margin-bottom: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add a subtle shadow for more emphasis */
+  z-index: 2; 
+}
+
+.audioWarning {
+  font-size: 1rem; /* Increased font size for better readability */
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background for contrast */
+  padding: 10px 12px; /* Add padding around the text */
   margin-bottom: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add a subtle shadow for more emphasis */
+  z-index: 2; 
 }
 
