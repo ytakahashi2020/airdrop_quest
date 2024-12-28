@@ -44,6 +44,7 @@ export async function POST() {
       inputVariables: [],
     });
     // プロンプトチェーンを作成
+    // @ts-ignore
     const chain = prompt.pipe(llmModel);
     // 実行
     const result = await chain.invoke({});
